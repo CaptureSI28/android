@@ -1,10 +1,15 @@
 package com.example.josephrocca.multiviewapptest;
 
 
+import android.app.Activity;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+
+import static android.support.v4.app.ActivityCompat.startActivityForResult;
 
 public class BoutonCapture {
 
@@ -32,6 +37,10 @@ public class BoutonCapture {
                 return false;
             }
         });
+    }
+
+    public void setOnClickListener(View.OnClickListener l){
+        capture.setOnClickListener(l);
     }
 
 }

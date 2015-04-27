@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Selection partie"
+        android:id="@+id/textView4"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:height="60dp"
+        android:background="#ff7b87aa"
+        android:textColor="#ffffffff" />
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal">
+
+        <TableRow
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="Existante"
+                android:id="@+id/selectpartold"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:height="40dp"
+                android:clickable="true" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="Nouvelle"
+                android:id="@+id/selectpartnew"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:height="40dp"
+                android:clickable="true" />
+        </TableRow>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal">
+
+        <TableRow
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent">
+
+            <FrameLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:minHeight="5dp"
+                android:layout_weight="1"
+                android:id="@+id/selectparties1"></FrameLayout>
+
+            <FrameLayout
+                android:layout_width="0dp"
+                android:layout_height="fill_parent"
+                android:layout_weight="1"
+                android:minHeight="5dp"
+                android:id="@+id/selectparties2"></FrameLayout>
+        </TableRow>
+    </LinearLayout>
+
+    <fragment
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:name="android.app.ListFragment"
+        android:id="@+id/selectioncontent"
+        android:layout_gravity="center_horizontal" />
+
+</LinearLayout>

@@ -22,8 +22,6 @@ public class Control {
     }
 
     public void init(){
-        user = new Player("Jojo", 10, 4);
-
         teams = new HashMap<Integer, Team>();
         teams.put(1, new Team(Color.rgb(0, 110, 160), Color.rgb(120, 190, 225), 1, 200));
         teams.put(2, new Team(Color.rgb(130, 110, 0), Color.rgb(255, 225, 70), 2, 300));
@@ -35,5 +33,7 @@ public class Control {
 
     public HashMap<Integer, Team> getTeams(){ return teams; }
     public Team getTeamByIdx(int idx){ return teams.get(idx); }
+
+    public void setUser(Player p) { user = p;}
 
 }
