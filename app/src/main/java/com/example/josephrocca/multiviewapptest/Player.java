@@ -19,7 +19,13 @@ public class Player {
         teamidx=t;
     }
 
+    public void setLogin(String log) { login=log; }
     public String getLogin(){ return login; }
+
+    public void setPoints(int pts) { points=pts; }
     public int getPoint(){ return points; }
+
+    public void setTeamIdx(int tidx) { teamidx=tidx; }
     public int getTeamIdx(){ return teamidx; }
+
 }

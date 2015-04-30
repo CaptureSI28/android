@@ -20,19 +20,19 @@ public class BoutonCapture {
     }
 
     public void init(){
-        capture.setBackgroundColor(Control.getInstance().getTeamByIdx(Control.getInstance().getUser().getTeamIdx()).getColorClaire());
+        capture.setBackgroundColor(MyColor.getTeamColorById(Control.getInstance().getUser().getTeamIdx(), false));
         capture.setImageResource(R.drawable.capture_ic_f);
-        capture.setColorFilter(Control.getInstance().getTeamByIdx(Control.getInstance().getUser().getTeamIdx()).getColorFonce());
+        capture.setColorFilter(MyColor.getTeamColorById(Control.getInstance().getUser().getTeamIdx(), true));
 
         capture.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View view, MotionEvent event) {
                 if (event.getAction() == MotionEvent.ACTION_UP) {
-                    capture.setBackgroundColor(Control.getInstance().getTeamByIdx(Control.getInstance().getUser().getTeamIdx()).getColorClaire());
-                    capture.setColorFilter(Control.getInstance().getTeamByIdx(Control.getInstance().getUser().getTeamIdx()).getColorFonce());
+                    capture.setBackgroundColor(MyColor.getTeamColorById(Control.getInstance().getUser().getTeamIdx(), false));
+                    capture.setColorFilter(MyColor.getTeamColorById(Control.getInstance().getUser().getTeamIdx(), true));
                 } else if (event.getAction() == MotionEvent.ACTION_DOWN) {
-                    capture.setBackgroundColor(Control.getInstance().getTeamByIdx(Control.getInstance().getUser().getTeamIdx()).getColorFonce());
-                    capture.setColorFilter(Control.getInstance().getTeamByIdx(Control.getInstance().getUser().getTeamIdx()).getColorClaire());
+                    capture.setBackgroundColor(MyColor.getTeamColorById(Control.getInstance().getUser().getTeamIdx(), true));
+                    capture.setColorFilter(MyColor.getTeamColorById(Control.getInstance().getUser().getTeamIdx(), false));
                 }
                 return false;
             }

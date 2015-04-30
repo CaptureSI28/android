@@ -39,7 +39,7 @@
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:text="nb player"
-            android:id="@+id/textView"
+            android:id="@+id/topteaminfo_nb"
             android:textSize="12sp"/>
     </LinearLayout>
 

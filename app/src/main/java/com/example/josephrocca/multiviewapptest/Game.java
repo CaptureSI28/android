@@ -30,7 +30,9 @@ public class Game {
     public int getId ()               {return id;}
     public String getName ()          {return name;}
     public String getDateDeb ()       {return dateDebut;}
+    public String getShortDateDeb ()  {return dateDebut.substring(0,10);}
     public String getDateFin ()       {return dateFin;}
+    public String getShortDateFin ()  {return dateFin.substring(0,10);}
     public boolean getIsPrivate ()    {return isPrivate;}
 
 }

@@ -43,8 +43,8 @@ public class TopInfo {
         LinearLayout colorlayout    = (LinearLayout)persoView.findViewById(R.id.colorlayperso);
 
         userpt.setText(Integer.toString(Control.getInstance().getUser().getPoint()));
-        userpt.setTextColor(Control.getInstance().getTeamByIdx(Control.getInstance().getUser().getTeamIdx()).getColorFonce());
-        colorlayout.setBackgroundColor(Control.getInstance().getTeamByIdx(Control.getInstance().getUser().getTeamIdx()).getColorClaire());
+        userpt.setTextColor(MyColor.getTeamColorById(Control.getInstance().getUser().getTeamIdx(), true));
+        colorlayout.setBackgroundColor(MyColor.getTeamColorById(Control.getInstance().getUser().getTeamIdx(), false));
 
         row.addView(persoView);
 
@@ -67,11 +67,15 @@ public class TopInfo {
             child.setLayoutParams(params);
 
             TextView teampt             = (TextView)child.findViewById(R.id.ptteam);
+            TextView teamnb             = (TextView)child.findViewById(R.id.topteaminfo_nb);
             LinearLayout colorlayout    = (LinearLayout)child.findViewById(R.id.colorlayteam);
 
             teampt.setText(Integer.toString(t.getPoints()));
-            teampt.setTextColor(t.getColorFonce());
-            colorlayout.setBackgroundColor(t.getColorClaire());
+            teampt.setTextColor(MyColor.getTeamColorById(t.getIdx(), true));
+
+            colorlayout.setBackgroundColor(MyColor.getTeamColorById(t.getIdx(), false));
+
+            teamnb.setTextColor(MyColor.getTeamColorById(t.getIdx(), true));
 
             row.addView(child);
 

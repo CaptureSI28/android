@@ -31,6 +31,7 @@ public class ServerRequest {
     private static String serverAdresse="http://192.168.1.21:8888/server/mobile/index.php";
 
 
+
     public static ArrayList<Game> fetchGamesList(){
         ArrayList<Game> games = new ArrayList<Game>();
 
@@ -50,7 +51,6 @@ public class ServerRequest {
         }
 
         if(reponse!=null) {
-            System.out.println(reponse.toString());
 
             String json = null;
             try {
@@ -79,6 +79,96 @@ public class ServerRequest {
         }
 
         return games;
+    }
+
+
+
+    public static boolean joinGame(Integer gameId, String password, Integer teamId){
+
+        HashMap<String, String> data = new HashMap<String, String>();
+        data.put("session_id", "-1");
+        data.put("service", "joinGame");
+        data.put("game_id", String.valueOf(gameId));
+        data.put("password", password);
+        data.put("team_id", String.valueOf(teamId));
+
+        AsyncHttpPost asyncHttpPost = new AsyncHttpPost(data);
+        asyncHttpPost.execute(serverAdresse);
+
+        HttpResponse reponse = null;
+        try {
+            reponse = asyncHttpPost.get();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        }
+
+        if(reponse!=null) {
+
+            String json = null;
+            String success = null;
+            try {
+                json = EntityUtils.toString(reponse.getEntity());
+                JSONObject jsonObj = new JSONObject(json);
+                success = jsonObj.getString("success");
+            } catch (IOException e) {
+                e.printStackTrace();
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+            if(success!=null && success.equals("YES"))
+                return true;
+            else
+                return false;
+        }
+        else
+            return false;
+    }
+
+
+
+    public static boolean qrcode(String codeNumber){
+
+        HashMap<String, String> data = new HashMap<String, String>();
+        data.put("session_id", "-1");
+        data.put("service", "flash");
+        data.put("qrcode", String.valueOf(codeNumber));
+
+        AsyncHttpPost asyncHttpPost = new AsyncHttpPost(data);
+        asyncHttpPost.execute(serverAdresse);
+
+        HttpResponse reponse = null;
+        try {
+            reponse = asyncHttpPost.get();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        }
+
+        if(reponse!=null) {
+
+            String json = null;
+            String success = null;
+            try {
+                json = EntityUtils.toString(reponse.getEntity());
+                JSONObject jsonObj = new JSONObject(json);
+                success = jsonObj.getString("success");
+            } catch (IOException e) {
+                e.printStackTrace();
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+            if(success!=null && success.equals("YES"))
+                return true;
+            else
+                return false;
+        }
+        else
+            return false;
     }
 
 }

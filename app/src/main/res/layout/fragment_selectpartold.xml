@@ -5,4 +5,10 @@
     android:background="#ffffffff"
     android:id="@+id/globalayout">
 
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/partieList"
+        android:layout_gravity="center_horizontal"
+        android:choiceMode="singleChoice" />
 </LinearLayout>
