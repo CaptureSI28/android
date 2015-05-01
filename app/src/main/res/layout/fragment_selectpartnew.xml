@@ -47,7 +47,7 @@
         android:id="@+id/new_game_datefin"
         android:layout_marginBottom="10dp"
         android:text="Date fin"
-        android:clickable="true" />
+        android:focusable="true" />
 
     <Button
         style="?android:attr/buttonStyleSmall"
@@ -60,4 +60,5 @@
         android:textColor="#ffffffff"
         android:layout_gravity="center_horizontal"
         android:layout_marginBottom="10dp" />
+
 </LinearLayout>

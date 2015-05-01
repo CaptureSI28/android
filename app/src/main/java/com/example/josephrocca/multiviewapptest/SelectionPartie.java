@@ -16,7 +16,7 @@ import java.util.List;
 /**
  * Created by josephrocca on 27/04/15.
  */
-public class SelectionPartie extends Activity {
+public class SelectionPartie extends Activity implements View.OnFocusChangeListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,5 +63,12 @@ public class SelectionPartie extends Activity {
         fm1.setBackgroundColor(Color.rgb(123,135,170));
         final FrameLayout fm2 = (FrameLayout) findViewById(R.id.selectparties2);
         fm2.setBackgroundColor(Color.rgb(255,255,255));
+    }
+
+    @Override
+    public void onFocusChange(View v, boolean hasFocus) {
+        switch(v.getId()){
+            case R.id.new_game_datefin: System.out.println("%%%%%%%%%%%%%%%%%%%%%%");
+        }
     }
 }
