@@ -1,14 +1,17 @@
-package com.example.josephrocca.multiviewapptest;
+package com.example.josephrocca.multiviewapptest.utils;
 
 import android.content.res.Resources;
 import android.graphics.Color;
+
+import com.example.josephrocca.multiviewapptest.App;
+import com.example.josephrocca.multiviewapptest.R;
 
 /**
  * Created by josephrocca on 30/04/15.
  */
 public class MyColor {
 
-    static int getTeamColorById(int idx, boolean dark){
+    public static int getTeamColorById(int idx, boolean dark){
         switch (idx){
             case 1:
                 if(dark)

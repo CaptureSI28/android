@@ -1,4 +1,4 @@
-package com.example.josephrocca.multiviewapptest;
+package com.example.josephrocca.multiviewapptest.view;
 
 import android.app.DatePickerDialog;
 import android.app.DialogFragment;
@@ -9,6 +9,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ListView;
+
+import com.example.josephrocca.multiviewapptest.R;
 
 import java.util.Calendar;
 

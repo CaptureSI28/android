@@ -1,15 +1,13 @@
-package com.example.josephrocca.multiviewapptest;
+package com.example.josephrocca.multiviewapptest.view;
 
 
-import android.app.Activity;
-import android.content.DialogInterface;
-import android.content.Intent;
 import android.view.MotionEvent;
 import android.view.View;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 
-import static android.support.v4.app.ActivityCompat.startActivityForResult;
+import com.example.josephrocca.multiviewapptest.Control;
+import com.example.josephrocca.multiviewapptest.utils.MyColor;
+import com.example.josephrocca.multiviewapptest.R;
 
 public class BoutonCapture {
 

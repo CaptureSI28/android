@@ -1,4 +1,4 @@
-package com.example.josephrocca.multiviewapptest;
+package com.example.josephrocca.multiviewapptest.view;
 
 
 import android.graphics.Color;
@@ -9,9 +9,13 @@ import android.widget.LinearLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 
+import com.example.josephrocca.multiviewapptest.Control;
+import com.example.josephrocca.multiviewapptest.R;
+import com.example.josephrocca.multiviewapptest.model.Team;
+import com.example.josephrocca.multiviewapptest.utils.MyColor;
+
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
 public class TopInfo {
 

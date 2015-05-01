@@ -1,15 +1,16 @@
-package com.example.josephrocca.multiviewapptest;
+package com.example.josephrocca.multiviewapptest.model;
 
 
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
-import android.content.Context;
 import android.graphics.Color;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.TableRow;
-import android.widget.TextView;
+
+import com.example.josephrocca.multiviewapptest.R;
+import com.example.josephrocca.multiviewapptest.view.fragmentOne;
+import com.example.josephrocca.multiviewapptest.view.fragmentTwo;
 
 import java.util.Arrays;
 import java.util.List;

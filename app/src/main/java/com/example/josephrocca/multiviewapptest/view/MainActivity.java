@@ -1,32 +1,20 @@
-package com.example.josephrocca.multiviewapptest;
+package com.example.josephrocca.multiviewapptest.view;
 
 import android.app.AlertDialog;
-import android.app.Fragment;
-import android.app.FragmentManager;
-import android.app.FragmentTransaction;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Color;
-import android.preference.PreferenceManager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
-import android.text.Layout;
-import android.view.MotionEvent;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.FrameLayout;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TableRow;
-import android.widget.TextView;
-import android.widget.Toast;
 
-import java.util.Arrays;
-import java.util.List;
-
-import static android.support.v4.app.ActivityCompat.startActivityForResult;
+import com.example.josephrocca.multiviewapptest.Control;
+import com.example.josephrocca.multiviewapptest.model.Menu;
+import com.example.josephrocca.multiviewapptest.R;
+import com.example.josephrocca.multiviewapptest.utils.ZBarConstants;
+import com.example.josephrocca.multiviewapptest.server.ServerRequest;
 
 
 public class MainActivity extends ActionBarActivity {

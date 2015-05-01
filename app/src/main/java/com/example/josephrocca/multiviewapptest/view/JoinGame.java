@@ -1,4 +1,4 @@
-package com.example.josephrocca.multiviewapptest;
+package com.example.josephrocca.multiviewapptest.view;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -8,6 +8,10 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.TextView;
+
+import com.example.josephrocca.multiviewapptest.Control;
+import com.example.josephrocca.multiviewapptest.R;
+import com.example.josephrocca.multiviewapptest.server.ServerRequest;
 
 /**
  * Created by josephrocca on 30/04/15.
