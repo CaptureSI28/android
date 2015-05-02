@@ -5,4 +5,13 @@
         <!-- Customize your theme here. -->
     </style>
 
+    <style name="Title" parent="AppTheme">
+        <item name="android:textSize">20dp</item>
+    </style>
+
+    <style name="errorMessage">
+        <item name="android:textColor">@android:color/holo_red_dark</item>
+        <item name="android:textSize">15dp</item>
+    </style>
+
 </resources>

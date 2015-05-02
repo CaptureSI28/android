@@ -116,6 +116,11 @@ public class ServerRequest {
         return result;
     }
 
+    public static boolean createGame (String name, String dateDebut, String dateFin, String password) {
+        // TODO
+        return true;
+    }
+
     public static boolean joinGame(Integer gameId, String password, Integer teamId) {
 
         HashMap<String, String> data = new HashMap<String, String>();
