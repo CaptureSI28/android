@@ -31,12 +31,18 @@ public class MainActivity extends ActionBarActivity {
         actionBar.hide();
 
         if(Control.getInstance().getUser() != null) {
+        // Gestion TOPINFO ------------------------------------------------
+            final TableRow topinforow = (TableRow) findViewById(R.id.topinfo);
+            TopInfo topinfo = new TopInfo(topinforow, getLayoutInflater());
+            topinfo.initPerso();
+            topinfo.initTeam();
+
             // Gestion MENU ---------------------------------------------------
             final ImageView menu1 = (ImageView) findViewById(R.id.menu1);
             final ImageView menu2 = (ImageView) findViewById(R.id.menu2);
             final ImageView menu3 = (ImageView) findViewById(R.id.menu3);
             final ImageView menu4 = (ImageView) findViewById(R.id.menu4);
-            Menu mymenu = new Menu(menu1, menu2, menu3, menu4, getFragmentManager());
+            Menu mymenu = new Menu(menu1, menu2, menu3, menu4, getFragmentManager(),topinfo);
             mymenu.init();
 
             // Gestion CAPTUREBTN --------------------------------------------
@@ -51,11 +57,7 @@ public class MainActivity extends ActionBarActivity {
                 }
             });
 
-            // Gestion TOPINFO ------------------------------------------------
-            final TableRow topinforow = (TableRow) findViewById(R.id.topinfo);
-            TopInfo topinfo = new TopInfo(topinforow, getLayoutInflater());
-            topinfo.initPerso();
-            topinfo.initTeam();
+
         }
 
 
@@ -79,7 +81,7 @@ public class MainActivity extends ActionBarActivity {
             if(data!=null) {
                 String barcode = data.getStringExtra(ZBarConstants.SCAN_RESULT);
 
-                boolean isOk = ServerRequest.qrcode(barcode);
+                boolean isOk = ServerRequest.flash(barcode);
                 if(!isOk){
                     AlertDialog alertDialog = new AlertDialog.Builder(MainActivity.this).create();
                     alertDialog.setTitle("Alert");

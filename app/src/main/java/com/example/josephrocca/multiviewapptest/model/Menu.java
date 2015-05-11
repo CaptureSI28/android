@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.ImageView;
 
 import com.example.josephrocca.multiviewapptest.R;
+import com.example.josephrocca.multiviewapptest.view.TopInfo;
 import com.example.josephrocca.multiviewapptest.view.fragmentOne;
 import com.example.josephrocca.multiviewapptest.view.fragmentTwo;
 
@@ -22,13 +23,15 @@ public class Menu {
     ImageView m3;
     ImageView m4;
     FragmentManager fm;
+    TopInfo topinfo;
 
-    public Menu(ImageView menu1, ImageView menu2, ImageView menu3, ImageView menu4, FragmentManager f){
+    public Menu(ImageView menu1, ImageView menu2, ImageView menu3, ImageView menu4, FragmentManager f, TopInfo ti){
         m1 = menu1;
         m2 = menu2;
         m3 = menu3;
         m4 = menu4;
         fm=f;
+        topinfo=ti;
     }
 
     public void init(){
@@ -82,6 +85,7 @@ public class Menu {
             iv.setBackgroundColor(Color.rgb(240, 240, 240));
             iv.setColorFilter(Color.rgb(110,115,115));
         }
+        topinfo.update();
     }
 
     public void selectFrag(int frag) {

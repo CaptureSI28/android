@@ -2,6 +2,7 @@ package com.example.josephrocca.multiviewapptest.view;
 
 import android.app.DatePickerDialog.OnDateSetListener;
 import android.app.Fragment;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -14,6 +15,7 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.example.josephrocca.multiviewapptest.Control;
 import com.example.josephrocca.multiviewapptest.R;
 import com.example.josephrocca.multiviewapptest.server.ServerRequest;
 
@@ -86,6 +88,7 @@ public class fragmentSelPartNew extends Fragment {
             }
         });
 
+        // TODO Remonter les messages d'erreur du serveur (date invalide etc.)
         conn_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -96,7 +99,7 @@ public class fragmentSelPartNew extends Fragment {
                 }
                 // Vérification debut < fin
                 else if (!dateIsValide(datedeb.getText().toString(), datefin.getText().toString())) {
-                    errorMessage.setText("La date de début doit être antérieure à la date de fin.");
+                    errorMessage.setText("La date de début doit être antérieure à la date de fin, et avant aujourd'hui.");
                     errorMessage.setVisibility(View.VISIBLE);
                 }
                 // Verification MDP si partie privée
@@ -107,9 +110,12 @@ public class fragmentSelPartNew extends Fragment {
                 // Création de la partie
                 else {
                     errorMessage.setText("");
-                    if (ServerRequest.createGame(nomPartie.getText().toString(), datedeb.getText().toString(), datefin.getText().toString(), password.getText().toString())) {
+                    if (ServerRequest.createGame(nomPartie.getText().toString(), formatDate(datedeb.getText().toString()), formatDate(datefin.getText().toString()), password.getText().toString())) {
                         Log.d("Succès", "Partie créée");
                         // TODO Rediriger vers la page des parties
+                        Intent intent = new Intent(getActivity(), JoinGame.class);
+                        intent.putExtra("GAMEID", Control.getInstance().getCurrentGame().getId());
+                        startActivity(intent);
                         errorMessage.setText("Log : partie créée !");
 
                     } else {
@@ -129,12 +135,27 @@ public class fragmentSelPartNew extends Fragment {
         try {
             Date debut = formatIn.parse(dateDebut);
             Date fin = formatIn.parse(dateFin);
-            if (!fin.before(debut))
+            if (!fin.before(debut) && debut.after(new Date()))
                 result = true;
         } catch (ParseException e) {
             e.printStackTrace();
         }
         return result;
+    }
+
+    private String formatDate(String d) {
+        SimpleDateFormat inFormatter = new SimpleDateFormat("d-M-yyyy");
+        SimpleDateFormat outFormatter = new SimpleDateFormat("yyyy-M-d H:m:s");
+        Date dateIn = new Date();
+        String dateOut = "";
+
+        try {
+            dateIn = inFormatter.parse(d);
+            dateOut = outFormatter.format(dateIn);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return dateOut;
     }
 
 }

@@ -33,9 +33,8 @@ public class JoinGame extends Activity {
         // Recuperation extras
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
-            String gameid = extras.getString("GAMEID");
-            gameToJoin = Integer.parseInt(gameid);
-            gameinfotxt.setText(Control.getInstance().getGames().get(gameToJoin-1).getName());
+            gameToJoin = extras.getInt("GAMEID");
+            gameinfotxt.setText(Control.getInstance().getGames().get(gameToJoin).getName());
         }
 
         final Intent intentMainActivity = new Intent(this, MainActivity.class);

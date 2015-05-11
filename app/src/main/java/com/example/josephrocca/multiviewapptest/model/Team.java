@@ -9,6 +9,7 @@ public class Team {
     int colclaire;
     int nbpts;
     int idx;
+    int nbJoueurs;
 
     public Team(int c1, int c2, int i, int pt){
         colfonce = c1;
@@ -17,9 +18,43 @@ public class Team {
         nbpts = pt;
     }
 
-    public int getColorFonce(){ return colfonce; }
-    public int getColorClaire(){ return colclaire; }
-    public int getPoints(){ return nbpts; }
-    public int getIdx(){ return idx; }
+    public int getColfonce() {
+        return colfonce;
+    }
 
+    public void setColfonce(int colfonce) {
+        this.colfonce = colfonce;
+    }
+
+    public int getColclaire() {
+        return colclaire;
+    }
+
+    public void setColclaire(int colclaire) {
+        this.colclaire = colclaire;
+    }
+
+    public int getNbpts() {
+        return nbpts;
+    }
+
+    public void setNbpts(int nbpts) {
+        this.nbpts = nbpts;
+    }
+
+    public int getIdx() {
+        return idx;
+    }
+
+    public void setIdx(int idx) {
+        this.idx = idx;
+    }
+
+    public int getNbJoueurs() {
+        return nbJoueurs;
+    }
+
+    public void setNbJoueurs(int nbJoueurs) {
+        this.nbJoueurs = nbJoueurs;
+    }
 }

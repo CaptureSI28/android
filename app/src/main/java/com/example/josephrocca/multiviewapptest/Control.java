@@ -15,9 +15,8 @@ public class Control {
     static private Control instance = new Control();
 
     private Player user;
-    private ArrayList<Game> games;
+    private HashMap<Integer, Game> games;
     private Game currentGame;
-
     private HashMap<Integer, Team> teams;
 
     private Control(){
@@ -30,7 +29,7 @@ public class Control {
 
     public void init(){
         teams = new HashMap<Integer, Team>();
-        games = new ArrayList<Game>();
+        games = new HashMap<Integer, Game>();
 
         // TODO Pourquoi ne pas utiliser les couleurs de MyColor ? Pour avoir les mêmes ?
         teams.put(1, new Team(Color.rgb(0, 110, 160), Color.rgb(120, 190, 225), 1, 200));
@@ -42,8 +41,9 @@ public class Control {
     public void setUser(Player p) { user = p;}
     public Player getUser(){ return user; }
 
-    public void setGames(ArrayList<Game> g){ games=g; }
-    public ArrayList<Game> getGames(){ return games; }
+    public void setGames(HashMap<Integer, Game> g){ games=g; }
+    public HashMap<Integer, Game> getGames(){ return games; }
+    public void addGame(int gameId, Game g) { games.put(gameId, g); }
 
     public void setCurrentGame(Integer idx){ currentGame=games.get(idx); }
     public Game getCurrentGame(){ return currentGame; }

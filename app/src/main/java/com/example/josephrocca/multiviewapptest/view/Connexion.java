@@ -42,13 +42,15 @@ public class Connexion extends Activity {
                 if(ServerRequest.connectCas(conn_log.getText().toString(), conn_pwd.getText().toString())) {
                     Log.d(Connexion.class.getSimpleName(), "Connexion réussie");
                     // TODO Calculer le nb de points du joueurs
-                    Control.getInstance().setUser(new Player(conn_log.toString(), 10, 1));
+                    Control.getInstance().setUser(new Player(conn_log.toString(), 0, 1));
                     finish();
                     startActivity(intentSelection);
                 } else {
                     errorMessage.setText("Erreur de connexion, veuillez réessayer.");
                     errorMessage.setVisibility(View.VISIBLE);
                 }
+
+
 
 
             }
