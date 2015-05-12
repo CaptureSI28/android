@@ -113,7 +113,7 @@ public class TopInfo {
         Team t;
 
         for(int i=0; i<nbteam; i++) {
-            t = team_map.get(i+1);
+            t = team_map.get((idxteamplayer+i-1)%nbteam+1);
 
             TextView teampt = (TextView) teamsView.get(i).findViewById(R.id.ptteam);
             teampt.setText(Integer.toString(t.getNbpts()));

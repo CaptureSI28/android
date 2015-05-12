@@ -3,6 +3,7 @@ package com.example.josephrocca.multiviewapptest.view;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -44,6 +45,7 @@ public class JoinGame extends Activity {
         joinButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Log.d("RB checked=", String.valueOf(getTeamChecked()));
                 boolean isOk = ServerRequest.joinGame(gameToJoin, password.getText().toString(), getTeamChecked());
 
                 if(isOk){

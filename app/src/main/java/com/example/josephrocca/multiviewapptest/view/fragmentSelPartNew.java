@@ -99,7 +99,7 @@ public class fragmentSelPartNew extends Fragment {
                 }
                 // Vérification debut < fin
                 else if (!dateIsValide(datedeb.getText().toString(), datefin.getText().toString())) {
-                    errorMessage.setText("La date de début doit être antérieure à la date de fin, et avant aujourd'hui.");
+                    errorMessage.setText("La date de début doit être antérieure à la date de fin, et postérieure à aujourd'hui.");
                     errorMessage.setVisibility(View.VISIBLE);
                 }
                 // Verification MDP si partie privée
