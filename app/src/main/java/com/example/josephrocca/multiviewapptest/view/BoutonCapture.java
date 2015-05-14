@@ -17,7 +17,7 @@ public class BoutonCapture {
         capture=c;
     }
 
-    public void init(){
+    public void init(final TopInfo topInfo){
         capture.setBackgroundColor(MyColor.getTeamColorById(Control.getInstance().getUser().getTeamIdx(), false));
         capture.setImageResource(R.drawable.capture_ic_f);
         capture.setColorFilter(MyColor.getTeamColorById(Control.getInstance().getUser().getTeamIdx(), true));
@@ -32,6 +32,7 @@ public class BoutonCapture {
                     capture.setBackgroundColor(MyColor.getTeamColorById(Control.getInstance().getUser().getTeamIdx(), true));
                     capture.setColorFilter(MyColor.getTeamColorById(Control.getInstance().getUser().getTeamIdx(), false));
                 }
+                topInfo.update();
                 return false;
             }
         });

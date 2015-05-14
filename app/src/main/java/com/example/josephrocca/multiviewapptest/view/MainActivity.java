@@ -48,7 +48,7 @@ public class MainActivity extends ActionBarActivity {
             // Gestion CAPTUREBTN --------------------------------------------
             final ImageView captureBtn = (ImageView) findViewById(R.id.btncapture);
             BoutonCapture capture = new BoutonCapture(captureBtn);
-            capture.init();
+            capture.init(topinfo);
             final Intent intentFlash = new Intent(this, ZBarScannerActivity.class);
             capture.setOnClickListener(new View.OnClickListener() {
                 @Override
