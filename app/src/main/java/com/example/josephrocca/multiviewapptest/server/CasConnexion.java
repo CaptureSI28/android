@@ -23,7 +23,7 @@ public class CasConnexion extends AsyncTask<String, Integer, String> {
     protected String doInBackground(String... params) {
         HttpClient httpclient = new DefaultHttpClient();
         HttpPost httppost = new HttpPost("https://cas.utc.fr/cas/v1/tickets");
-        List<NameValuePair> nameValuePairs = new ArrayList<>(2);
+        List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(2);
         nameValuePairs.add(new BasicNameValuePair("username", params[0]));
         nameValuePairs.add(new BasicNameValuePair("password", params[1]));
 

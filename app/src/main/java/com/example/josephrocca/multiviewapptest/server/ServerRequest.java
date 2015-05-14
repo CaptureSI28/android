@@ -25,7 +25,7 @@ public class ServerRequest {
 
 
     // TODO Modifier l'adresse du serveur pour mettre l'adresse du serveur
-    private static String serverAdresse = "http://10.0.3.2:8888/mobile/index.php";
+    private static String serverAdresse = "http://192.168.1.29:8888/server/mobile/index.php";
 
     public static JSONObject getInfosPartie() {
         JSONObject result = new JSONObject();
