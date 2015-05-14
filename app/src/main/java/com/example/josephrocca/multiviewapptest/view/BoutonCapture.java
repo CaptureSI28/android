@@ -19,7 +19,7 @@ public class BoutonCapture {
 
     public void init(final TopInfo topInfo){
         capture.setBackgroundColor(MyColor.getTeamColorById(Control.getInstance().getUser().getTeamIdx(), false));
-        capture.setImageResource(R.drawable.capture_ic_f);
+        capture.setImageResource(R.drawable.logocapture80);
         capture.setColorFilter(MyColor.getTeamColorById(Control.getInstance().getUser().getTeamIdx(), true));
 
         capture.setOnTouchListener(new View.OnTouchListener() {

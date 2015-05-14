@@ -38,9 +38,9 @@ public class Menu {
 
     public void init(){
 
-        m1.setImageResource(R.drawable.menuicmap);
-        m2.setImageResource(R.drawable.menu_ic2_f);
-        m3.setImageResource(R.drawable.menu_ic3_f);
+        m1.setImageResource(R.drawable.menuicmap2);
+        m2.setImageResource(R.drawable.menuiclast);
+        m3.setImageResource(R.drawable.menuicclassement);
         m4.setImageResource(R.drawable.menuicreglage);
 
         m1.setOnClickListener(new View.OnClickListener() {
