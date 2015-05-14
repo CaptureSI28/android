@@ -1,13 +1,18 @@
-package com.example.josephrocca.multiviewapptest;
+package com.example.josephrocca.multiviewapptest.view;
 
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.TextView;
+
+import com.example.josephrocca.multiviewapptest.Control;
+import com.example.josephrocca.multiviewapptest.R;
+import com.example.josephrocca.multiviewapptest.server.ServerRequest;
 
 /**
  * Created by josephrocca on 30/04/15.
@@ -29,9 +34,8 @@ public class JoinGame extends Activity {
         // Recuperation extras
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
-            String gameid = extras.getString("GAMEID");
-            gameToJoin = Integer.parseInt(gameid);
-            gameinfotxt.setText(Control.getInstance().getGames().get(gameToJoin-1).getName());
+            gameToJoin = extras.getInt("GAMEID");
+            gameinfotxt.setText(Control.getInstance().getGames().get(gameToJoin).getName());
         }
 
         final Intent intentMainActivity = new Intent(this, MainActivity.class);
@@ -41,6 +45,7 @@ public class JoinGame extends Activity {
         joinButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Log.d("RB checked=", String.valueOf(getTeamChecked()));
                 boolean isOk = ServerRequest.joinGame(gameToJoin, password.getText().toString(), getTeamChecked());
 
                 if(isOk){

@@ -10,7 +10,7 @@
         android:theme="@style/AppTheme"
         android:screenOrientation="portrait">
         <activity
-            android:name=".MainActivity"
+            android:name=".view.MainActivity"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -18,16 +18,17 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ZBarScannerActivity"/>
-        <activity android:name=".Connexion"/>
-        <activity android:name=".SelectionPartie"/>
-        <activity android:name=".JoinGame"/>
+        <activity android:name=".view.ZBarScannerActivity"/>
+        <activity android:name=".view.Connexion"/>
+        <activity android:name=".view.SelectionPartie"/>
+        <activity android:name=".view.JoinGame"/>
     </application>
 
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-feature android:name="android.hardware.camera" />
     <uses-feature android:name="android.hardware.camera.autofocus" />
 
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
     <uses-permission android:name="android.permission.INTERNET"/>
 
 </manifest>

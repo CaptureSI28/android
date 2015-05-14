@@ -1,4 +1,4 @@
-package com.example.josephrocca.multiviewapptest;
+package com.example.josephrocca.multiviewapptest.utils;
 
         import android.content.Context;
         import android.hardware.Camera;
@@ -13,7 +13,7 @@ package com.example.josephrocca.multiviewapptest;
         import java.io.IOException;
         import java.util.List;
 
-class CameraPreview extends ViewGroup implements SurfaceHolder.Callback {
+public class CameraPreview extends ViewGroup implements SurfaceHolder.Callback {
     private final String TAG = "CameraPreview";
 
     SurfaceView mSurfaceView;
@@ -24,7 +24,7 @@ class CameraPreview extends ViewGroup implements SurfaceHolder.Callback {
     PreviewCallback mPreviewCallback;
     AutoFocusCallback mAutoFocusCallback;
 
-    CameraPreview(Context context, PreviewCallback previewCallback, AutoFocusCallback autoFocusCb) {
+    public CameraPreview(Context context, PreviewCallback previewCallback, AutoFocusCallback autoFocusCb) {
         super(context);
 
         mPreviewCallback = previewCallback;

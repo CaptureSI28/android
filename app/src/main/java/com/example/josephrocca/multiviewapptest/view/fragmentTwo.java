@@ -1,4 +1,4 @@
-package com.example.josephrocca.multiviewapptest;
+package com.example.josephrocca.multiviewapptest.view;
 
 
 import android.app.Fragment;
@@ -6,6 +6,8 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import com.example.josephrocca.multiviewapptest.R;
 
 public class fragmentTwo extends Fragment {
     @Override

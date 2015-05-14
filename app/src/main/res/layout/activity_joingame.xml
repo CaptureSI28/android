@@ -54,7 +54,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:text="Password"
+                    android:text="Mot de passe"
                     android:id="@+id/textView6"
                     android:layout_weight="1"
                     android:paddingLeft="10dp" />

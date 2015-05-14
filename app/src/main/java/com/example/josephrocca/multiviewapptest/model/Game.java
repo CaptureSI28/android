@@ -1,4 +1,4 @@
-package com.example.josephrocca.multiviewapptest;
+package com.example.josephrocca.multiviewapptest.model;
 
 /**
  * Created by josephrocca on 27/04/15.
@@ -23,13 +23,13 @@ public class Game {
 
     public void setId (int i)               {id=i;}
     public void setName (String n)          {name=n;}
-    public void setDateDeb (String dd)       {dateDebut=dd;}
+    public void setDateDebut (String dd)       {dateDebut=dd;}
     public void setDateFin (String df)       {dateFin=df;}
-    public void setIsPrivate (boolean isp)    {isPrivate=isp;}
+    public void setPrivate (boolean isp)    {isPrivate=isp;}
 
     public int getId ()               {return id;}
     public String getName ()          {return name;}
-    public String getDateDeb ()       {return dateDebut;}
+    public String getDateDebut ()       {return dateDebut;}
     public String getShortDateDeb ()  {return dateDebut.substring(0,10);}
     public String getDateFin ()       {return dateFin;}
     public String getShortDateFin ()  {return dateFin.substring(0,10);}

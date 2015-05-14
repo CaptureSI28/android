@@ -1,4 +1,4 @@
-package com.example.josephrocca.multiviewapptest;
+package com.example.josephrocca.multiviewapptest.model;
 
 
 public class Player {
