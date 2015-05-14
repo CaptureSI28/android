@@ -13,6 +13,7 @@ import android.widget.TableRow;
 import com.example.josephrocca.multiviewapptest.Control;
 import com.example.josephrocca.multiviewapptest.model.Menu;
 import com.example.josephrocca.multiviewapptest.R;
+import com.example.josephrocca.multiviewapptest.model.Zone;
 import com.example.josephrocca.multiviewapptest.utils.ZBarConstants;
 import com.example.josephrocca.multiviewapptest.server.ServerRequest;
 
@@ -94,8 +95,7 @@ public class MainActivity extends ActionBarActivity {
                             });
                     alertDialog.show();
                 }
-
-
+                
             }
         }
     }

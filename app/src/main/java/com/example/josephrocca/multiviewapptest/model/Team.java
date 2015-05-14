@@ -5,34 +5,15 @@ import android.graphics.Color;
 
 public class Team {
 
-    int colfonce;
-    int colclaire;
     int nbpts;
     int idx;
     int nbJoueurs;
 
-    public Team(int c1, int c2, int i, int pt){
-        colfonce = c1;
-        colclaire = c2;
+    public Team(int i, int pt){
         idx = i;
         nbpts = pt;
     }
 
-    public int getColfonce() {
-        return colfonce;
-    }
-
-    public void setColfonce(int colfonce) {
-        this.colfonce = colfonce;
-    }
-
-    public int getColclaire() {
-        return colclaire;
-    }
-
-    public void setColclaire(int colclaire) {
-        this.colclaire = colclaire;
-    }
 
     public int getNbpts() {
         return nbpts;

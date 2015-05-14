@@ -5,6 +5,7 @@ import android.util.Log;
 import com.example.josephrocca.multiviewapptest.Control;
 import com.example.josephrocca.multiviewapptest.model.Game;
 import com.example.josephrocca.multiviewapptest.model.Team;
+import com.example.josephrocca.multiviewapptest.model.Zone;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.util.EntityUtils;
@@ -91,6 +92,27 @@ public class ServerRequest {
                     int scoreJoueur = result.getInt("scoreJoueur");
                     Log.d("scoreJoueur : ", String.valueOf(scoreJoueur));
                     Control.getInstance().getUser().setPoints(scoreJoueur);
+                } catch (JSONException e) {
+                    Log.d("Exception:", e.toString());
+                }
+                // Update zones dans le modèle
+                try {
+                    JSONArray equipesZones = result.getJSONArray("equipesZones");
+                    Log.d("EquipesZonesJSON : ", equipesZones.toString());
+                    for (int i = 0; i < equipesZones.length(); i++) {
+
+                        JSONObject tmp = equipesZones.getJSONObject(i);
+                        int eq = tmp.getInt("equipe");
+                        int zo = tmp.getInt("zone");
+                        Zone modifZone = Control.getInstance().getZoneByIdx(zo);
+                        if(modifZone != null) {
+                            modifZone.setTeam(eq);
+                            Log.d("Zone:", zo + " : " + " equipe" + eq);
+                        }
+                        else{
+                            Log.d("Zone:", zo + " zone inexistante");
+                        }
+                    }
                 } catch (JSONException e) {
                     Log.d("Exception:", e.toString());
                 }
