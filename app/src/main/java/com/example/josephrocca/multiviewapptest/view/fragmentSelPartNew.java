@@ -135,7 +135,7 @@ public class fragmentSelPartNew extends Fragment {
         try {
             Date debut = formatIn.parse(dateDebut);
             Date fin = formatIn.parse(dateFin);
-            if (!fin.before(debut) && debut.after(new Date()))
+            if (!fin.before(debut))
                 result = true;
         } catch (ParseException e) {
             e.printStackTrace();
