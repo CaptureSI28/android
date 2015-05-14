@@ -5,12 +5,13 @@
     android:gravity="center">
 
     <ImageView
-        android:layout_width="150dp"
-        android:layout_height="150dp"
+        android:layout_width="200dp"
+        android:layout_height="100dp"
         android:id="@+id/imageView"
         android:layout_gravity="center_horizontal"
-        android:src="@drawable/capture_ic_f"
-        android:layout_marginBottom="20dp"/>
+        android:src="@drawable/logocapture"
+        android:layout_marginBottom="20dp"
+        android:tint="@color/neutre" />
 
     <TextView
         android:layout_width="wrap_content"

@@ -28,7 +28,7 @@
                 android:id="@+id/menu1"
                 android:minHeight="50dp"
                 android:layout_weight="1"
-                android:padding="10dp" />
+                android:padding="7dp" />
 
             <ImageView
                 android:layout_width="0dp"
@@ -36,7 +36,7 @@
                 android:id="@+id/menu2"
                 android:minHeight="50dp"
                 android:layout_weight="1"
-                android:padding="10dp" />
+                android:padding="7dp" />
 
             <ImageView
                 android:layout_width="0dp"
@@ -44,7 +44,7 @@
                 android:id="@+id/menu3"
                 android:minHeight="50dp"
                 android:layout_weight="1"
-                android:padding="10dp" />
+                android:padding="7dp" />
 
             <ImageView
                 android:layout_width="0dp"
@@ -52,7 +52,7 @@
                 android:id="@+id/menu4"
                 android:minHeight="50dp"
                 android:layout_weight="1"
-                android:padding="10dp" />
+                android:padding="7dp" />
         </TableRow>
 
     </TableLayout>

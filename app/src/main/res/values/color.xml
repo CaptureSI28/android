@@ -20,6 +20,8 @@
     <item name="gray40" type="color">#FFD7D7D7</item>
     <item name="gray60" type="color">#FFC3C3C3</item>
 
+    <item name="lightgray" type="color">#FFF2F2F3</item>
+    <item name="darkgray" type="color">#FF707173</item>
 
     <integer-array name="androidcolors">
         <item>@color/white</item>

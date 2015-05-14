@@ -95,7 +95,6 @@ public class MainActivity extends ActionBarActivity {
                             });
                     alertDialog.show();
                 }
-                
             }
         }
     }

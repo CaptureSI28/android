@@ -8,6 +8,7 @@ import android.graphics.Color;
 import android.view.View;
 import android.widget.ImageView;
 
+import com.example.josephrocca.multiviewapptest.App;
 import com.example.josephrocca.multiviewapptest.R;
 import com.example.josephrocca.multiviewapptest.view.FragmentMap;
 import com.example.josephrocca.multiviewapptest.view.TopInfo;
@@ -37,10 +38,10 @@ public class Menu {
 
     public void init(){
 
-        m1.setImageResource(R.drawable.menu_ic1_f);
+        m1.setImageResource(R.drawable.menuicmap);
         m2.setImageResource(R.drawable.menu_ic2_f);
         m3.setImageResource(R.drawable.menu_ic3_f);
-        m4.setImageResource(R.drawable.menu_ic4_f);
+        m4.setImageResource(R.drawable.menuicreglage);
 
         m1.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -80,11 +81,11 @@ public class Menu {
     }
 
     private void updateMenu(ImageView mIn, List<ImageView> mOut){
-        mIn.setBackgroundColor(Color.rgb(110,115,115));
-        mIn.setColorFilter(Color.rgb(240, 240, 240));
+        mIn.setBackgroundColor(App.getContext().getResources().getColor(R.color.darkgray));
+        mIn.setColorFilter(App.getContext().getResources().getColor(R.color.lightgray));
         for(ImageView iv : mOut){
-            iv.setBackgroundColor(Color.rgb(240, 240, 240));
-            iv.setColorFilter(Color.rgb(110,115,115));
+            iv.setBackgroundColor(App.getContext().getResources().getColor(R.color.lightgray));
+            iv.setColorFilter(App.getContext().getResources().getColor(R.color.darkgray));
         }
         topinfo.update();
     }
