@@ -81,9 +81,18 @@ public class fragmentSelPartOld extends Fragment {
             partieList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    Intent intent = new Intent(getActivity(), JoinGame.class);
-                    intent.putExtra("GAMEID", id_games.get(position));
-                    startActivity(intent);
+                    Game game = Control.getInstance().getGames().get(id_games.get(position));
+                    Log.d("Liste joueur partie",game.getName()+" - "+game.getPlayers().toString());
+                    if(game.containsCurrentPlayer()) {
+                        final Intent intentMainActivity = new Intent(getActivity(), MainActivity.class);
+                        Control.getInstance().setCurrentGame(game.getId()-1);
+                        Control.getInstance().getUser().setTeamIdx(game.getPlayers().get(Control.getInstance().getUser()).getIdx());
+                        startActivity(intentMainActivity);
+                    } else {
+                        Intent intent = new Intent(getActivity(), JoinGame.class);
+                        intent.putExtra("GAMEID", game.getId());
+                        startActivity(intent);
+                    }
                 }
             });
         }

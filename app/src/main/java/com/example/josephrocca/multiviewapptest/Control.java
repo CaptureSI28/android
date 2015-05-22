@@ -43,6 +43,7 @@ public class Control {
         zones.put(2, new Zone(2, "BatB", 0));
         zones.put(3, new Zone(3, "BatC", 0));
         zones.put(4, new Zone(4, "BatD", 0));
+
     }
 
 

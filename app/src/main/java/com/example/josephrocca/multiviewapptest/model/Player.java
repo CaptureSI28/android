@@ -1,6 +1,10 @@
 package com.example.josephrocca.multiviewapptest.model;
 
 
+import com.example.josephrocca.multiviewapptest.Control;
+
+import java.util.HashMap;
+
 public class Player {
 
     String login;
@@ -8,27 +12,43 @@ public class Player {
     int teamidx;
     String session_id;
 
-    public Player(){
-        login="anonym";
-        points=0;
-        teamidx=1;
+    public Player(String l) {
+        login = l;
+        points = 0;
+        teamidx = 1;
+        session_id = "";
     }
 
-    public Player(String l, int p, int t, String s){
-        login=l;
-        points=p;
-        teamidx=t;
-        session_id=s;
+    public Player(String l, int p, int t, String s) {
+        login = l;
+        points = p;
+        teamidx = t;
+        session_id = s;
     }
 
-    public void setLogin(String log) { login=log; }
-    public String getLogin(){ return login; }
+    public void setLogin(String log) {
+        login = log;
+    }
 
-    public void setPoints(int pts) { points=pts; }
-    public int getPoint(){ return points; }
+    public String getLogin() {
+        return login;
+    }
 
-    public void setTeamIdx(int tidx) { teamidx=tidx; }
-    public int getTeamIdx(){ return teamidx; }
+    public void setPoints(int pts) {
+        points = pts;
+    }
+
+    public int getPoint() {
+        return points;
+    }
+
+    public void setTeamIdx(int tidx) {
+        teamidx = tidx;
+    }
+
+    public int getTeamIdx() {
+        return teamidx;
+    }
 
     public String getSession_id() {
         return session_id;
@@ -37,5 +57,6 @@ public class Player {
     public void setSession_id(String session_id) {
         this.session_id = session_id;
     }
+
 
 }

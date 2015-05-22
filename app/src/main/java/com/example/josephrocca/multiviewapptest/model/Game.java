@@ -1,8 +1,12 @@
 package com.example.josephrocca.multiviewapptest.model;
 
-/**
- * Created by josephrocca on 27/04/15.
- */
+import android.util.Log;
+
+import com.example.josephrocca.multiviewapptest.Control;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+
 public class Game {
 
     private int id;
@@ -11,15 +15,20 @@ public class Game {
     private String dateFin;
     private boolean isPrivate;
 
+    private HashMap<Player,Team> players;
+
     public Game(int i, String n, String dd, String df, boolean isp){
         id=i;
         name=n;
         dateDebut=dd;
         dateFin=df;
         isPrivate=isp;
+        players = new HashMap<Player,Team>();
     }
 
-    public Game(){}
+    public Game(){
+        players = new HashMap<Player,Team>();
+    }
 
     public void setId (int i)               {id=i;}
     public void setName (String n)          {name=n;}
@@ -34,5 +43,22 @@ public class Game {
     public String getDateFin ()       {return dateFin;}
     public String getShortDateFin ()  {return dateFin.substring(0,10);}
     public boolean getIsPrivate ()    {return isPrivate;}
+
+    public HashMap<Player,Team> getPlayers() {
+        return players;
+    }
+
+    public void setPlayers(HashMap<Player,Team> players) {
+        this.players = players;
+    }
+
+    public boolean containsCurrentPlayer () {
+        Log.d("User",Control.getInstance().getUser().getLogin());
+        return this.players.containsKey(Control.getInstance().getUser());
+    }
+
+    public void addPlayer (String login, int team_id) {
+        this.players.put(new Player(login), Control.getInstance().getTeamByIdx(team_id));
+    }
 
 }

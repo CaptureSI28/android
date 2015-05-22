@@ -177,6 +177,15 @@ public class ServerRequest {
                         g.setDateDebut(tmp.getString("date_debut"));
                         g.setDateFin(tmp.getString("date_fin"));
                         g.setPrivate(tmp.getString("partie_privee").equals("YES"));
+
+                        // Get liste joueurs
+                        JSONArray players = tmp.getJSONArray("players");
+                        for(int j=0; j<players.length(); j++) {
+                            Log.d("Liste des joueurs:", players.get(j).toString());
+                            JSONObject playerJson = players.getJSONObject(j);
+                            g.addPlayer(playerJson.getString("login"), Integer.valueOf(playerJson.getString("equipe")));
+                        }
+
                         Control.getInstance().addGame(g.getId(), g);
                     }
                     succes=true;
