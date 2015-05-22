@@ -9,9 +9,11 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.Spinner;
 
 import com.example.josephrocca.multiviewapptest.Control;
 import com.example.josephrocca.multiviewapptest.R;
+import com.example.josephrocca.multiviewapptest.model.ClassementItem;
 import com.example.josephrocca.multiviewapptest.model.Game;
 import com.example.josephrocca.multiviewapptest.server.ServerRequest;
 import com.example.josephrocca.multiviewapptest.utils.MyColor;
@@ -34,6 +36,23 @@ public class FragmentClassement extends Fragment {
                              ViewGroup container, Bundle savedInstanceState) {
 
         View v = inflater.inflate(R.layout.fragment_classement, container, false);
+
+
+        // Gestion du selecteur
+        Spinner selecteur = (Spinner) v.findViewById(R.id.classement_spinner);
+
+        List<String> spinnerArray =  new ArrayList<String>();
+        spinnerArray.add("Points");
+        spinnerArray.add("Flashs");
+
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(
+                getActivity(), android.R.layout.simple_spinner_item, spinnerArray);
+
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        Spinner sItems = (Spinner) v.findViewById(R.id.classement_spinner);
+        sItems.setAdapter(adapter);
+
+
 
 
         ServerRequest.getClassement("joueurs");
@@ -79,12 +98,14 @@ public class FragmentClassement extends Fragment {
 
 
         ListView partieList = (ListView) v.findViewById(R.id.frag_class_list);
-        List<String> fill_list = new ArrayList<String>();
-        fill_list.add("zzzzzzzzzz");
-        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(
+        HashMap<Integer, ClassementItem> allclassement = new HashMap<Integer, ClassementItem>();
+
+        allclassement.put(0, new ClassementItem(1, "roccajos", 2, 30));
+        allclassement.put(1, new ClassementItem(2, "tricioli", 1, 25));
+
+        ClassementListAdapter arrayAdapter = new ClassementListAdapter(
                 getActivity(),
-                android.R.layout.simple_list_item_1,
-                fill_list);
+                allclassement);
         partieList.setAdapter(arrayAdapter);
 
         return v;
