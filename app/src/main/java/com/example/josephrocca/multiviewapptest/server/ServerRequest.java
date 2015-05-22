@@ -1,13 +1,15 @@
 package com.example.josephrocca.multiviewapptest.server;
 
+import android.content.Context;
+import android.os.StrictMode;
 import android.util.Log;
 
 import com.example.josephrocca.multiviewapptest.Control;
+import com.example.josephrocca.multiviewapptest.R;
 import com.example.josephrocca.multiviewapptest.model.Game;
+import com.example.josephrocca.multiviewapptest.model.Player;
 import com.example.josephrocca.multiviewapptest.model.Team;
 import com.example.josephrocca.multiviewapptest.model.Zone;
-import com.example.josephrocca.multiviewapptest.server.ServerRequest;
-import com.example.josephrocca.multiviewapptest.server.LoginCas;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.util.EntityUtils;
@@ -23,19 +25,19 @@ import java.util.concurrent.ExecutionException;
 import javax.net.ssl.HostnameVerifier;
 import javax.net.ssl.HttpsURLConnection;
 import javax.net.ssl.SSLSession;
+import android.os.StrictMode;
 
 public class ServerRequest {
 
 
     // TODO Modifier l'adresse du serveur pour mettre l'adresse du serveur
-    private static String serverAdresse = "http://192.168.1.29:8888/server/mobile/index.php";
+    private static String serverAdresse = "http://si28.riccioli.fr/mobile/";
 
     public static JSONObject getInfosPartie() {
         JSONObject result = new JSONObject();
 
         HashMap<String, String> data = new HashMap<String, String>();
-        data.put("session_id", "-1");
-        // TODO Pour l'instant on récupère tout à chaque fois
+        data.put("session_id", Control.getInstance().getUser().getSession_id());
         data.put("service", "infos_partie");
         data.put("infos_equipes", "true");
         data.put("infos_joueur", "true");
@@ -131,11 +133,16 @@ public class ServerRequest {
 
     // Récupère la liste des parties en cours
     public static boolean fetchGamesList() {
+        if (android.os.Build.VERSION.SDK_INT > 9) {
+            StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+            StrictMode.setThreadPolicy(policy);
+        }
+
         boolean succes=false;
         ArrayList<Game> games = new ArrayList<Game>();
 
         HashMap<String, String> data = new HashMap<String, String>();
-        data.put("session_id", "-1");
+        data.put("session_id", Control.getInstance().getUser().getSession_id());
         data.put("service", "fetchGamesList");
         AsyncHttpPost asyncHttpPost = new AsyncHttpPost(data);
         asyncHttpPost.execute(serverAdresse);
@@ -184,9 +191,9 @@ public class ServerRequest {
         return succes;
     }
 
-    public String getTicket(String tbt, String service){
+    private static String getTicket(String tbt, String service, Context c){
         try {
-            RequestTicket rt = new RequestTicket(this);
+            RequestTicket rt = new RequestTicket(c);
             return rt.execute(tbt, service).get();
         } catch (InterruptedException e) {
             // TODO Auto-generated catch block
@@ -198,10 +205,10 @@ public class ServerRequest {
         return null;
     }
 
-    public String loginCas(String ticket, String service){
+    private static String loginCas(String ticket, String service, String cas_service, Context c){
         try {
             LoginCas lc = new LoginCas();
-            return lc.execute(this.getResources().getString(R.string.url)+"MYACCOUNT/",ticket, service).get();
+            return lc.execute(c.getResources().getString(R.string.url),ticket, service, cas_service).get();
         } catch (InterruptedException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
@@ -213,7 +220,7 @@ public class ServerRequest {
     }
 
     // Connexion au CAS
-    public static boolean connectCas(String login, String password) {
+    public static boolean connectCas(String login, String password, Context c) {
 
         boolean result=false;
         HostnameVerifier hostnameVerifier = org.apache.http.conn.ssl.SSLSocketFactory.ALLOW_ALL_HOSTNAME_VERIFIER;
@@ -231,18 +238,28 @@ public class ServerRequest {
             Log.d("ServerRequest: ",tbt);
 
             if (tbt!= null && tbt.startsWith("TGT")){
-                String ticket = getTicket(tbt, getResources().getString(R.string.service));
+                String ticket = getTicket(tbt, c.getResources().getString(R.string.cas_service), c);
                 Log.d("ticket",ticket);
                 if (ticket!=null && ticket.startsWith("ST")){
-                    String res = loginCas(ticket, getResources().getString(R.string.service));
+                    String res = loginCas(ticket, c.getResources().getString(R.string.service), c.getResources().getString(R.string.cas_service), c);
                     if (res != null){
                         Log.d("res",res);
+                        String session_id;
+                        try {
+                            JSONObject resJson = new JSONObject(res);
+                            session_id = resJson.getString("session_id");
+                            Log.d("session_id", session_id);
+                            // TODO Calculer le nb de points du joueurs
+                            Control.getInstance().setUser(new Player(login, 0, 1, session_id));
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
                         result = true; // success
                     }else{
-                        Log.d("Connexion error login=", regid);
+                        Log.d("Connexion error login=", "");
                     }
                 }else{
-                    Log.d("Connexion error ticket=", st);
+                    Log.d("Connexion error ticket=","");
                 }
             }else{
                 Log.d("Connexion error=", tbt);
@@ -261,7 +278,7 @@ public class ServerRequest {
     public static boolean createGame (String name, String dateDebut, String dateFin, String password) {
         boolean success=false;
         HashMap<String, String> data = new HashMap<String, String>();
-        data.put("session_id", "-1");
+        data.put("session_id", Control.getInstance().getUser().getSession_id());
         data.put("service", "createNewGame");
         data.put("name", name);
         data.put("debut", dateDebut);
@@ -327,7 +344,7 @@ public class ServerRequest {
     public static boolean joinGame(Integer gameId, String password, Integer teamId) {
 
         HashMap<String, String> data = new HashMap<String, String>();
-        data.put("session_id", "-1");
+        data.put("session_id", Control.getInstance().getUser().getSession_id());
         data.put("service", "joinGame");
         data.put("game_id", String.valueOf(gameId));
         data.put("password", password);
@@ -379,7 +396,7 @@ public class ServerRequest {
     public static boolean flash(String codeNumber) {
 
         HashMap<String, String> data = new HashMap<String, String>();
-        data.put("session_id", "-1");
+        data.put("session_id", Control.getInstance().getUser().getSession_id());
         data.put("service", "flash");
         data.put("qrcode", String.valueOf(codeNumber));
 

@@ -1,4 +1,4 @@
-package utc.assos.payutcapp.communication;
+package com.example.josephrocca.multiviewapptest.server;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -20,57 +20,53 @@ import android.os.AsyncTask;
 import android.util.Log;
 
 public class RequestTicket extends AsyncTask<String, Integer, String> {
-	ProgressDialog dialog;
-	Context c;
-	
-	public RequestTicket(Context c) {
-		super();
-		this.c = c;
-	}
-	
-	@Override
-	protected void onPreExecute() {
-		super.onPreExecute();
-		dialog = ProgressDialog.show(c, "Chargement", "2/5");
-	}
-	
-	@Override
-	protected void onPostExecute(String result) {
-		super.onPostExecute(result);
-		dialog.dismiss();
-	}
-	@Override
-	protected String doInBackground(String... params) {
-		// On créé un client http
-				HttpClient httpclient = PermanentHttpClient.getInstance().getNewHttpClient();
+    Context c;
 
-				// On créé notre entête
-				HttpPost httppost = new HttpPost("https://cas.utc.fr/cas/v1/tickets/" + params[0]); 
-				
-				List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(1);  
-				
-				nameValuePairs.add(new BasicNameValuePair("service", params[1]));  
-		        
-				try {
-					httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));  
-			        HttpResponse response;
-					response = httpclient.execute(httppost);
-					
-				// get the tbt
-					String rep =  EntityUtils.toString(response.getEntity());
-//					Log.d("REP", rep);
-					
-					return rep;
-					
-				} catch (ClientProtocolException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-				return null;
-		
-	}
+    public RequestTicket(Context c) {
+        super();
+        this.c = c;
+    }
+
+    @Override
+    protected void onPreExecute() {
+        super.onPreExecute();
+    }
+
+    @Override
+    protected void onPostExecute(String result) {
+        super.onPostExecute(result);
+    }
+
+    @Override
+    protected String doInBackground(String... params) {
+        HttpClient httpclient = PermanentHttpClient.getInstance().getNewHttpClient();
+
+        HttpPost httppost = new HttpPost("https://cas.utc.fr/cas/v1/tickets/" + params[0]);
+
+        List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(1);
+
+        nameValuePairs.add(new BasicNameValuePair("service", params[1]));
+
+        try {
+            httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
+            HttpResponse response;
+            response = httpclient.execute(httppost);
+
+            // get the tbt
+            String rep = EntityUtils.toString(response.getEntity());
+            Log.d("REP", rep);
+
+            return rep;
+
+        } catch (ClientProtocolException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        return null;
+
+    }
 
 }

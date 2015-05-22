@@ -1,6 +1,4 @@
-package utc.assos.payutcapp.communication;
-
-import java.security.KeyStore;
+package com.example.josephrocca.multiviewapptest.server;
 
 import org.apache.http.Header;
 import org.apache.http.HttpVersion;
@@ -16,6 +14,8 @@ import org.apache.http.params.BasicHttpParams;
 import org.apache.http.params.HttpParams;
 import org.apache.http.params.HttpProtocolParams;
 import org.apache.http.protocol.HTTP;
+
+import java.security.KeyStore;
 
 public class PermanentHttpClient {
 

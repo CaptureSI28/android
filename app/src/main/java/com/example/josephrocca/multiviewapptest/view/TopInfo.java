@@ -69,6 +69,11 @@ public class TopInfo {
         int nbteam = team_map.size();
         Team t;
 
+        // Team du joueur
+        Team teamPlayer = team_map.get((idxteamplayer));
+
+
+
         for(int i=0; i<nbteam; i++){
             t = team_map.get((idxteamplayer+i-1)%nbteam+1);
 

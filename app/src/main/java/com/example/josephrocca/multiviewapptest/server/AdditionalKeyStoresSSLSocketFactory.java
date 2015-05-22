@@ -1,5 +1,4 @@
-package utc.assos.payutcapp.communication;
-
+package com.example.josephrocca.multiviewapptest.server;
 
 
 import java.io.IOException;
@@ -49,7 +48,7 @@ public class AdditionalKeyStoresSSLSocketFactory extends SSLSocketFactory {
     }
 
     public static AdditionalKeyStoresTrustManager getTrustManager(KeyStore keyStore) {
-    	return new AdditionalKeyStoresTrustManager(keyStore);
+        return new AdditionalKeyStoresTrustManager(keyStore);
     }
 
     /**
@@ -69,7 +68,7 @@ public class AdditionalKeyStoresSSLSocketFactory extends SSLSocketFactory {
                 original.init((KeyStore) null);
                 factories.add(original);
 
-                for( KeyStore keyStore : additionalkeyStores ) {
+                for (KeyStore keyStore : additionalkeyStores) {
                     final TrustManagerFactory additionalCerts = TrustManagerFactory.getInstance(TrustManagerFactory.getDefaultAlgorithm());
                     additionalCerts.init(keyStore);
                     factories.add(additionalCerts);
@@ -86,12 +85,12 @@ public class AdditionalKeyStoresSSLSocketFactory extends SSLSocketFactory {
              * to any that are X509TrustManagers
              */
             for (TrustManagerFactory tmf : factories)
-                for( TrustManager tm : tmf.getTrustManagers() )
+                for (TrustManager tm : tmf.getTrustManagers())
                     if (tm instanceof X509TrustManager)
-                        x509TrustManagers.add( (X509TrustManager)tm );
+                        x509TrustManagers.add((X509TrustManager) tm);
 
 
-            if( x509TrustManagers.size()==0 )
+            if (x509TrustManagers.size() == 0)
                 throw new RuntimeException("Couldn't find any X509TrustManagers");
 
         }
@@ -100,8 +99,8 @@ public class AdditionalKeyStoresSSLSocketFactory extends SSLSocketFactory {
          * Delegate to the default trust manager.
          */
         public void checkClientTrusted(X509Certificate[] chain, String authType) throws CertificateException {
-        	//Log.d("TrustManager", "checkClientTrusted");
-        	final X509TrustManager defaultX509TrustManager = x509TrustManagers.get(0);
+            //Log.d("TrustManager", "checkClientTrusted");
+            final X509TrustManager defaultX509TrustManager = x509TrustManagers.get(0);
             defaultX509TrustManager.checkClientTrusted(chain, authType);
         }
 
@@ -109,7 +108,7 @@ public class AdditionalKeyStoresSSLSocketFactory extends SSLSocketFactory {
          * Loop over the trustmanagers until we find one that accepts our server
          */
         public void checkServerTrusted(X509Certificate[] chain, String authType) throws CertificateException {
-        	/*Log.d("TrustManager", "checkServerTrusted");
+            /*Log.d("TrustManager", "checkServerTrusted");
         	for (X509Certificate c : chain) {
         		Log.d("TrustManager", "DN = "+c.getSubjectDN());
         		Log.d("TrustManager", "AltNames = "+c.getSubjectAlternativeNames());
@@ -118,12 +117,12 @@ public class AdditionalKeyStoresSSLSocketFactory extends SSLSocketFactory {
         		//Log.d("TrustManager", c.toString());
         	}
         	Log.i("TrustManager", authType);*/
-            for( X509TrustManager tm : x509TrustManagers ) {
-            	//Log.d("TrustManager", tm.toString());
+            for (X509TrustManager tm : x509TrustManagers) {
+                //Log.d("TrustManager", tm.toString());
                 try {
-                    tm.checkServerTrusted(chain,authType);
+                    tm.checkServerTrusted(chain, authType);
                     return;
-                } catch( CertificateException e ) {
+                } catch (CertificateException e) {
                     // ignore
                 }
             }
@@ -132,14 +131,13 @@ public class AdditionalKeyStoresSSLSocketFactory extends SSLSocketFactory {
         }
 
         public X509Certificate[] getAcceptedIssuers() {
-        	Log.i("TrustManager", "getAcceptedIssuers");
-        	final ArrayList<X509Certificate> list = new ArrayList<X509Certificate>();
-            for( X509TrustManager tm : x509TrustManagers )
+            Log.i("TrustManager", "getAcceptedIssuers");
+            final ArrayList<X509Certificate> list = new ArrayList<X509Certificate>();
+            for (X509TrustManager tm : x509TrustManagers)
                 list.addAll(Arrays.asList(tm.getAcceptedIssuers()));
             return list.toArray(new X509Certificate[list.size()]);
         }
     }
 
-	
 
 }

@@ -39,10 +39,8 @@ public class Connexion extends Activity {
             public void onClick(View v) {
 
                 // TODO Afficher message erreur connexion
-                if(ServerRequest.connectCas(conn_log.getText().toString(), conn_pwd.getText().toString())) {
+                if(ServerRequest.connectCas(conn_log.getText().toString(), conn_pwd.getText().toString(), getApplicationContext())) {
                     Log.d(Connexion.class.getSimpleName(), "Connexion réussie");
-                    // TODO Calculer le nb de points du joueurs
-                    Control.getInstance().setUser(new Player(conn_log.toString(), 0, 1));
                     finish();
                     startActivity(intentSelection);
                 } else {

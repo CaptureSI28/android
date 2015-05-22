@@ -4,4 +4,7 @@
     <string name="hello_world">Hello world!</string>
     <string name="activityTwo">ActivityTwo!</string>
     <string name="action_settings">Settings</string>
+    <string name="cas_service">http://localhost</string>
+    <string name="service">login</string>
+    <string name="url">http://si28.riccioli.fr/mobile/</string>
 </resources>
