@@ -6,6 +6,7 @@ import android.util.Log;
 
 import com.example.josephrocca.multiviewapptest.Control;
 import com.example.josephrocca.multiviewapptest.R;
+import com.example.josephrocca.multiviewapptest.model.ClassementItem;
 import com.example.josephrocca.multiviewapptest.model.Game;
 import com.example.josephrocca.multiviewapptest.model.Player;
 import com.example.josephrocca.multiviewapptest.model.Team;
@@ -31,7 +32,8 @@ public class ServerRequest {
 
 
     // TODO Modifier l'adresse du serveur pour mettre l'adresse du serveur
-    private static String serverAdresse = "http://si28.riccioli.fr/mobile/";
+    //private static String serverAdresse = "http://si28.riccioli.fr/mobile/";
+    private static String serverAdresse = "http://172.25.18.56:8888/server/mobile/";
 
     public static JSONObject getInfosPartie() {
         JSONObject result = new JSONObject();
@@ -443,6 +445,54 @@ public class ServerRequest {
                 return false;
         } else
             return false;
+    }
+
+
+    // Recuperation de classements
+    public static HashMap<Integer, ClassementItem> getClassement(String typC) {
+
+        HashMap<Integer, ClassementItem> classement = new HashMap<Integer, ClassementItem>();
+
+        HashMap<String, String> data = new HashMap<String, String>();
+        data.put("session_id", Control.getInstance().getUser().getSession_id());
+        data.put("service", "classements");
+        data.put("classement", typC);
+        AsyncHttpPost asyncHttpPost = new AsyncHttpPost(data);
+        asyncHttpPost.execute(serverAdresse);
+
+        HttpResponse reponse = null;
+        try {
+            reponse = asyncHttpPost.get();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        }
+
+        if (reponse != null) {
+
+            String json = null;
+            try {
+                json = EntityUtils.toString(reponse.getEntity());
+                JSONObject jsonObj = new JSONObject(json);
+                Log.d(ServerRequest.class.getSimpleName(), jsonObj.toString());
+                System.out.println("------------------");
+                String succ = jsonObj.getString("success");
+                Log.d("Success=", succ.toString());
+                if (succ != null && succ.contains("YES")) {
+                    JSONArray classementTab = jsonObj.getJSONArray("classement");
+                    for (int i = 0; i < classementTab.length(); i++) {
+                        JSONObject tmp = classementTab.getJSONObject(i);
+                        Log.d("TEST : ", tmp.toString());
+                    }
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+        return classement;
     }
 
 }
