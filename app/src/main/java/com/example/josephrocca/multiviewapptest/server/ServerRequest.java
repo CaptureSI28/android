@@ -6,6 +6,8 @@ import com.example.josephrocca.multiviewapptest.Control;
 import com.example.josephrocca.multiviewapptest.model.Game;
 import com.example.josephrocca.multiviewapptest.model.Team;
 import com.example.josephrocca.multiviewapptest.model.Zone;
+import com.example.josephrocca.multiviewapptest.server.ServerRequest;
+import com.example.josephrocca.multiviewapptest.server.LoginCas;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.util.EntityUtils;
@@ -182,6 +184,34 @@ public class ServerRequest {
         return succes;
     }
 
+    public String getTicket(String tbt, String service){
+        try {
+            RequestTicket rt = new RequestTicket(this);
+            return rt.execute(tbt, service).get();
+        } catch (InterruptedException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public String loginCas(String ticket, String service){
+        try {
+            LoginCas lc = new LoginCas();
+            return lc.execute(this.getResources().getString(R.string.url)+"MYACCOUNT/",ticket, service).get();
+        } catch (InterruptedException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        return null;
+    }
+
     // Connexion au CAS
     public static boolean connectCas(String login, String password) {
 
@@ -198,14 +228,25 @@ public class ServerRequest {
         CasConnexion casConnexion = new CasConnexion();
         try {
             String tbt = casConnexion.execute(login, password).get();
-            Log.d("ServerRequest",tbt);
+            Log.d("ServerRequest: ",tbt);
 
-            if (tbt.startsWith("TGT")) {
-                result=true;
-            } else {
+            if (tbt!= null && tbt.startsWith("TGT")){
+                String ticket = getTicket(tbt, getResources().getString(R.string.service));
+                Log.d("ticket",ticket);
+                if (ticket!=null && ticket.startsWith("ST")){
+                    String res = loginCas(ticket, getResources().getString(R.string.service));
+                    if (res != null){
+                        Log.d("res",res);
+                        result = true; // success
+                    }else{
+                        Log.d("Connexion error login=", regid);
+                    }
+                }else{
+                    Log.d("Connexion error ticket=", st);
+                }
+            }else{
                 Log.d("Connexion error=", tbt);
             }
-
         } catch (InterruptedException e) {
             e.printStackTrace();
         } catch (ExecutionException e) {
