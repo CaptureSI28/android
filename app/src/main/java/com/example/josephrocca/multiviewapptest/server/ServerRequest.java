@@ -246,7 +246,7 @@ public class ServerRequest {
         CasConnexion casConnexion = new CasConnexion();
         try {
             String tbt = casConnexion.execute(login, password).get();
-            Log.d("ServerRequest: ",tbt);
+//            Log.d("ServerRequest: ",tbt);
 
             if (tbt!= null && tbt.startsWith("TGT")){
                 String ticket = getTicket(tbt, c.getResources().getString(R.string.cas_service), c);
@@ -273,7 +273,7 @@ public class ServerRequest {
                     Log.d("Connexion error ticket=","");
                 }
             }else{
-                Log.d("Connexion error=", tbt);
+                Log.d("Connexion error=", "Error Connexion");
             }
         } catch (InterruptedException e) {
             e.printStackTrace();
@@ -451,12 +451,15 @@ public class ServerRequest {
     // Recuperation de classements
     public static HashMap<Integer, ClassementItem> getClassement(String typC) {
 
+        System.out.println("DEBUG REQUETE "+Control.getInstance().getUser().getSession_id()+" "+typC+" "+String.valueOf(Control.getInstance().getCurrentGame().getId()));
+
         HashMap<Integer, ClassementItem> classement = new HashMap<Integer, ClassementItem>();
 
         HashMap<String, String> data = new HashMap<String, String>();
         data.put("session_id", Control.getInstance().getUser().getSession_id());
         data.put("service", "classements");
         data.put("classement", typC);
+        data.put("game_id", String.valueOf(Control.getInstance().getCurrentGame().getId()));
         AsyncHttpPost asyncHttpPost = new AsyncHttpPost(data);
         asyncHttpPost.execute(serverAdresse);
 
@@ -476,14 +479,19 @@ public class ServerRequest {
                 json = EntityUtils.toString(reponse.getEntity());
                 JSONObject jsonObj = new JSONObject(json);
                 Log.d(ServerRequest.class.getSimpleName(), jsonObj.toString());
-                System.out.println("------------------");
                 String succ = jsonObj.getString("success");
                 Log.d("Success=", succ.toString());
-                if (succ != null && succ.contains("YES")) {
+                if (succ != null && succ.contains("true")) {
                     JSONArray classementTab = jsonObj.getJSONArray("classement");
                     for (int i = 0; i < classementTab.length(); i++) {
                         JSONObject tmp = classementTab.getJSONObject(i);
-                        Log.d("TEST : ", tmp.toString());
+
+                        int place = tmp.getInt("place");
+                        int score = tmp.getInt("score");
+                        int team = tmp.getInt("team");
+                        String name = tmp.getString("login");
+
+                        classement.put(place, new ClassementItem(place, name, team, score));
                     }
                 }
             } catch (IOException e) {

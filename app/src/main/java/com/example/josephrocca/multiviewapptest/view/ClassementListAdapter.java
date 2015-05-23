@@ -84,13 +84,13 @@ public class ClassementListAdapter extends ArrayAdapter<ClassementItem> {
             holder = (ViewHolder) convertView.getTag();
         }
 
-        ClassementItem it = allclassement.get(position);
+        ClassementItem it = allclassement.get(position+1);
 
         holder.indice.setText(String.valueOf(it.getIndice()));
         holder.indice.setTextColor(MyColor.getTeamColorById(it.getTeam(), false));
         holder.name.setText(it.getName());
         holder.name.setTextColor(MyColor.getTeamColorById(it.getTeam(), false));
-        holder.score.setText(String.valueOf(allclassement.get(position).getScore()));
+        holder.score.setText(String.valueOf(it.getScore()));
         holder.score.setTextColor(MyColor.getTeamColorById(it.getTeam(), false));
         holder.pos = position;
         return convertView;

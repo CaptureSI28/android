@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.RadioGroup;
 import android.widget.Spinner;
 
 import com.example.josephrocca.multiviewapptest.Control;
@@ -42,8 +43,8 @@ public class FragmentClassement extends Fragment {
         Spinner selecteur = (Spinner) v.findViewById(R.id.classement_spinner);
 
         List<String> spinnerArray =  new ArrayList<String>();
-        spinnerArray.add("Points");
-        spinnerArray.add("Flashs");
+        spinnerArray.add("Classement points");
+        spinnerArray.add("Classement flashs");
 
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(
                 getActivity(), android.R.layout.simple_spinner_item, spinnerArray);
@@ -53,59 +54,24 @@ public class FragmentClassement extends Fragment {
         sItems.setAdapter(adapter);
 
 
-
-
-        ServerRequest.getClassement("joueurs");
-        /*
-        // Récupération des données depuis le server
-        if (ServerRequest.fetchGamesList()) {
-            Collection<Game> games = Control.getInstance().getGames().values();
-            SimpleDateFormat formatIn = new SimpleDateFormat("yyyy-MM-dd");
-            SimpleDateFormat formatOut = new SimpleDateFormat("d MMMM yyyy", Locale.FRENCH);
-
-            // Création de la liste de remplissage
-            List<String> fill_list = new ArrayList<String>();
-            final HashMap<Integer,Integer> id_games = new HashMap<Integer, Integer>();
-            int i=0;
-            for (Game g : games) {
-                String content = g.getName() + "\n";
-                try {
-                    Date debut = formatIn.parse(g.getShortDateDeb());
-                    content = content.concat("Du " + formatOut.format(debut) + " ");
-                    Log.d("debut", formatOut.format(debut));
-                    Date fin = formatIn.parse(g.getShortDateFin());
-                    content = content.concat("au " + formatOut.format(fin));
-                } catch (ParseException e) {
-                    e.printStackTrace();
+        RadioGroup teamselector = (RadioGroup) v.findViewById(R.id.classement_teamselector);
+        teamselector.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                if(checkedId==R.id.classement_radio_button_blue){
+                    System.out.println("debug");
                 }
-                content = content.concat(g.getIsPrivate() ? "\nPartie privée" : "\nPartie publique");
-                fill_list.add(content);
-                id_games.put(i,g.getId());
-                i++;
             }
+        });
 
-            if (fill_list.size() == 0) {
-                fill_list.add("Pas de partie en cours.");
-            }
 
-            // Creation de la liste en elle-même
-            ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(
-                    getActivity(),
-                    android.R.layout.simple_list_item_1,
-                    fill_list);
-            partieList.setAdapter(arrayAdapter);
-        */
-
+        Control.getInstance().getClst().setClassementPoints(ServerRequest.getClassement("points"));
 
         ListView partieList = (ListView) v.findViewById(R.id.frag_class_list);
-        HashMap<Integer, ClassementItem> allclassement = new HashMap<Integer, ClassementItem>();
-
-        allclassement.put(0, new ClassementItem(1, "roccajos", 2, 30));
-        allclassement.put(1, new ClassementItem(2, "tricioli", 1, 25));
 
         ClassementListAdapter arrayAdapter = new ClassementListAdapter(
                 getActivity(),
-                allclassement);
+                Control.getInstance().getClst().getClassementPoints(0));
         partieList.setAdapter(arrayAdapter);
 
         return v;

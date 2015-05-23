@@ -3,6 +3,7 @@ package com.example.josephrocca.multiviewapptest;
 
 import android.graphics.Color;
 
+import com.example.josephrocca.multiviewapptest.model.Classements;
 import com.example.josephrocca.multiviewapptest.model.Game;
 import com.example.josephrocca.multiviewapptest.model.Player;
 import com.example.josephrocca.multiviewapptest.model.Team;
@@ -20,6 +21,7 @@ public class Control {
     private Game currentGame;
     private HashMap<Integer, Team> teams;
     private HashMap<Integer, Zone> zones;
+    private Classements clst;
 
     private Control(){
         init();
@@ -44,6 +46,8 @@ public class Control {
         zones.put(3, new Zone(3, "BatC", 0));
         zones.put(4, new Zone(4, "BatD", 0));
 
+        clst = new Classements();
+
     }
 
 
@@ -63,5 +67,7 @@ public class Control {
     public HashMap<Integer, Zone> getZones(){ return zones; }
     public Zone getZoneByIdx(int idx){ return zones.get(idx); }
     public void addZone(Zone z) { zones.put(z.getId(), z); }
+
+    public Classements getClst() { return clst; }
 
 }
