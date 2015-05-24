@@ -451,8 +451,6 @@ public class ServerRequest {
     // Recuperation de classements
     public static HashMap<Integer, ClassementItem> getClassement(String typC) {
 
-        System.out.println("DEBUG REQUETE "+Control.getInstance().getUser().getSession_id()+" "+typC+" "+String.valueOf(Control.getInstance().getCurrentGame().getId()));
-
         HashMap<Integer, ClassementItem> classement = new HashMap<Integer, ClassementItem>();
 
         HashMap<String, String> data = new HashMap<String, String>();

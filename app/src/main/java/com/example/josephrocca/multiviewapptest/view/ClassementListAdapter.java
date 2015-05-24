@@ -96,6 +96,10 @@ public class ClassementListAdapter extends ArrayAdapter<ClassementItem> {
         return convertView;
     }
 
+    public void setList(HashMap<Integer, ClassementItem> newclassement){
+        allclassement = newclassement;
+    }
+
     @Override
     public void notifyDataSetChanged() {
         super.notifyDataSetChanged();
