@@ -42,4 +42,7 @@ public class MyColor {
 
     }
 
+
+    public static int white(){ return App.getContext().getResources().getColor(R.color.white); }
+
 }
