@@ -7,19 +7,25 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.TextView;
 
 import com.example.josephrocca.multiviewapptest.Control;
 import com.example.josephrocca.multiviewapptest.R;
+import com.example.josephrocca.multiviewapptest.model.Game;
+import com.example.josephrocca.multiviewapptest.model.Player;
 import com.example.josephrocca.multiviewapptest.server.ServerRequest;
+
+import java.util.ArrayList;
 
 /**
  * Created by josephrocca on 30/04/15.
  */
 public class JoinGame extends Activity {
 
-    int gameToJoin;
+    int idgameToJoin;
+    Game gameToJoin;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,15 +34,30 @@ public class JoinGame extends Activity {
 
 
         // Recuperation elements graphiques
-        final TextView gameinfotxt = (TextView) findViewById(R.id.joingame_info);
         final EditText password = (EditText) findViewById(R.id.joingame_pwd);
+
+        TextView gamename = (TextView) findViewById(R.id.joingame_namegame);
+        TextView gamecrea = (TextView) findViewById(R.id.joingame_crea);
+        TextView gamedatedeb = (TextView) findViewById(R.id.joingame_datedeb);
+        TextView gamedatefin = (TextView) findViewById(R.id.joingame_datefin);
+        ListView partieList = (ListView) findViewById(R.id.joingame_listparticipant);
 
         // Recuperation extras
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
-            gameToJoin = extras.getInt("GAMEID");
-            gameinfotxt.setText(Control.getInstance().getGames().get(gameToJoin).getName());
+            idgameToJoin = extras.getInt("GAMEID");
+            gameToJoin = Control.getInstance().getGames().get(idgameToJoin);
+            gamename.setText(gameToJoin.getName());
+            gamecrea.setText("");
+            gamedatedeb.setText("du "+gameToJoin.getDateDebut());
+            gamedatefin.setText("au "+gameToJoin.getDateFin());
+
+            SimplePlayerListAdapter arrayAdapter = new SimplePlayerListAdapter(
+                    this,
+                    new ArrayList<Player>(gameToJoin.getPlayers().keySet()));
+            partieList.setAdapter(arrayAdapter);
         }
+
 
         final Intent intentMainActivity = new Intent(this, MainActivity.class);
         intentMainActivity.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -46,10 +67,10 @@ public class JoinGame extends Activity {
             @Override
             public void onClick(View v) {
                 Log.d("RB checked=", String.valueOf(getTeamChecked()));
-                boolean isOk = ServerRequest.joinGame(gameToJoin, password.getText().toString(), getTeamChecked());
+                boolean isOk = ServerRequest.joinGame(idgameToJoin, password.getText().toString(), getTeamChecked());
 
                 if(isOk){
-                    Control.getInstance().setCurrentGame(gameToJoin-1);
+                    Control.getInstance().setCurrentGame(idgameToJoin -1);
                     Control.getInstance().getUser().setTeamIdx(getTeamChecked());
                     finish();
                     startActivity(intentMainActivity);

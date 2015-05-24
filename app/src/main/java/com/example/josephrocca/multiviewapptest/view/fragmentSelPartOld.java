@@ -71,10 +71,9 @@ public class fragmentSelPartOld extends Fragment {
             }
 
             // Creation de la liste en elle-même
-            ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(
+            ArrayAdapter<Game> arrayAdapter = new GamesListAdapter(
                     getActivity(),
-                    android.R.layout.simple_list_item_1,
-                    fill_list);
+                    new ArrayList<Game>(Control.getInstance().getGames().values()));
             partieList.setAdapter(arrayAdapter);
 
             // Création du listener

@@ -61,4 +61,8 @@ public class Game {
         this.players.put(new Player(login), Control.getInstance().getTeamByIdx(team_id));
     }
 
+    public void addPlayer (Player p) {
+        this.players.put(p, Control.getInstance().getTeamByIdx(p.getTeamIdx()));
+    }
+
 }

@@ -185,7 +185,9 @@ public class ServerRequest {
                         for(int j=0; j<players.length(); j++) {
                             Log.d("Liste des joueurs:", players.get(j).toString());
                             JSONObject playerJson = players.getJSONObject(j);
-                            g.addPlayer(playerJson.getString("login"), Integer.valueOf(playerJson.getString("equipe")));
+
+                            Player p = new Player(playerJson.getString("login"), 0, Integer.valueOf(playerJson.getString("equipe")), "");
+                            g.addPlayer(p);
                         }
 
                         Control.getInstance().addGame(g.getId(), g);
