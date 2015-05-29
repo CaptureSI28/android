@@ -15,7 +15,7 @@ public class Game {
     private String dateFin;
     private boolean isPrivate;
 
-    private HashMap<Player,Team> players;
+    private HashMap<String,Integer> players;
 
     public Game(int i, String n, String dd, String df, boolean isp){
         id=i;
@@ -23,11 +23,11 @@ public class Game {
         dateDebut=dd;
         dateFin=df;
         isPrivate=isp;
-        players = new HashMap<Player,Team>();
+        players = new HashMap<String,Integer>();
     }
 
     public Game(){
-        players = new HashMap<Player,Team>();
+        players = new HashMap<String,Integer>();
     }
 
     public void setId (int i)               {id=i;}
@@ -44,25 +44,29 @@ public class Game {
     public String getShortDateFin ()  {return dateFin.substring(0,10);}
     public boolean getIsPrivate ()    {return isPrivate;}
 
-    public HashMap<Player,Team> getPlayers() {
+    public HashMap<String,Integer> getPlayers() {
         return players;
     }
 
-    public void setPlayers(HashMap<Player,Team> players) {
+    public void setPlayers(HashMap<String,Integer> players) {
         this.players = players;
     }
 
     public boolean containsCurrentPlayer () {
-        Log.d("User",Control.getInstance().getUser().getLogin());
-        return this.players.containsKey(Control.getInstance().getUser());
+        return this.players.containsKey(Control.getInstance().getUser().getLogin());
     }
 
-    public void addPlayer (String login, int team_id) {
-        this.players.put(new Player(login), Control.getInstance().getTeamByIdx(team_id));
+    public void addPlayer (String playerLogin, int t) {
+        this.players.put(playerLogin, t);
     }
 
-    public void addPlayer (Player p) {
-        this.players.put(p, Control.getInstance().getTeamByIdx(p.getTeamIdx()));
+    public ArrayList<Player> getPlayerList () {
+        ArrayList<Player> list = new ArrayList<Player>();
+        for(String login : players.keySet()) {
+            list.add(Control.getInstance().getPlayerByLogin(login));
+        }
+        return list;
     }
+
 
 }

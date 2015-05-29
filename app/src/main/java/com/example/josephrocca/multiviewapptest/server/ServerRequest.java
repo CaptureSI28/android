@@ -33,7 +33,8 @@ public class ServerRequest {
 
     // TODO Modifier l'adresse du serveur pour mettre l'adresse du serveur
     private static String serverAdresse = "http://si28.riccioli.fr/mobile/";
-    //private static String serverAdresse = "http://192.168.1.43:8888/server/mobile/";
+    // private static String serverAdresse = "http://192.168.1.43:8888/server/mobile/";
+    // private static String serverAdresse = "http://10.0.3.2.2:8888/mobile/";
 
     public static JSONObject getInfosPartie() {
         JSONObject result = new JSONObject();
@@ -185,9 +186,11 @@ public class ServerRequest {
                         for(int j=0; j<players.length(); j++) {
                             Log.d("Liste des joueurs:", players.get(j).toString());
                             JSONObject playerJson = players.getJSONObject(j);
+                            String pseudo = playerJson.getString("login");
+                            int teamId = Integer.valueOf(playerJson.getString("equipe"));
 
-                            Player p = new Player(playerJson.getString("login"), 0, Integer.valueOf(playerJson.getString("equipe")), "");
-                            g.addPlayer(p);
+                            Control.getInstance().addPlayer(new Player(pseudo, 0, teamId, ""));
+                            g.addPlayer(pseudo, teamId);
                         }
 
                         Control.getInstance().addGame(g.getId(), g);

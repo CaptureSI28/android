@@ -189,14 +189,30 @@
                 android:orientation="horizontal"
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
-                android:gravity="center">
+                android:gravity="center"
+                android:weightSum="1">
 
                 <Button
                     style="?android:attr/buttonStyleSmall"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@drawable/button_background"
-                    android:text="Rejoindre"
+                    android:text="@string/annuler"
+                    android:id="@+id/joingame_cancel"
+                    android:minHeight="0dp"
+                    android:textColor="#ffffffff" />
+
+                <Space
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.1" />
+
+                <Button
+                    style="?android:attr/buttonStyleSmall"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/button_background"
+                    android:text="@string/rejoindre"
                     android:id="@+id/joingame_joinbut"
                     android:minHeight="0dp"
                     android:textColor="#ffffffff" />

@@ -82,14 +82,16 @@ public class fragmentSelPartOld extends Fragment {
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                     Game game = Control.getInstance().getGames().get(id_games.get(position));
                     Log.d("Liste joueur partie",game.getName()+" - "+game.getPlayers().toString());
-                    if(game.containsCurrentPlayer()) {
-                        final Intent intentMainActivity = new Intent(getActivity(), MainActivity.class);
-                        Control.getInstance().setCurrentGame(game.getId()-1);
-                        Control.getInstance().getUser().setTeamIdx(game.getPlayers().get(Control.getInstance().getUser()).getIdx());
+                    if(!game.containsCurrentPlayer()) {
+                        final Intent intentMainActivity = new Intent(getActivity(), JoinGame.class);
+                        intentMainActivity.putExtra("GAMEID", game.getId());
                         startActivity(intentMainActivity);
                     } else {
-                        Intent intent = new Intent(getActivity(), JoinGame.class);
+                        final Intent intent = new Intent(getActivity(), MainActivity.class);
                         intent.putExtra("GAMEID", game.getId());
+                        Control.getInstance().setCurrentGame(game.getId()-1);
+                        int teamId = game.getPlayers().get(Control.getInstance().getUser().getLogin());
+                        Control.getInstance().getUser().setTeamIdx(teamId);
                         startActivity(intent);
                     }
                 }

@@ -21,6 +21,7 @@ public class Control {
     private Game currentGame;
     private HashMap<Integer, Team> teams;
     private HashMap<Integer, Zone> zones;
+    private HashMap<String, Player> players;
     private Classements clst;
 
     private Control(){
@@ -35,6 +36,7 @@ public class Control {
         teams = new HashMap<Integer, Team>();
         zones = new HashMap<Integer, Zone>();
         games = new HashMap<Integer, Game>();
+        players = new HashMap<String, Player>();
 
         teams.put(1, new Team(1, 0));
         teams.put(2, new Team(2, 0));
@@ -63,6 +65,22 @@ public class Control {
 
     public HashMap<Integer, Team> getTeams(){ return teams; }
     public Team getTeamByIdx(int idx){ return teams.get(idx); }
+
+    public void addPlayer (Player p) {
+        players.put(p.getLogin(), p);
+    }
+
+    public HashMap<String, Player> getPlayers() {
+        return players;
+    }
+
+    public void setPlayers(HashMap<String, Player> players) {
+        this.players = players;
+    }
+
+    public Player getPlayerByLogin (String login) {
+        return players.get(login);
+    }
 
     public HashMap<Integer, Zone> getZones(){ return zones; }
     public Zone getZoneByIdx(int idx){ return zones.get(idx); }

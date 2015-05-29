@@ -54,7 +54,7 @@ public class JoinGame extends Activity {
 
             SimplePlayerListAdapter arrayAdapter = new SimplePlayerListAdapter(
                     this,
-                    new ArrayList<Player>(gameToJoin.getPlayers().keySet()));
+                    new ArrayList<Player>(gameToJoin.getPlayerList()));
             partieList.setAdapter(arrayAdapter);
         }
 
@@ -72,9 +72,21 @@ public class JoinGame extends Activity {
                 if(isOk){
                     Control.getInstance().setCurrentGame(idgameToJoin -1);
                     Control.getInstance().getUser().setTeamIdx(getTeamChecked());
+                    gameToJoin.addPlayer(Control.getInstance().getUser().getLogin(), getTeamChecked());
                     finish();
                     startActivity(intentMainActivity);
                 }
+            }
+        });
+
+        // Bouton 'Annuler'
+        final Button cancelButton = (Button) findViewById(R.id.joingame_cancel);
+        final Intent intentConn = new Intent(this,SelectionPartie.class);
+        cancelButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+                startActivity(intentConn);
             }
         });
 

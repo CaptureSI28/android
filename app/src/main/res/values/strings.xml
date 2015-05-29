@@ -1,8 +1,8 @@
 <resources>
     <string name="app_name">CAPTURE</string>
 
-    <string name="hello_world">Hello world!</string>
-    <string name="activityTwo">ActivityTwo!</string>
+    <string name="annuler">Annuler</string>
+    <string name="rejoindre">Rejoindre</string>
     <string name="action_settings">Settings</string>
     <string name="cas_service">http://localhost</string>
     <string name="service">login</string>
