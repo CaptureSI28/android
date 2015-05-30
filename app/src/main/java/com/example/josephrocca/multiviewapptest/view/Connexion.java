@@ -39,7 +39,10 @@ public class Connexion extends Activity {
             public void onClick(View v) {
 
                 // TODO Afficher message erreur connexion
-                if(ServerRequest.connectCas(conn_log.getText().toString(), conn_pwd.getText().toString(), getApplicationContext())) {
+                //if(ServerRequest.connectCas(conn_log.getText().toString(), conn_pwd.getText().toString(), getApplicationContext())) {
+                 boolean ok = true;
+                Control.getInstance().setUser(new Player("aperdria", 0, 1, "9ruqf87bvl7ufkc4lv3p3p96t5"));
+                if(ok) {
                     Log.d(Connexion.class.getSimpleName(), "Connexion réussie");
                     finish();
                     startActivity(intentSelection);

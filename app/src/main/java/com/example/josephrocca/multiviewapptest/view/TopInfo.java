@@ -101,6 +101,8 @@ public class TopInfo {
 
     public void update() {
         ServerRequest.getInfosPartie();
+        Control.getInstance().getClst().setClassementPoints(ServerRequest.getClassement("points"));
+        Control.getInstance().getClst().setClassementFlashs(ServerRequest.getClassement("flashs"));
         updatePerso();
         updateTeams();
     }

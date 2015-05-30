@@ -79,6 +79,7 @@ public class GamesListAdapter extends ArrayAdapter<Game> {
                     convertView = mInflater.inflate(R.layout.fetchgame_row,parent, false);
                     holder.title = (TextView) convertView.findViewById(R.id.games_row_title);
                     holder.nbp = (TextView) convertView.findViewById(R.id.games_row_nbp);
+                    holder.creator = (TextView) convertView.findViewById(R.id.games_row_by);
                     holder.lockic = (ImageView) convertView.findViewById(R.id.games_row_lockic);
                     break;
             }
@@ -95,6 +96,7 @@ public class GamesListAdapter extends ArrayAdapter<Game> {
             holder.lockic.setVisibility(View.INVISIBLE);
         }
         holder.pos = position;
+        holder.creator.setText(it.getCreator());
         return convertView;
     }
 
@@ -118,6 +120,7 @@ public class GamesListAdapter extends ArrayAdapter<Game> {
 
         TextView title;
         TextView nbp;
+        TextView creator;
         ImageView lockic;
         int pos; //to store the position of the item within the list
     }

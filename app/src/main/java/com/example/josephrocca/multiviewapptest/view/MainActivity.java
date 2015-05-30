@@ -32,6 +32,7 @@ public class MainActivity extends ActionBarActivity {
         actionBar.hide();
 
         if(Control.getInstance().getUser() != null) {
+            ServerRequest.fetchZonesList();
         // Gestion TOPINFO ------------------------------------------------
             final TableRow topinforow = (TableRow) findViewById(R.id.topinfo);
             TopInfo topinfo = new TopInfo(topinforow, getLayoutInflater());

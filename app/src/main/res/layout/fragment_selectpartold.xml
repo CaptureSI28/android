@@ -5,10 +5,15 @@
     android:background="#ffffffff"
     android:id="@+id/globalayout">
 
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/swipeRefreshLayout_discussions_fragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
     <ListView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/partieList"
         android:layout_gravity="center_horizontal"
         android:choiceMode="singleChoice" />
+    </android.support.v4.widget.SwipeRefreshLayout>
 </LinearLayout>

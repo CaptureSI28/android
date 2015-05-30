@@ -18,6 +18,7 @@ import android.widget.TextView;
 import com.example.josephrocca.multiviewapptest.Control;
 import com.example.josephrocca.multiviewapptest.R;
 import com.example.josephrocca.multiviewapptest.server.ServerRequest;
+import com.example.josephrocca.multiviewapptest.utils.Util;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -110,13 +111,12 @@ public class fragmentSelPartNew extends Fragment {
                 // Création de la partie
                 else {
                     errorMessage.setText("");
-                    if (ServerRequest.createGame(nomPartie.getText().toString(), formatDate(datedeb.getText().toString()), formatDate(datefin.getText().toString()), password.getText().toString())) {
+                    if (ServerRequest.createGame(nomPartie.getText().toString(), Util.formatDateFromDataPicker(datedeb.getText().toString()), Util.formatDateFromDataPicker(datefin.getText().toString()), password.getText().toString())) {
                         Log.d("Succès", "Partie créée");
                         // TODO Rediriger vers la page des parties
                         Intent intent = new Intent(getActivity(), JoinGame.class);
                         intent.putExtra("GAMEID", Control.getInstance().getCurrentGame().getId());
                         startActivity(intent);
-                        errorMessage.setText("Log : partie créée !");
 
                     } else {
                         errorMessage.setText("Erreur de création, veuillez réessayer.");
@@ -141,21 +141,6 @@ public class fragmentSelPartNew extends Fragment {
             e.printStackTrace();
         }
         return result;
-    }
-
-    private String formatDate(String d) {
-        SimpleDateFormat inFormatter = new SimpleDateFormat("d-M-yyyy");
-        SimpleDateFormat outFormatter = new SimpleDateFormat("yyyy-M-d H:m:s");
-        Date dateIn = new Date();
-        String dateOut = "";
-
-        try {
-            dateIn = inFormatter.parse(d);
-            dateOut = outFormatter.format(dateIn);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        return dateOut;
     }
 
 }

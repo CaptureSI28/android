@@ -4,17 +4,16 @@ package com.example.josephrocca.multiviewapptest.model;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
-import android.graphics.Color;
 import android.view.View;
 import android.widget.ImageView;
 
 import com.example.josephrocca.multiviewapptest.App;
 import com.example.josephrocca.multiviewapptest.R;
 import com.example.josephrocca.multiviewapptest.view.FragmentClassement;
+import com.example.josephrocca.multiviewapptest.view.FragmentHistorique;
 import com.example.josephrocca.multiviewapptest.view.FragmentMap;
 import com.example.josephrocca.multiviewapptest.view.TopInfo;
-import com.example.josephrocca.multiviewapptest.view.fragmentOne;
-import com.example.josephrocca.multiviewapptest.view.fragmentTwo;
+import com.example.josephrocca.multiviewapptest.view.FragmentSettings;
 
 import java.util.Arrays;
 import java.util.List;
@@ -96,10 +95,10 @@ public class Menu {
 
         switch(frag){
             case 1 : fr = new FragmentMap();break;
-            case 2 : fr = new fragmentTwo();break;
+            case 2 : fr = new FragmentHistorique();break;
             case 3 : fr = new FragmentClassement();break;
-            case 4 : fr = new fragmentTwo();break;
-            default: fr = new fragmentTwo();break;
+            case 4 : fr = new FragmentSettings();break;
+            default: fr = new FragmentMap();break;
         }
         FragmentTransaction fragmentTransaction = fm.beginTransaction();
         fragmentTransaction.replace(R.id.globalcontent, fr);

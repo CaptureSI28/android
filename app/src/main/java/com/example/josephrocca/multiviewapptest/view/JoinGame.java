@@ -48,7 +48,7 @@ public class JoinGame extends Activity {
             idgameToJoin = extras.getInt("GAMEID");
             gameToJoin = Control.getInstance().getGames().get(idgameToJoin);
             gamename.setText(gameToJoin.getName());
-            gamecrea.setText("");
+            gamecrea.setText(gameToJoin.getCreator());
             gamedatedeb.setText("du "+gameToJoin.getDateDebut());
             gamedatefin.setText("au "+gameToJoin.getDateFin());
 
@@ -70,7 +70,7 @@ public class JoinGame extends Activity {
                 boolean isOk = ServerRequest.joinGame(idgameToJoin, password.getText().toString(), getTeamChecked());
 
                 if(isOk){
-                    Control.getInstance().setCurrentGame(idgameToJoin -1);
+                    Control.getInstance().setCurrentGame(idgameToJoin);
                     Control.getInstance().getUser().setTeamIdx(getTeamChecked());
                     gameToJoin.addPlayer(Control.getInstance().getUser().getLogin(), getTeamChecked());
                     finish();

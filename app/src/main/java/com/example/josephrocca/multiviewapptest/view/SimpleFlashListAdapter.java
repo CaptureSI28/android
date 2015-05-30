@@ -9,36 +9,41 @@ import android.widget.TextView;
 
 import com.example.josephrocca.multiviewapptest.R;
 import com.example.josephrocca.multiviewapptest.model.ClassementItem;
+import com.example.josephrocca.multiviewapptest.model.Flash;
+import com.example.josephrocca.multiviewapptest.model.Player;
 import com.example.josephrocca.multiviewapptest.utils.MyColor;
+import com.example.josephrocca.multiviewapptest.utils.Util;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 
-/**
- * Created by josephrocca on 22/05/15.
- */
-public class ClassementListAdapter extends ArrayAdapter<ClassementItem> {
+public class SimpleFlashListAdapter extends ArrayAdapter<Flash> {
 
     private Context context;
-    private HashMap<Integer, ClassementItem> allclassement;
+    private ArrayList<Flash> allflashs;
 
     private LayoutInflater mInflater;
     private boolean mNotifyOnChange = true;
 
-    public ClassementListAdapter(Context context, HashMap<Integer, ClassementItem> cla) {
-        super(context, R.layout.classement_row);
+    public SimpleFlashListAdapter(Context context, ArrayList<Flash> f) {
+        super(context, R.layout.flash_row);
+
         this.context = context;
-        this.allclassement = cla;
+        this.allflashs = f;
         this.mInflater = LayoutInflater.from(context);
     }
 
     @Override
     public int getCount() {
-        return allclassement.size();
+        return allflashs.size();
     }
 
     @Override
-    public ClassementItem getItem(int position) {
-        return allclassement.get(position);
+    public Flash getItem(int position) {
+        return allflashs.get(position);
     }
 
     @Override
@@ -47,16 +52,10 @@ public class ClassementListAdapter extends ArrayAdapter<ClassementItem> {
         return position;
     }
 
-    /*
-    @Override
-    public int getPosition(ClassementItem item) {
-        return allclassement.get(item.getIndice());
-    }
-    */
 
     @Override
     public int getViewTypeCount() {
-        return 1; //Number of types + 1 !!!!!!!!
+        return 1;
     }
 
     @Override
@@ -73,10 +72,11 @@ public class ClassementListAdapter extends ArrayAdapter<ClassementItem> {
             holder = new ViewHolder();
             switch (type) {
                 case 1:
-                    convertView = mInflater.inflate(R.layout.classement_row,parent, false);
-                    holder.indice = (TextView) convertView.findViewById(R.id.cl_row_ind);
-                    holder.name = (TextView) convertView.findViewById(R.id.cl_row_name);
-                    holder.score = (TextView) convertView.findViewById(R.id.cl_row_score);
+                    convertView = mInflater.inflate(R.layout.flash_row, parent, false);
+                    holder.date = (TextView) convertView.findViewById(R.id.historique_date);
+                    holder.player = (TextView) convertView.findViewById(R.id.historique_player);
+                    holder.zone = (TextView) convertView.findViewById(R.id.historique_zone);
+                    holder.nbpoints = (TextView) convertView.findViewById(R.id.historique_points);
                     break;
             }
             convertView.setTag(holder);
@@ -84,20 +84,17 @@ public class ClassementListAdapter extends ArrayAdapter<ClassementItem> {
             holder = (ViewHolder) convertView.getTag();
         }
 
-        ClassementItem classement = allclassement.get(position);
-
-        holder.indice.setText(String.valueOf(classement.getIndice()));
-        holder.indice.setTextColor(MyColor.getTeamColorById(classement.getTeam(), false));
-        holder.name.setText(classement.getName());
-        holder.name.setTextColor(MyColor.getTeamColorById(classement.getTeam(), false));
-        holder.score.setText(String.valueOf(classement.getScore()));
-        holder.score.setTextColor(MyColor.getTeamColorById(classement.getTeam(), false));
+        Flash it = allflashs.get(position);
+        holder.player.setText(String.valueOf(it.getPlayer().getLogin()));
+        holder.date.setText(Util.getStringFromDate(it.getDate_flash()));
+        holder.zone.setText(String.valueOf(it.getZone().getName()));
+        holder.nbpoints.setText(String.valueOf(it.getNbpoints()));
         holder.pos = position;
         return convertView;
     }
 
-    public void setList(HashMap<Integer, ClassementItem> newclassement){
-        allclassement = newclassement;
+    public void setList(ArrayList<Flash> newflash) {
+        allflashs = newflash;
     }
 
     @Override
@@ -114,9 +111,10 @@ public class ClassementListAdapter extends ArrayAdapter<ClassementItem> {
     //---------------static views for each row-----------//
     static class ViewHolder {
 
-        TextView indice;
-        TextView name;
-        TextView score;
+        TextView date;
+        TextView player;
+        TextView zone;
+        TextView nbpoints;
         int pos; //to store the position of the item within the list
     }
 }

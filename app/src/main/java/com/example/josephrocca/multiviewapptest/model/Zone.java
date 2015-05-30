@@ -6,12 +6,11 @@ public class Zone {
     private String name;
     private int team;
 
-
-    public Zone (int i, String n, int t) {
+    public Zone (int i, String n) {
         id = i;
         name = n;
-        team = t;
     }
+
 
     public int getId() {
         return id;

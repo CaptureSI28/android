@@ -8,6 +8,7 @@ import com.example.josephrocca.multiviewapptest.model.Game;
 import com.example.josephrocca.multiviewapptest.model.Player;
 import com.example.josephrocca.multiviewapptest.model.Team;
 import com.example.josephrocca.multiviewapptest.model.Zone;
+import com.example.josephrocca.multiviewapptest.server.ServerRequest;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -28,6 +29,13 @@ public class Control {
         init();
     }
 
+    public void clear () {
+        games.clear();
+        players.clear();
+        clst = new Classements();
+        ServerRequest.fetchGamesList();
+    }
+
     static public Control getInstance(){
         return instance;
     }
@@ -43,11 +51,6 @@ public class Control {
         teams.put(3, new Team(3, 0));
         teams.put(4, new Team(4, 0));
 
-        zones.put(1, new Zone(1, "BatA", 0));
-        zones.put(2, new Zone(2, "BatB", 0));
-        zones.put(3, new Zone(3, "BatC", 0));
-        zones.put(4, new Zone(4, "BatD", 0));
-
         clst = new Classements();
 
     }
@@ -58,6 +61,10 @@ public class Control {
 
     public void setGames(HashMap<Integer, Game> g){ games=g; }
     public HashMap<Integer, Game> getGames(){ return games; }
+    public ArrayList<Game> getGamesArrayList() {
+        return new ArrayList<Game>(games.values());
+    }
+
     public void addGame(int gameId, Game g) { games.put(gameId, g); }
 
     public void setCurrentGame(Integer idx){ currentGame=games.get(idx); }
@@ -87,5 +94,7 @@ public class Control {
     public void addZone(Zone z) { zones.put(z.getId(), z); }
 
     public Classements getClst() { return clst; }
+
+
 
 }

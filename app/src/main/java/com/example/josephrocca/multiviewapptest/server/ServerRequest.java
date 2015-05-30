@@ -7,10 +7,12 @@ import android.util.Log;
 import com.example.josephrocca.multiviewapptest.Control;
 import com.example.josephrocca.multiviewapptest.R;
 import com.example.josephrocca.multiviewapptest.model.ClassementItem;
+import com.example.josephrocca.multiviewapptest.model.Flash;
 import com.example.josephrocca.multiviewapptest.model.Game;
 import com.example.josephrocca.multiviewapptest.model.Player;
 import com.example.josephrocca.multiviewapptest.model.Team;
 import com.example.josephrocca.multiviewapptest.model.Zone;
+import com.example.josephrocca.multiviewapptest.utils.Util;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.util.EntityUtils;
@@ -19,7 +21,10 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.concurrent.ExecutionException;
 
@@ -32,9 +37,9 @@ public class ServerRequest {
 
 
     // TODO Modifier l'adresse du serveur pour mettre l'adresse du serveur
-    private static String serverAdresse = "http://si28.riccioli.fr/mobile/";
+    // private static String serverAdresse = "http://si28.riccioli.fr/mobile/";
     // private static String serverAdresse = "http://192.168.1.43:8888/server/mobile/";
-    // private static String serverAdresse = "http://10.0.3.2.2:8888/mobile/";
+    private static String serverAdresse = "http://10.0.3.2:8888/mobile/";
 
     public static JSONObject getInfosPartie() {
         JSONObject result = new JSONObject();
@@ -46,6 +51,7 @@ public class ServerRequest {
         data.put("infos_joueur", "true");
         data.put("couleur_zones", "true");
         data.put("equipe_zones", "true");
+        data.put("historique_flashs", "true");
         AsyncHttpPost asyncHttpPost = new AsyncHttpPost(data);
         asyncHttpPost.execute(serverAdresse);
 
@@ -123,6 +129,26 @@ public class ServerRequest {
                 } catch (JSONException e) {
                     Log.d("Exception:", e.toString());
                 }
+                // Update historique dans le modèle
+                try {
+                    JSONArray historique = result.getJSONArray("historique");
+                    Log.d("Historique : ", historique.toString());
+                    ArrayList<Flash> f = new ArrayList<Flash>();
+                    for (int i = 0; i < historique.length(); i++) {
+
+                        JSONObject tmp = historique.getJSONObject(i);
+                        String dateString = tmp.getString("date_flash");
+                        int equipe = tmp.getInt("equipe");
+                        int zone = tmp.getInt("zone");
+                        String login = tmp.getString("login");
+                        int nbpoints = tmp.getInt("nbpoints");
+                        Date date = Util.getDateFromString(dateString);
+                        f.add(new Flash(date, Control.getInstance().getPlayerByLogin(login), Control.getInstance().getZoneByIdx(zone), nbpoints));
+                    }
+                    Control.getInstance().getCurrentGame().setFlashs(f);
+                } catch (JSONException e) {
+                    Log.d("Exception:", e.toString());
+                }
 
 
             } catch (IOException e) {
@@ -132,6 +158,61 @@ public class ServerRequest {
             }
         }
         return result;
+    }
+
+    // Récupère la liste des parties en cours
+    public static boolean fetchZonesList() {
+        if (android.os.Build.VERSION.SDK_INT > 9) {
+            StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+            StrictMode.setThreadPolicy(policy);
+        }
+
+        boolean succes=false;
+
+        HashMap<String, String> data = new HashMap<String, String>();
+        data.put("session_id", Control.getInstance().getUser().getSession_id());
+        data.put("service", "fetchZone");
+        AsyncHttpPost asyncHttpPost = new AsyncHttpPost(data);
+        asyncHttpPost.execute(serverAdresse);
+
+        HttpResponse reponse = null;
+        try {
+            reponse = asyncHttpPost.get();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        }
+
+        if (reponse != null) {
+
+            String json = null;
+            try {
+                json = EntityUtils.toString(reponse.getEntity());
+                JSONObject jsonObj = new JSONObject(json);
+                Log.d(ServerRequest.class.getSimpleName(), jsonObj.toString());
+                String succ = jsonObj.getString("success");
+                Log.d("Success=", succ.toString());
+                if (succ != null && succ.contains("YES")) {
+                    JSONArray zonesTab = jsonObj.getJSONArray("zones_list");
+                    for (int i = 0; i < zonesTab.length(); i++) {
+                        Log.d("Zones : ", zonesTab.toString());
+                        JSONObject tmp = zonesTab.getJSONObject(i);
+
+                        int id = tmp.getInt("id_zone");
+                        String name = tmp.getString("nom_zone");
+                        Control.getInstance().addZone(new Zone(id, name));
+                    }
+                    succes=true;
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+
+        return succes;
     }
 
     // Récupère la liste des parties en cours
@@ -177,9 +258,10 @@ public class ServerRequest {
                         Game g = new Game();
                         g.setId(Integer.parseInt(tmp.getString("id_partie")));
                         g.setName(tmp.getString("nom"));
-                        g.setDateDebut(tmp.getString("date_debut"));
-                        g.setDateFin(tmp.getString("date_fin"));
+                        g.setDateDebut(Util.getDateFromString(tmp.getString("date_debut")));
+                        g.setDateFin(Util.getDateFromString(tmp.getString("date_fin")));
                         g.setPrivate(tmp.getString("partie_privee").equals("YES"));
+                        g.setCreator(tmp.getString("createur"));
 
                         // Get liste joueurs
                         JSONArray players = tmp.getJSONArray("players");
@@ -332,8 +414,8 @@ public class ServerRequest {
 
                     int idGame = new_game.getInt("id_partie");
                     String nameGame = new_game.getString("nom");
-                    String datedebGame = new_game.getString("date_debut");
-                    String datefinGame = new_game.getString("date_fin");
+                    Date datedebGame = Util.getDateFromString(new_game.getString("date_debut"));
+                    Date datefinGame = Util.getDateFromString(new_game.getString("date_fin"));
                     String privateGame = new_game.getString("partie_privee");
 
                     Game newGame = new Game();
@@ -485,16 +567,29 @@ public class ServerRequest {
                 String succ = jsonObj.getString("success");
                 Log.d("Success=", succ.toString());
                 if (succ != null && succ.contains("true")) {
-                    JSONArray classementTab = jsonObj.getJSONArray("classement");
-                    for (int i = 0; i < classementTab.length(); i++) {
-                        JSONObject tmp = classementTab.getJSONObject(i);
-
+                    // Le classement retourné par le serveur est trié : il est donc indicé du rang, il faut itérer sur le nombre de joueur à classer, sauf s'il n'y a qu'un seul joueur
+                    if(Control.getInstance().getCurrentGame().getPlayers().size()==1) {
+                        JSONArray classementTab = jsonObj.getJSONArray("classement");
+                        JSONObject tmp = classementTab.getJSONObject(0);
                         int place = tmp.getInt("place");
                         int score = tmp.getInt("score");
                         int team = tmp.getInt("team");
                         String name = tmp.getString("login");
-
                         classement.put(place, new ClassementItem(place, name, team, score));
+                    }
+                    else {
+                        JSONObject classementTab = jsonObj.getJSONObject("classement");
+
+                        for (int i = 0; i < Control.getInstance().getCurrentGame().getPlayers().size(); i++) {
+                            JSONObject tmp = classementTab.getJSONObject(String.valueOf(i));
+
+                            int place = tmp.getInt("place");
+                            int score = tmp.getInt("score");
+                            int team = tmp.getInt("team");
+                            String name = tmp.getString("login");
+
+                            classement.put(place, new ClassementItem(place, name, team, score));
+                        }
                     }
                 }
             } catch (IOException e) {

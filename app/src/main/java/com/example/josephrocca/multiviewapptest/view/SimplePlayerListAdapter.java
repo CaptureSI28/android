@@ -15,9 +15,6 @@ import com.example.josephrocca.multiviewapptest.utils.MyColor;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-/**
- * Created by josephrocca on 22/05/15.
- */
 public class SimplePlayerListAdapter extends ArrayAdapter<Player> {
 
     private Context context;
@@ -84,10 +81,10 @@ public class SimplePlayerListAdapter extends ArrayAdapter<Player> {
             holder = (ViewHolder) convertView.getTag();
         }
 
-        Player it = allplayer.get(position);
+        Player player = allplayer.get(position);
 
-        holder.playerlogin.setText(String.valueOf(it.getLogin()));
-        holder.playerlogin.setTextColor(MyColor.getTeamColorById(it.getTeamIdx(), false));
+        holder.playerlogin.setText(String.valueOf(player.getLogin()));
+        holder.playerlogin.setTextColor(MyColor.getTeamColorById(player.getTeamIdx(), false));
         holder.pos = position;
         return convertView;
     }
