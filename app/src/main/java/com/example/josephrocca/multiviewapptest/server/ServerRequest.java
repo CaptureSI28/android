@@ -36,10 +36,9 @@ import android.os.StrictMode;
 public class ServerRequest {
 
 
-    // TODO Modifier l'adresse du serveur pour mettre l'adresse du serveur
-    // private static String serverAdresse = "http://si28.riccioli.fr/mobile/";
+    private static String serverAdresse = "http://si28.riccioli.fr/mobile/";
     // private static String serverAdresse = "http://192.168.1.43:8888/server/mobile/";
-    private static String serverAdresse = "http://10.0.3.2:8888/mobile/";
+    // private static String serverAdresse = "http://10.0.3.2:8888/mobile/";
 
     public static JSONObject getInfosPartie() {
         JSONObject result = new JSONObject();

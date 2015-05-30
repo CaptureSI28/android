@@ -14,9 +14,7 @@ import com.example.josephrocca.multiviewapptest.model.Player;
 import com.example.josephrocca.multiviewapptest.R;
 import com.example.josephrocca.multiviewapptest.server.ServerRequest;
 
-/**
- * Created by josephrocca on 27/04/15.
- */
+
 public class Connexion extends Activity {
 
     @Override
@@ -38,11 +36,7 @@ public class Connexion extends Activity {
             @Override
             public void onClick(View v) {
 
-                // TODO Afficher message erreur connexion
-                //if(ServerRequest.connectCas(conn_log.getText().toString(), conn_pwd.getText().toString(), getApplicationContext())) {
-                 boolean ok = true;
-                Control.getInstance().setUser(new Player("aperdria", 0, 1, "9ruqf87bvl7ufkc4lv3p3p96t5"));
-                if(ok) {
+                if (ServerRequest.connectCas(conn_log.getText().toString(), conn_pwd.getText().toString(), getApplicationContext())) {
                     Log.d(Connexion.class.getSimpleName(), "Connexion réussie");
                     finish();
                     startActivity(intentSelection);
@@ -50,10 +44,6 @@ public class Connexion extends Activity {
                     errorMessage.setText("Erreur de connexion, veuillez réessayer.");
                     errorMessage.setVisibility(View.VISIBLE);
                 }
-
-
-
-
             }
         });
     }
