@@ -7,8 +7,10 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
+import com.example.josephrocca.multiviewapptest.Control;
 import com.example.josephrocca.multiviewapptest.R;
 import com.example.josephrocca.multiviewapptest.model.ClassementItem;
+import com.example.josephrocca.multiviewapptest.model.Game;
 import com.example.josephrocca.multiviewapptest.model.Player;
 import com.example.josephrocca.multiviewapptest.utils.MyColor;
 
@@ -82,9 +84,8 @@ public class SimplePlayerListAdapter extends ArrayAdapter<Player> {
         }
 
         Player player = allplayer.get(position);
-
         holder.playerlogin.setText(String.valueOf(player.getLogin()));
-        holder.playerlogin.setTextColor(MyColor.getTeamColorById(player.getTeamIdx(), false));
+        holder.playerlogin.setTextColor(MyColor.getTeamColorById(Control.getInstance().getCurrentGame().getTeamIdByLogin(player.getLogin()), false));
         holder.pos = position;
         return convertView;
     }

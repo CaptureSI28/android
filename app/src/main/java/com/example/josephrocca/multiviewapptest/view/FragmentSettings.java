@@ -47,7 +47,7 @@ public class FragmentSettings extends Fragment {
 
         SimplePlayerListAdapter arrayAdapter = new SimplePlayerListAdapter(
                 getActivity(),
-                new ArrayList<Player>(currentGame.getPlayerList()));
+                new ArrayList<Player>(currentGame.getPlayersList()));
         partieList.setAdapter(arrayAdapter);
 
         final Intent intentConn = new Intent(getActivity(), SelectionPartie.class);

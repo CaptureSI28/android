@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TableRow;
+import android.widget.Toast;
 
 import com.example.josephrocca.multiviewapptest.Control;
 import com.example.josephrocca.multiviewapptest.model.Menu;
@@ -31,9 +32,9 @@ public class MainActivity extends ActionBarActivity {
         ActionBar actionBar = getSupportActionBar();
         actionBar.hide();
 
-        if(Control.getInstance().getUser() != null) {
+        if (Control.getInstance().getUser() != null) {
             ServerRequest.fetchZonesList();
-        // Gestion TOPINFO ------------------------------------------------
+            // Gestion TOPINFO ------------------------------------------------
             final TableRow topinforow = (TableRow) findViewById(R.id.topinfo);
             TopInfo topinfo = new TopInfo(topinforow, getLayoutInflater());
             topinfo.initPerso();
@@ -44,8 +45,10 @@ public class MainActivity extends ActionBarActivity {
             final ImageView menu2 = (ImageView) findViewById(R.id.menu2);
             final ImageView menu3 = (ImageView) findViewById(R.id.menu3);
             final ImageView menu4 = (ImageView) findViewById(R.id.menu4);
-            Menu mymenu = new Menu(menu1, menu2, menu3, menu4, getFragmentManager(),topinfo);
+            Menu mymenu = new Menu(menu1, menu2, menu3, menu4, getFragmentManager(), topinfo);
+            Control.getInstance().setMenu(mymenu);
             mymenu.init();
+            mymenu.updateTopInfo();
 
             // Gestion CAPTUREBTN --------------------------------------------
             final ImageView captureBtn = (ImageView) findViewById(R.id.btncapture);
@@ -64,7 +67,7 @@ public class MainActivity extends ActionBarActivity {
 
 
         // Si pas connecté, go page de connexion
-        else{
+        else {
             final Intent intentConn = new Intent(this, Connexion.class);
             finish();
             startActivity(intentConn);
@@ -73,29 +76,19 @@ public class MainActivity extends ActionBarActivity {
     }
 
 
-
     // Retour d'activités diverses...
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
         // Si retour d'un flash...
         if (requestCode == SCAN) {
-            if(data!=null) {
+            if (data != null) {
                 String barcode = data.getStringExtra(ZBarConstants.SCAN_RESULT);
 
                 boolean isOk = ServerRequest.flash(barcode);
-                if(!isOk){
-                    AlertDialog alertDialog = new AlertDialog.Builder(MainActivity.this).create();
-                    alertDialog.setTitle("Alert");
-                    alertDialog.setMessage("Echec du falsh !");
-                    alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
-                            new DialogInterface.OnClickListener() {
-                                public void onClick(DialogInterface dialog, int which) {
-                                    dialog.dismiss();
-                                }
-                            });
-                    alertDialog.show();
-                }
+                if (!isOk)
+                    Toast.makeText(getApplicationContext(), getResources().getString(R.string.flash_error), Toast.LENGTH_LONG).show();
+
             }
         }
     }

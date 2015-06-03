@@ -18,19 +18,21 @@ public class BoutonCapture {
     }
 
     public void init(final TopInfo topInfo){
-        capture.setBackgroundColor(MyColor.getTeamColorById(Control.getInstance().getUser().getTeamIdx(), false));
+        int teamId = Control.getInstance().getCurrentGame().getTeamIdCurrentUser();
+        capture.setBackgroundColor(MyColor.getTeamColorById(teamId, false));
         capture.setImageResource(R.drawable.logocapture80);
-        capture.setColorFilter(MyColor.getTeamColorById(Control.getInstance().getUser().getTeamIdx(), true));
+        capture.setColorFilter(MyColor.getTeamColorById(teamId, true));
 
         capture.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View view, MotionEvent event) {
+                int teamId = Control.getInstance().getCurrentGame().getTeamIdCurrentUser();
                 if (event.getAction() == MotionEvent.ACTION_UP) {
-                    capture.setBackgroundColor(MyColor.getTeamColorById(Control.getInstance().getUser().getTeamIdx(), false));
-                    capture.setColorFilter(MyColor.getTeamColorById(Control.getInstance().getUser().getTeamIdx(), true));
+                    capture.setBackgroundColor(MyColor.getTeamColorById(teamId, false));
+                    capture.setColorFilter(MyColor.getTeamColorById(teamId, true));
                 } else if (event.getAction() == MotionEvent.ACTION_DOWN) {
-                    capture.setBackgroundColor(MyColor.getTeamColorById(Control.getInstance().getUser().getTeamIdx(), true));
-                    capture.setColorFilter(MyColor.getTeamColorById(Control.getInstance().getUser().getTeamIdx(), false));
+                    capture.setBackgroundColor(MyColor.getTeamColorById(teamId, true));
+                    capture.setColorFilter(MyColor.getTeamColorById(teamId, false));
                 }
                 topInfo.update();
                 return false;

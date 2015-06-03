@@ -9,20 +9,17 @@ public class Player {
 
     String login;
     int points;
-    int teamidx;
     String session_id;
 
     public Player(String l) {
         login = l;
         points = 0;
-        teamidx = 1;
         session_id = "";
     }
 
     public Player(String l, int p, int t, String s) {
         login = l;
         points = p;
-        teamidx = t;
         session_id = s;
     }
 
@@ -40,14 +37,6 @@ public class Player {
 
     public int getPoint() {
         return points;
-    }
-
-    public void setTeamIdx(int tidx) {
-        teamidx = tidx;
-    }
-
-    public int getTeamIdx() {
-        return teamidx;
     }
 
     public String getSession_id() {

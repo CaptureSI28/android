@@ -71,22 +71,34 @@ public class Menu {
             @Override
             public void onClick(View v) {
                 selectFrag(4);
-                updateMenu(m4, Arrays.asList(m2, m3, m1));
+                updateAllMenu();
             }
         });
 
         updateMenu(m1, Arrays.asList(m2, m3, m4));
+        updateMenu(m2, Arrays.asList(m1, m3, m4));
         selectFrag(1);
 
     }
 
-    private void updateMenu(ImageView mIn, List<ImageView> mOut){
+    public void updateAllMenu () {
+        updateMenu(m1, Arrays.asList(m2, m3, m4));
+        updateMenu(m2, Arrays.asList(m1, m3, m4));
+        updateMenu(m3, Arrays.asList(m2, m1, m4));
+        updateMenu(m4, Arrays.asList(m2, m3, m1));
+    }
+
+    public void updateMenu(ImageView mIn, List<ImageView> mOut){
         mIn.setBackgroundColor(App.getContext().getResources().getColor(R.color.darkgray));
         mIn.setColorFilter(App.getContext().getResources().getColor(R.color.lightgray));
         for(ImageView iv : mOut){
             iv.setBackgroundColor(App.getContext().getResources().getColor(R.color.lightgray));
             iv.setColorFilter(App.getContext().getResources().getColor(R.color.darkgray));
         }
+        updateTopInfo();
+    }
+
+    public void updateTopInfo() {
         topinfo.update();
     }
 

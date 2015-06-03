@@ -54,7 +54,7 @@ public class JoinGame extends Activity {
 
             SimplePlayerListAdapter arrayAdapter = new SimplePlayerListAdapter(
                     this,
-                    new ArrayList<Player>(gameToJoin.getPlayerList()));
+                    new ArrayList<Player>(gameToJoin.getPlayersList()));
             partieList.setAdapter(arrayAdapter);
         }
 
@@ -66,13 +66,11 @@ public class JoinGame extends Activity {
         joinButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.d("RB checked=", String.valueOf(getTeamChecked()));
                 boolean isOk = ServerRequest.joinGame(idgameToJoin, password.getText().toString(), getTeamChecked());
 
                 if(isOk){
                     Control.getInstance().setCurrentGame(idgameToJoin);
-                    Control.getInstance().getUser().setTeamIdx(getTeamChecked());
-                    gameToJoin.addPlayer(Control.getInstance().getUser().getLogin(), getTeamChecked());
+                    gameToJoin.addPlayer(Control.getInstance().getUser(), getTeamChecked());
                     finish();
                     startActivity(intentMainActivity);
                 }

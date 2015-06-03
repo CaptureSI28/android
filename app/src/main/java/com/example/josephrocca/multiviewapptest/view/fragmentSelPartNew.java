@@ -14,6 +14,7 @@ import android.widget.CompoundButton;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.josephrocca.multiviewapptest.Control;
 import com.example.josephrocca.multiviewapptest.R;
@@ -38,7 +39,6 @@ public class fragmentSelPartNew extends Fragment {
         final CheckBox checkBox = (CheckBox) v.findViewById(R.id.checkBoxPrivate);
         final EditText password = (EditText) v.findViewById(R.id.frag_select_new_pwd);
         final Button conn_btn = (Button) v.findViewById(R.id.frag_select_new_btn);
-        final TextView errorMessage = (TextView) v.findViewById(R.id.errorMessage);
 
         // Date picker début
         datedeb.setOnClickListener(new View.OnClickListener() {
@@ -95,32 +95,25 @@ public class fragmentSelPartNew extends Fragment {
             public void onClick(View v) {
                 // TODO Vérifier que la partie n'existe pas déjà
                 if (nomPartie.getText().toString().isEmpty()) {
-                    errorMessage.setText("Veuillez entrer un nom de partie.");
-                    errorMessage.setVisibility(View.VISIBLE);
+                    Toast.makeText(getActivity(), v.getResources().getString(R.string.game_name_missing), Toast.LENGTH_LONG).show();
                 }
                 // Vérification debut < fin
                 else if (!dateIsValide(datedeb.getText().toString(), datefin.getText().toString())) {
-                    errorMessage.setText("La date de début doit être antérieure à la date de fin, et postérieure à aujourd'hui.");
-                    errorMessage.setVisibility(View.VISIBLE);
+                    Toast.makeText(getActivity(), v.getResources().getString(R.string.wrong_date), Toast.LENGTH_LONG).show();
                 }
                 // Verification MDP si partie privée
                 else if (checkBox.isChecked() && password.getText().length() == 0) {
-                    errorMessage.setText("Veuillez entrer un mot de passe.");
-                    errorMessage.setVisibility(View.VISIBLE);
+                    Toast.makeText(getActivity(), v.getResources().getString(R.string.password_missing), Toast.LENGTH_LONG).show();
                 }
                 // Création de la partie
                 else {
-                    errorMessage.setText("");
                     if (ServerRequest.createGame(nomPartie.getText().toString(), Util.formatDateFromDataPicker(datedeb.getText().toString()), Util.formatDateFromDataPicker(datefin.getText().toString()), password.getText().toString())) {
-                        Log.d("Succès", "Partie créée");
-                        // TODO Rediriger vers la page des parties
                         Intent intent = new Intent(getActivity(), JoinGame.class);
                         intent.putExtra("GAMEID", Control.getInstance().getCurrentGame().getId());
                         startActivity(intent);
 
                     } else {
-                        errorMessage.setText("Erreur de création, veuillez réessayer.");
-                        errorMessage.setVisibility(View.VISIBLE);
+                        Toast.makeText(getActivity(), v.getResources().getString(R.string.wrong_date), Toast.LENGTH_LONG).show();
                     }
                 }
             }

@@ -8,6 +8,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.util.Log;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.josephrocca.multiviewapptest.Control;
 import com.example.josephrocca.multiviewapptest.model.Player;
@@ -26,9 +27,6 @@ public class Connexion extends Activity {
         final Button conn_btn = (Button) findViewById(R.id.conn_button);
         final EditText conn_log = (EditText) findViewById(R.id.conn_login);
         final EditText conn_pwd = (EditText) findViewById(R.id.conn_pwd);
-        final TextView errorMessage = (TextView) findViewById(R.id.errorMessage);
-        errorMessage.setText("");
-        errorMessage.setVisibility(View.INVISIBLE);
 
         final Intent intentSelection = new Intent(this, SelectionPartie.class);
 
@@ -41,8 +39,7 @@ public class Connexion extends Activity {
                     finish();
                     startActivity(intentSelection);
                 } else {
-                    errorMessage.setText("Erreur de connexion, veuillez réessayer.");
-                    errorMessage.setVisibility(View.VISIBLE);
+                    Toast.makeText(getApplicationContext(), v.getResources().getString(R.string.connexion_error), Toast.LENGTH_LONG).show();
                 }
             }
         });

@@ -30,12 +30,15 @@ public class TopInfo {
 
     View            persoView;
     ArrayList<View> teamsView;
+    // HashMap of the id of the team in the topbar and the team associated
+    HashMap<Integer, Team> teamsMap;
 
 
     public TopInfo(TableRow viewrow, LayoutInflater linflater){
 
         row     = viewrow;
         linf    = linflater;
+        teamsMap = new HashMap<Integer, Team>();
 
     }
 
@@ -53,8 +56,8 @@ public class TopInfo {
         LinearLayout colorlayout    = (LinearLayout)persoView.findViewById(R.id.colorlayperso);
 
         userpt.setText(Integer.toString(Control.getInstance().getUser().getPoint()));
-        userpt.setTextColor(MyColor.getTeamColorById(Control.getInstance().getUser().getTeamIdx(), true));
-        colorlayout.setBackgroundColor(MyColor.getTeamColorById(Control.getInstance().getUser().getTeamIdx(), false));
+        userpt.setTextColor(MyColor.getTeamColorById(Control.getInstance().getCurrentGame().getTeamIdCurrentUser(), true));
+        colorlayout.setBackgroundColor(MyColor.getTeamColorById(Control.getInstance().getCurrentGame().getTeamIdCurrentUser(), false));
 
         row.addView(persoView);
 
@@ -64,18 +67,14 @@ public class TopInfo {
 
         teamsView = new ArrayList<View>();
 
-        HashMap<Integer, Team> team_map = Control.getInstance().getTeams();
-        int idxteamplayer = Control.getInstance().getUser().getTeamIdx();
+        HashMap<Integer, Team> team_map = Control.getInstance().getCurrentGame().getTeams();
+        int idxteamplayer = Control.getInstance().getCurrentGame().getTeamIdCurrentUser();
         int nbteam = team_map.size();
         Team t;
 
-        // Team du joueur
-        Team teamPlayer = team_map.get((idxteamplayer));
-
-
-
         for(int i=0; i<nbteam; i++){
             t = team_map.get((idxteamplayer+i-1)%nbteam+1);
+            teamsMap.put(i,t);
 
             View child = linf.inflate(R.layout.topteaminfo, row, false);
             TableRow.LayoutParams params = new TableRow.LayoutParams(1, ViewGroup.LayoutParams.WRAP_CONTENT, 1f);
@@ -114,13 +113,13 @@ public class TopInfo {
 
 
     public void updateTeams() {
-        HashMap<Integer, Team> team_map = Control.getInstance().getTeams();
-        int idxteamplayer = Control.getInstance().getUser().getTeamIdx();
+        HashMap<Integer, Team> team_map = Control.getInstance().getCurrentGame().getTeams();
+        int idxteamplayer = Control.getInstance().getCurrentGame().getTeamIdByLogin(Control.getInstance().getUser().getLogin());
         int nbteam = team_map.size();
         Team t;
 
         for(int i=0; i<nbteam; i++) {
-            t = team_map.get((idxteamplayer+i-1)%nbteam+1);
+            t = teamsMap.get(i);
 
             TextView teampt = (TextView) teamsView.get(i).findViewById(R.id.ptteam);
             teampt.setText(Integer.toString(t.getNbpts()));

@@ -64,8 +64,14 @@ public class fragmentSelPartOld extends Fragment implements SwipeRefreshLayout.O
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                     Game game = Control.getInstance().getGames().get(id_games.get(position).getId());
-                    Log.d("Liste joueur partie", game.getName() + " - " + game.getPlayers().toString());
+                    Log.d("Liste joueur partie", game.getName() + " - " + game.getPlayersList().toString());
+                    // Via les services on récupère la liste des joueurs ACTIFS de la partie
+                    // Or on veut savoir si le joueur s'est déjà inscrit à la partie auparavant dans une équipe
+                    // Donc on utilise un service
+                    // TODO Remettre quand le serveur sera à jour
+                    // if (ServerRequest.getTeamIdByPlayer(game.getId(), Control.getInstance().getUser().getLogin()) != 0) {
                     if (!game.containsCurrentPlayer()) {
+                        Control.getInstance().setCurrentGame(game.getId());
                         final Intent intentMainActivity = new Intent(getActivity(), JoinGame.class);
                         intentMainActivity.putExtra("GAMEID", game.getId());
                         startActivity(intentMainActivity);
@@ -73,8 +79,6 @@ public class fragmentSelPartOld extends Fragment implements SwipeRefreshLayout.O
                         final Intent intent = new Intent(getActivity(), MainActivity.class);
                         intent.putExtra("GAMEID", game.getId());
                         Control.getInstance().setCurrentGame(game.getId());
-                        int teamId = game.getPlayers().get(Control.getInstance().getUser().getLogin());
-                        Control.getInstance().getUser().setTeamIdx(teamId);
                         startActivity(intent);
                     }
                 }

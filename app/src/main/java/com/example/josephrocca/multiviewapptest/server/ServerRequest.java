@@ -31,6 +31,7 @@ import java.util.concurrent.ExecutionException;
 import javax.net.ssl.HostnameVerifier;
 import javax.net.ssl.HttpsURLConnection;
 import javax.net.ssl.SSLSession;
+
 import android.os.StrictMode;
 
 public class ServerRequest {
@@ -66,21 +67,20 @@ public class ServerRequest {
         if (reponse != null) {
             String json = null;
             try {
+
+                Game currentGame = Control.getInstance().getCurrentGame();
+
                 json = EntityUtils.toString(reponse.getEntity());
                 result = new JSONObject(json);
-                Log.d(ServerRequest.class.getSimpleName(), result.toString());
-
                 // Update nombre de joueurs par équipe dans le modèle
                 try {
                     JSONArray nbJoueursEquipe = result.getJSONArray("nbJoueursEquipes");
-                    Log.d("NbJoueursJSON : ", nbJoueursEquipe.toString());
                     for (int i = 0; i < nbJoueursEquipe.length(); i++) {
 
                         JSONObject tmp = nbJoueursEquipe.getJSONObject(i);
                         int eq = tmp.getInt("equipe");
                         int nb = tmp.getInt("nbJoueurs");
-                        Team t = Control.getInstance().getTeams().get(eq);
-                        Log.d("Equipe:", eq+" = "+nb+"pts");
+                        Team t = currentGame.getTeams().get(eq);
                         t.setNbJoueurs(nb);
                     }
                 } catch (JSONException e) {
@@ -89,11 +89,10 @@ public class ServerRequest {
                 // Update score équipes dans le modèle
                 try {
                     JSONArray scoreEquipes = result.getJSONArray("scoreEquipes");
-                    Log.d("scoreEquipes : ", scoreEquipes.toString());
                     for (int i = 0; i < scoreEquipes.length(); i++) {
 
                         JSONObject tmp = scoreEquipes.getJSONObject(i);
-                        Team t = Control.getInstance().getTeams().get(tmp.getInt("equipe"));
+                        Team t = currentGame.getTeams().get(tmp.getInt("equipe"));
                         t.setNbpts(tmp.getInt("score"));
                     }
                 } catch (JSONException e) {
@@ -102,7 +101,6 @@ public class ServerRequest {
                 // Update score joueur dans le modèle
                 try {
                     int scoreJoueur = result.getInt("scoreJoueur");
-                    Log.d("scoreJoueur : ", String.valueOf(scoreJoueur));
                     Control.getInstance().getUser().setPoints(scoreJoueur);
                 } catch (JSONException e) {
                     Log.d("Exception:", e.toString());
@@ -110,20 +108,15 @@ public class ServerRequest {
                 // Update zones dans le modèle
                 try {
                     JSONArray equipesZones = result.getJSONArray("equipesZones");
-                    Log.d("EquipesZonesJSON : ", equipesZones.toString());
                     for (int i = 0; i < equipesZones.length(); i++) {
 
                         JSONObject tmp = equipesZones.getJSONObject(i);
                         int eq = tmp.getInt("equipe");
                         int zo = tmp.getInt("zone");
                         Zone modifZone = Control.getInstance().getZoneByIdx(zo);
-                        if(modifZone != null) {
+                        if (modifZone != null)
                             modifZone.setTeam(eq);
-                            Log.d("Zone:", zo + " : " + " equipe" + eq);
-                        }
-                        else{
-                            Log.d("Zone:", zo + " zone inexistante");
-                        }
+
                     }
                 } catch (JSONException e) {
                     Log.d("Exception:", e.toString());
@@ -131,7 +124,6 @@ public class ServerRequest {
                 // Update historique dans le modèle
                 try {
                     JSONArray historique = result.getJSONArray("historique");
-                    Log.d("Historique : ", historique.toString());
                     ArrayList<Flash> f = new ArrayList<Flash>();
                     for (int i = 0; i < historique.length(); i++) {
 
@@ -166,7 +158,7 @@ public class ServerRequest {
             StrictMode.setThreadPolicy(policy);
         }
 
-        boolean succes=false;
+        boolean succes = false;
 
         HashMap<String, String> data = new HashMap<String, String>();
         data.put("session_id", Control.getInstance().getUser().getSession_id());
@@ -189,20 +181,17 @@ public class ServerRequest {
             try {
                 json = EntityUtils.toString(reponse.getEntity());
                 JSONObject jsonObj = new JSONObject(json);
-                Log.d(ServerRequest.class.getSimpleName(), jsonObj.toString());
                 String succ = jsonObj.getString("success");
-                Log.d("Success=", succ.toString());
                 if (succ != null && succ.contains("YES")) {
                     JSONArray zonesTab = jsonObj.getJSONArray("zones_list");
                     for (int i = 0; i < zonesTab.length(); i++) {
-                        Log.d("Zones : ", zonesTab.toString());
                         JSONObject tmp = zonesTab.getJSONObject(i);
 
                         int id = tmp.getInt("id_zone");
                         String name = tmp.getString("nom_zone");
                         Control.getInstance().addZone(new Zone(id, name));
                     }
-                    succes=true;
+                    succes = true;
                 }
             } catch (IOException e) {
                 e.printStackTrace();
@@ -214,6 +203,44 @@ public class ServerRequest {
         return succes;
     }
 
+    public static int getTeamIdByPlayer(int id_equipe, String login_joueur) {
+        int equipe = 0;
+        HashMap<String, String> data = new HashMap<String, String>();
+        data.put("session_id", Control.getInstance().getUser().getSession_id());
+        data.put("service", "equipe_joueur");
+        data.put("login_joueur", String.valueOf(login_joueur));
+        data.put("id_equipe", String.valueOf(id_equipe));
+        AsyncHttpPost asyncHttpPost = new AsyncHttpPost(data);
+        asyncHttpPost.execute(serverAdresse);
+
+        HttpResponse reponse = null;
+        try {
+            reponse = asyncHttpPost.get();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        }
+
+
+        JSONObject result = new JSONObject();
+        if (reponse != null) {
+            String json = null;
+            try {
+                json = EntityUtils.toString(reponse.getEntity());
+                JSONObject jsonObj = new JSONObject(json);
+                String equipeString = jsonObj.getString("equipe");
+                if (equipeString != null)
+                    equipe = Integer.valueOf(equipeString);
+            } catch (IOException e) {
+                e.printStackTrace();
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+        return equipe;
+    }
+
     // Récupère la liste des parties en cours
     public static boolean fetchGamesList() {
         if (android.os.Build.VERSION.SDK_INT > 9) {
@@ -221,7 +248,7 @@ public class ServerRequest {
             StrictMode.setThreadPolicy(policy);
         }
 
-        boolean succes=false;
+        boolean succes = false;
         ArrayList<Game> games = new ArrayList<Game>();
 
         HashMap<String, String> data = new HashMap<String, String>();
@@ -245,13 +272,10 @@ public class ServerRequest {
             try {
                 json = EntityUtils.toString(reponse.getEntity());
                 JSONObject jsonObj = new JSONObject(json);
-                Log.d(ServerRequest.class.getSimpleName(), jsonObj.toString());
                 String succ = jsonObj.getString("success");
-                Log.d("Success=", succ.toString());
                 if (succ != null && succ.contains("YES")) {
                     JSONArray gamestab = jsonObj.getJSONArray("games_list");
                     for (int i = 0; i < gamestab.length(); i++) {
-                        Log.d("Nombre de parties ", String.valueOf(gamestab.length()));
                         JSONObject tmp = gamestab.getJSONObject(i);
 
                         Game g = new Game();
@@ -262,21 +286,20 @@ public class ServerRequest {
                         g.setPrivate(tmp.getString("partie_privee").equals("YES"));
                         g.setCreator(tmp.getString("createur"));
 
-                        // Get liste joueurs
+                        // Get liste s
                         JSONArray players = tmp.getJSONArray("players");
-                        for(int j=0; j<players.length(); j++) {
-                            Log.d("Liste des joueurs:", players.get(j).toString());
+                        for (int j = 0; j < players.length(); j++) {
                             JSONObject playerJson = players.getJSONObject(j);
                             String pseudo = playerJson.getString("login");
                             int teamId = Integer.valueOf(playerJson.getString("equipe"));
 
                             Control.getInstance().addPlayer(new Player(pseudo, 0, teamId, ""));
-                            g.addPlayer(pseudo, teamId);
+                            g.addPlayer(Control.getInstance().getPlayerByLogin(pseudo), teamId);
                         }
 
                         Control.getInstance().addGame(g.getId(), g);
                     }
-                    succes=true;
+                    succes = true;
                 }
             } catch (IOException e) {
                 e.printStackTrace();
@@ -288,7 +311,7 @@ public class ServerRequest {
         return succes;
     }
 
-    private static String getTicket(String tbt, String service, Context c){
+    private static String getTicket(String tbt, String service, Context c) {
         try {
             RequestTicket rt = new RequestTicket(c);
             return rt.execute(tbt, service).get();
@@ -302,10 +325,10 @@ public class ServerRequest {
         return null;
     }
 
-    private static String loginCas(String ticket, String service, String cas_service, Context c){
+    private static String loginCas(String ticket, String service, String cas_service, Context c) {
         try {
             LoginCas lc = new LoginCas();
-            return lc.execute(c.getResources().getString(R.string.url),ticket, service, cas_service).get();
+            return lc.execute(c.getResources().getString(R.string.url), ticket, service, cas_service).get();
         } catch (InterruptedException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
@@ -319,7 +342,7 @@ public class ServerRequest {
     // Connexion au CAS
     public static boolean connectCas(String login, String password, Context c) {
 
-        boolean result=false;
+        boolean result = false;
         HostnameVerifier hostnameVerifier = org.apache.http.conn.ssl.SSLSocketFactory.ALLOW_ALL_HOSTNAME_VERIFIER;
         HttpsURLConnection.setDefaultHostnameVerifier(hostnameVerifier);
         HostnameVerifier v = new HostnameVerifier() {
@@ -332,33 +355,29 @@ public class ServerRequest {
         CasConnexion casConnexion = new CasConnexion();
         try {
             String tbt = casConnexion.execute(login, password).get();
-//            Log.d("ServerRequest: ",tbt);
 
-            if (tbt!= null && tbt.startsWith("TGT")){
+            if (tbt != null && tbt.startsWith("TGT")) {
                 String ticket = getTicket(tbt, c.getResources().getString(R.string.cas_service), c);
-                Log.d("ticket",ticket);
-                if (ticket!=null && ticket.startsWith("ST")){
+                if (ticket != null && ticket.startsWith("ST")) {
                     String res = loginCas(ticket, c.getResources().getString(R.string.service), c.getResources().getString(R.string.cas_service), c);
-                    if (res != null){
-                        Log.d("res",res);
+                    if (res != null) {
                         String session_id;
                         try {
                             JSONObject resJson = new JSONObject(res);
                             session_id = resJson.getString("session_id");
-                            Log.d("session_id", session_id);
                             // TODO Calculer le nb de points du joueurs
                             Control.getInstance().setUser(new Player(login, 0, 1, session_id));
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
                         result = true; // success
-                    }else{
+                    } else {
                         Log.d("Connexion error login=", "");
                     }
-                }else{
-                    Log.d("Connexion error ticket=","");
+                } else {
+                    Log.d("Connexion error ticket=", "");
                 }
-            }else{
+            } else {
                 Log.d("Connexion error=", "Error Connexion");
             }
         } catch (InterruptedException e) {
@@ -372,8 +391,8 @@ public class ServerRequest {
     }
 
     // Créer une partie
-    public static boolean createGame (String name, String dateDebut, String dateFin, String password) {
-        boolean success=false;
+    public static boolean createGame(String name, String dateDebut, String dateFin, String password) {
+        boolean success = false;
         HashMap<String, String> data = new HashMap<String, String>();
         data.put("session_id", Control.getInstance().getUser().getSession_id());
         data.put("service", "createNewGame");
@@ -381,8 +400,6 @@ public class ServerRequest {
         data.put("debut", dateDebut);
         data.put("fin", dateFin);
         data.put("password", password);
-
-        Log.d("Création de la partie ",name+" ,debut=" + dateDebut+ " ,fin=" + dateFin+ " ,mdp="+password);
 
         AsyncHttpPost asyncHttpPost = new AsyncHttpPost(data);
         asyncHttpPost.execute(serverAdresse);
@@ -404,10 +421,8 @@ public class ServerRequest {
             try {
                 json = EntityUtils.toString(reponse.getEntity());
                 JSONObject jsonObj = new JSONObject(json);
-                Log.d(ServerRequest.class.getSimpleName(), jsonObj.toString());
 
                 String succ = jsonObj.getString("success");
-                Log.d("Success=", succ.toString());
                 if (succ != null && succ.contains("YES")) {
                     JSONObject new_game = jsonObj.getJSONObject("new_game");
 
@@ -423,8 +438,9 @@ public class ServerRequest {
                     newGame.setDateDebut(datedebGame);
                     newGame.setDateFin(datefinGame);
                     newGame.setPrivate(privateGame.equals("YES"));
+                    newGame.setCreator(Control.getInstance().getUser().getLogin());
 
-                    Control.getInstance().addGame(newGame.getId(),newGame);
+                    Control.getInstance().addGame(newGame.getId(), newGame);
                     Control.getInstance().setCurrentGame(newGame.getId());
                     success = true;
                 }
@@ -447,9 +463,6 @@ public class ServerRequest {
         data.put("password", password);
         data.put("team_id", String.valueOf(teamId));
 
-
-        Log.d("Joindre la partie ",gameId+" ,password=" + password+ " ,teamId=" + teamId);
-
         AsyncHttpPost asyncHttpPost = new AsyncHttpPost(data);
         asyncHttpPost.execute(serverAdresse);
 
@@ -469,11 +482,9 @@ public class ServerRequest {
 
             try {
                 json = EntityUtils.toString(reponse.getEntity());
-                json=json.substring(json.indexOf("{"), json.lastIndexOf("}")+1);
+                json = json.substring(json.indexOf("{"), json.lastIndexOf("}") + 1);
                 JSONObject jsonObj = new JSONObject(json);
-                Log.d(ServerRequest.class.getSimpleName(), jsonObj.toString());
                 success = jsonObj.getString("success");
-                Log.d("Success=",success);
             } catch (IOException e) {
                 e.printStackTrace();
             } catch (JSONException e) {
@@ -516,8 +527,6 @@ public class ServerRequest {
             try {
                 json = EntityUtils.toString(reponse.getEntity());
                 JSONObject jsonObj = new JSONObject(json);
-                Log.d(ServerRequest.class.getSimpleName(), jsonObj.toString());
-
                 success = jsonObj.getString("success");
             } catch (IOException e) {
                 e.printStackTrace();
@@ -562,12 +571,10 @@ public class ServerRequest {
             try {
                 json = EntityUtils.toString(reponse.getEntity());
                 JSONObject jsonObj = new JSONObject(json);
-                Log.d(ServerRequest.class.getSimpleName(), jsonObj.toString());
                 String succ = jsonObj.getString("success");
-                Log.d("Success=", succ.toString());
                 if (succ != null && succ.contains("true")) {
                     // Le classement retourné par le serveur est trié : il est donc indicé du rang, il faut itérer sur le nombre de joueur à classer, sauf s'il n'y a qu'un seul joueur
-                    if(Control.getInstance().getCurrentGame().getPlayers().size()==1) {
+                    if (Control.getInstance().getCurrentGame().getPlayersList().size() == 1) {
                         JSONArray classementTab = jsonObj.getJSONArray("classement");
                         JSONObject tmp = classementTab.getJSONObject(0);
                         int place = tmp.getInt("place");
@@ -575,11 +582,10 @@ public class ServerRequest {
                         int team = tmp.getInt("team");
                         String name = tmp.getString("login");
                         classement.put(place, new ClassementItem(place, name, team, score));
-                    }
-                    else {
+                    } else {
                         JSONObject classementTab = jsonObj.getJSONObject("classement");
 
-                        for (int i = 0; i < Control.getInstance().getCurrentGame().getPlayers().size(); i++) {
+                        for (int i = 0; i < Control.getInstance().getCurrentGame().getPlayersList().size(); i++) {
                             JSONObject tmp = classementTab.getJSONObject(String.valueOf(i));
 
                             int place = tmp.getInt("place");

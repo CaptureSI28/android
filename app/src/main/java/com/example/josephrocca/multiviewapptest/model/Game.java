@@ -17,40 +17,75 @@ public class Game {
     private Date dateFin;
     private boolean isPrivate;
     private String creator;
-
-    private HashMap<String,Integer> players;
+    // HashMap of the teams (id of the teams, team)
+    private HashMap<Integer, Team> teams;
 
 
     private ArrayList<Flash> flashs;
 
-    public Game(int i, String n, String c, Date dd, Date df, boolean isp){
-        id=i;
-        name=n;
-        creator=c;
-        dateDebut=dd;
-        dateFin=df;
-        isPrivate=isp;
-        players = new HashMap<String,Integer>();
+    public Game(int i, String n, String c, Date dd, Date df, boolean isp) {
+        id = i;
+        name = n;
+        creator = c;
+        dateDebut = dd;
+        dateFin = df;
+        isPrivate = isp;
+        teams = new HashMap<Integer, Team>();
+        teams.put(1, new Team(1, 0));
+        teams.put(2, new Team(2, 0));
+        teams.put(3, new Team(3, 0));
+        teams.put(4, new Team(4, 0));
         flashs = new ArrayList<Flash>();
     }
 
-    public Game(){
-        players = new HashMap<String,Integer>();
-
+    public Game() {
+        teams = new HashMap<Integer, Team>();
+        teams.put(1, new Team(1, 0));
+        teams.put(2, new Team(2, 0));
+        teams.put(3, new Team(3, 0));
+        teams.put(4, new Team(4, 0));
         flashs = new ArrayList<Flash>();
     }
 
-    public void setId (int i)               {id=i;}
-    public void setName (String n)          {name=n;}
-    public void setDateDebut (Date dd)       {dateDebut=dd;}
-    public void setDateFin (Date df)       {dateFin=df;}
-    public void setPrivate (boolean isp)    {isPrivate=isp;}
+    public void setId(int i) {
+        id = i;
+    }
 
-    public int getId ()               {return id;}
-    public String getName ()          {return name;}
-    public String getDateDebut ()       {return Util.getStringFromDate(dateDebut);}
-    public String getDateFin ()       {return Util.getStringFromDate(dateFin);}
-    public boolean getIsPrivate ()    {return isPrivate;}
+    public void setName(String n) {
+        name = n;
+    }
+
+    public void setDateDebut(Date dd) {
+        dateDebut = dd;
+    }
+
+    public void setDateFin(Date df) {
+        dateFin = df;
+    }
+
+    public void setPrivate(boolean isp) {
+        isPrivate = isp;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getDateDebut() {
+        return Util.getStringFromDate(dateDebut);
+    }
+
+    public String getDateFin() {
+        return Util.getStringFromDate(dateFin);
+    }
+
+    public boolean getIsPrivate() {
+        return isPrivate;
+    }
 
 
     public ArrayList<Flash> getFlashs() {
@@ -69,31 +104,54 @@ public class Game {
         this.creator = creator;
     }
 
-    public HashMap<String,Integer> getPlayers() {
-        return players;
+    public boolean containsCurrentPlayer() {
+        boolean find = false;
+        for (Team t : teams.values()) {
+            if (t.containsCurrentPlayer())
+                find = true;
+        }
+        return find;
     }
 
-    public void setPlayers(HashMap<String,Integer> players) {
-        this.players = players;
+    public int getTeamIdByLogin(String login) {
+        int i = 0;
+        for (Team team : teams.values()) {
+            if (team.containsPlayer(login))
+                i = team.getIdx();
+        }
+        return i;
     }
 
-    public boolean containsCurrentPlayer () {
-        return this.players.containsKey(Control.getInstance().getUser().getLogin());
+    public int getTeamIdCurrentUser() {
+        int i = 0;
+        for (Team team : teams.values()) {
+            if (team.containsPlayer(Control.getInstance().getUser().getLogin()))
+                i = team.getIdx();
+        }
+        return i;
     }
 
-    public void addPlayer (String playerLogin, int t) {
-        this.players.put(playerLogin, t);
+    public HashMap<Integer, Team> getTeams() {
+        return teams;
     }
 
-    public ArrayList<Player> getPlayerList () {
+    public void setTeams(HashMap<Integer, Team> teams) {
+        this.teams = teams;
+    }
+
+    public void addPlayer(Player player, int teamId) {
+        teams.get(teamId).addPlayer(player);
+    }
+
+    public ArrayList<Player> getPlayersList() {
         ArrayList<Player> list = new ArrayList<Player>();
-        for(String login : players.keySet()) {
-            list.add(Control.getInstance().getPlayerByLogin(login));
+        for (Team team : teams.values()) {
+            list.addAll(team.getPlayerList());
         }
         return list;
     }
 
-    public void addFlash (Flash f) {
+    public void addFlash(Flash f) {
         flashs.add(f);
     }
 

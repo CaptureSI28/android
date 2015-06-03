@@ -88,15 +88,15 @@ public class GamesListAdapter extends ArrayAdapter<Game> {
             holder = (ViewHolder) convertView.getTag();
         }
 
-        Game it = allgames.get(position);
+        Game game = allgames.get(position);
 
-        holder.title.setText(it.getName());
-        holder.nbp.setText(String.valueOf(it.getPlayers().size()));
-        if(!it.getIsPrivate()) {
+        holder.title.setText(game.getName());
+        holder.nbp.setText(String.valueOf(game.getPlayersList().size()));
+        if(!game.getIsPrivate()) {
             holder.lockic.setVisibility(View.INVISIBLE);
         }
         holder.pos = position;
-        holder.creator.setText(it.getCreator());
+        holder.creator.setText(game.getCreator());
         return convertView;
     }
 
