@@ -72,9 +72,11 @@ public class FragmentClassement extends Fragment {
                 }
 
                 if(parent.getItemAtPosition(position).toString().equals(spinnerTxt1)){
+                    Control.getInstance().getClst().setClassementPoints(ServerRequest.getClassement("points"));
                     arrayAdapter.setList(Control.getInstance().getClst().getClassementPoints(teamidx));
                 }
                 if(parent.getItemAtPosition(position).toString().equals(spinnerTxt2)){
+                    Control.getInstance().getClst().setClassementFlashs(ServerRequest.getClassement("flashs"));
                     arrayAdapter.setList(Control.getInstance().getClst().getClassementFlashs(teamidx));
                 }
                 arrayAdapter.notifyDataSetChanged();
@@ -114,6 +116,7 @@ public class FragmentClassement extends Fragment {
         });
 
 
+        Control.getInstance().getClst().setClassementPoints(ServerRequest.getClassement("points"));
         ListView partieList = (ListView) v.findViewById(R.id.frag_class_list);
         arrayAdapter = new ClassementListAdapter(
                 getActivity(),

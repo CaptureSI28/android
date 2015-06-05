@@ -24,6 +24,7 @@ import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.concurrent.ExecutionException;
@@ -542,11 +543,11 @@ public class ServerRequest {
             return false;
     }
 
-
     // Recuperation de classements
     public static HashMap<Integer, ClassementItem> getClassement(String typC) {
 
         HashMap<Integer, ClassementItem> classement = new HashMap<Integer, ClassementItem>();
+        ArrayList<ClassementItem> classementTemp = new ArrayList<ClassementItem>();
 
         HashMap<String, String> data = new HashMap<String, String>();
         data.put("session_id", Control.getInstance().getUser().getSession_id());
@@ -571,30 +572,32 @@ public class ServerRequest {
             try {
                 json = EntityUtils.toString(reponse.getEntity());
                 JSONObject jsonObj = new JSONObject(json);
+                Log.d(ServerRequest.class.getSimpleName(), jsonObj.toString());
                 String succ = jsonObj.getString("success");
+                Log.d("Success=", succ.toString());
                 if (succ != null && succ.contains("true")) {
-                    // Le classement retourné par le serveur est trié : il est donc indicé du rang, il faut itérer sur le nombre de joueur à classer, sauf s'il n'y a qu'un seul joueur
-                    if (Control.getInstance().getCurrentGame().getPlayersList().size() == 1) {
-                        JSONArray classementTab = jsonObj.getJSONArray("classement");
-                        JSONObject tmp = classementTab.getJSONObject(0);
+
+                    Object js = jsonObj.get("classement");
+
+                    for (int i = 0; i < Control.getInstance().getCurrentGame().getPlayersList().size(); i++) {
+
+                        JSONObject tmp;
+                        if (js instanceof JSONArray)
+                            tmp = jsonObj.getJSONArray("classement").getJSONObject(i);
+                        else
+                            tmp = jsonObj.getJSONObject("classement").getJSONObject(String.valueOf(i));
+
                         int place = tmp.getInt("place");
                         int score = tmp.getInt("score");
                         int team = tmp.getInt("team");
                         String name = tmp.getString("login");
-                        classement.put(place, new ClassementItem(place, name, team, score));
-                    } else {
-                        JSONObject classementTab = jsonObj.getJSONObject("classement");
 
-                        for (int i = 0; i < Control.getInstance().getCurrentGame().getPlayersList().size(); i++) {
-                            JSONObject tmp = classementTab.getJSONObject(String.valueOf(i));
-
-                            int place = tmp.getInt("place");
-                            int score = tmp.getInt("score");
-                            int team = tmp.getInt("team");
-                            String name = tmp.getString("login");
-
-                            classement.put(place, new ClassementItem(place, name, team, score));
-                        }
+                        classementTemp.add(new ClassementItem(i, name, team, score));
+                    }
+                    Collections.sort(classementTemp);
+                    for (int i = 0; i < classementTemp.size(); i++) {
+                        classementTemp.get(i).setIndice(i + 1);
+                        classement.put(i + 1, classementTemp.get(i));
                     }
                 }
             } catch (IOException e) {

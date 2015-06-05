@@ -3,7 +3,7 @@ package com.example.josephrocca.multiviewapptest.model;
 /**
  * Created by josephrocca on 22/05/15.
  */
-public class ClassementItem {
+public class ClassementItem implements Comparable<ClassementItem> {
 
     private int indice;
     private String name;
@@ -26,5 +26,14 @@ public class ClassementItem {
     public void setName(String n){ name=n; }
     public void setTeam(int t){ team=t; }
     public void setScore(int s){ score=s; }
+
+    public int compareTo(ClassementItem classement2) {
+        int result = 0;
+        if(this.getScore()>classement2.getScore())
+            result = -1;
+        else if(this.getScore()<classement2.getScore())
+            result = 1;
+        return result;
+    }
 
 }

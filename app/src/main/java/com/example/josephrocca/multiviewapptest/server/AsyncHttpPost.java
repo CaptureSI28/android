@@ -59,12 +59,4 @@ public class AsyncHttpPost extends AsyncTask<String, String, HttpResponse> {
         return response;
     }
 
-
-    /**
-     * on getting result
-     */
-    @Override
-    protected void onPostExecute(HttpResponse result) {
-        // something...
-    }
 }
