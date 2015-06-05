@@ -10,7 +10,7 @@
 
     <!-- Error messages -->
     <string name="connexion_error">Erreur de connexion, veuillez réessayer.</string>
-    <string name="flash_error">Echec du flash.</string>
+    <string name="flash_error">Ce QRCode a déjà été flashé dans les trois dernières minutes.</string>
     <string name="game_name_missing">Veuillez entrer un nom de partie.</string>
     <string name="wrong_date">La date de début doit être antérieure à la date de fin et postérieure à aujourd\'hui.</string>
     <string name="password_missing">Veuillez entrer un mot de passe.</string>
