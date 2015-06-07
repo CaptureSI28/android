@@ -140,7 +140,8 @@ public class Game {
     }
 
     public void addPlayer(Player player, int teamId) {
-        teams.get(teamId).addPlayer(player);
+        if (!teams.get(teamId).containsPlayer(player.getLogin()))
+            teams.get(teamId).addPlayer(player);
     }
 
     public ArrayList<Player> getPlayersList() {

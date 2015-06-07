@@ -11,10 +11,13 @@ import android.widget.ImageView;
 import android.widget.TableRow;
 import android.widget.Toast;
 
+import java.util.Date;
+
 import com.example.josephrocca.multiviewapptest.Control;
 import com.example.josephrocca.multiviewapptest.model.Menu;
 import com.example.josephrocca.multiviewapptest.R;
 import com.example.josephrocca.multiviewapptest.model.Zone;
+import com.example.josephrocca.multiviewapptest.utils.Util;
 import com.example.josephrocca.multiviewapptest.utils.ZBarConstants;
 import com.example.josephrocca.multiviewapptest.server.ServerRequest;
 
@@ -22,6 +25,7 @@ import com.example.josephrocca.multiviewapptest.server.ServerRequest;
 public class MainActivity extends ActionBarActivity {
 
     public static int SCAN = 1;
+    private TopInfo topinfo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,7 +40,7 @@ public class MainActivity extends ActionBarActivity {
             ServerRequest.fetchZonesList();
             // Gestion TOPINFO ------------------------------------------------
             final TableRow topinforow = (TableRow) findViewById(R.id.topinfo);
-            TopInfo topinfo = new TopInfo(topinforow, getLayoutInflater());
+            topinfo = new TopInfo(topinforow, getLayoutInflater());
             topinfo.initPerso();
             topinfo.initTeam();
 
@@ -48,19 +52,24 @@ public class MainActivity extends ActionBarActivity {
             Menu mymenu = new Menu(menu1, menu2, menu3, menu4, getFragmentManager(), topinfo);
             Control.getInstance().setMenu(mymenu);
             mymenu.init();
-            mymenu.updateTopInfo();
+            topinfo.update();
 
             // Gestion CAPTUREBTN --------------------------------------------
             final ImageView captureBtn = (ImageView) findViewById(R.id.btncapture);
             BoutonCapture capture = new BoutonCapture(captureBtn);
             capture.init(topinfo);
             final Intent intentFlash = new Intent(this, ZBarScannerActivity.class);
-            capture.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    startActivityForResult(intentFlash, SCAN);
-                }
-            });
+
+            if (Util.getDateFromShortString(Control.getInstance().getCurrentGame().getDateFin()).before(new Date())) {
+                Toast.makeText(getApplicationContext(), getResources().getString(R.string.game_end), Toast.LENGTH_LONG).show();
+            } else {
+                capture.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        startActivityForResult(intentFlash, SCAN);
+                    }
+                });
+            }
 
 
         }
@@ -85,10 +94,21 @@ public class MainActivity extends ActionBarActivity {
             if (data != null) {
                 String barcode = data.getStringExtra(ZBarConstants.SCAN_RESULT);
 
-                boolean isOk = ServerRequest.flash(barcode);
-                if (!isOk)
+                String response = ServerRequest.flash(barcode);
+                if (response.contains("fail")) {
                     Toast.makeText(getApplicationContext(), getResources().getString(R.string.flash_error), Toast.LENGTH_LONG).show();
+                } else if (response.contains("bonus")) {
+                    AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                    builder.setMessage(R.string.bonus).setTitle(R.string.bonus_title);
+                    builder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            dialog.cancel();
+                        }
+                    });
+                    builder.create().show();
+                }
 
+                topinfo.update();
             }
         }
     }

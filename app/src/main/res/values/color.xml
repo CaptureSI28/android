@@ -14,6 +14,7 @@
     <item name="darkred" type="color">#FF60120E</item>
 
     <item name="neutre" type="color">#ff7b87aa</item>
+    <!--<item name="neutre" type="color">#4BB3D6</item>-->
     <item name="darkneutre" type="color">#FF5A5A74</item>
 
     <item name="gray20" type="color">#FFEBEBEB</item>

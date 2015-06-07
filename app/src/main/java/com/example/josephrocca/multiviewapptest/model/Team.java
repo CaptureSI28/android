@@ -51,7 +51,8 @@ public class Team {
     }
 
     public void addPlayer(Player p) {
-        this.players.put(p.getLogin(), p);
+        if (!this.players.containsKey(p.getLogin()))
+            this.players.put(p.getLogin(), p);
     }
 
     public ArrayList<Player> getPlayerList() {

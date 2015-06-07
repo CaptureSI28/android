@@ -6,6 +6,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
@@ -52,8 +54,16 @@ public class TopInfo {
         TableRow.LayoutParams params = new TableRow.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT, 1f);
         persoView.setLayoutParams(params);
 
+        ImageView refresh = (ImageView)persoView.findViewById(R.id.refresh);
         TextView userpt             = (TextView)persoView.findViewById(R.id.userpt);
         LinearLayout colorlayout    = (LinearLayout)persoView.findViewById(R.id.colorlayperso);
+
+        refresh.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                update();
+            }
+        });
 
         userpt.setText(Integer.toString(Control.getInstance().getUser().getPoint()));
         userpt.setTextColor(MyColor.getTeamColorById(Control.getInstance().getCurrentGame().getTeamIdCurrentUser(), true));

@@ -25,6 +25,17 @@ public class Util {
         return date;
     }
 
+    public static Date getDateFromShortString(String d) {
+        SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
+        Date date = new Date();
+        try {
+            date = formatter.parse(d);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return date;
+    }
+
     public static String formatDateFromDataPicker(String d) {
         SimpleDateFormat inFormatter = new SimpleDateFormat("d-M-yyyy");
         SimpleDateFormat outFormatter = new SimpleDateFormat("yyyy-M-d H:m:s");

@@ -113,7 +113,7 @@ public class fragmentSelPartNew extends Fragment {
                         startActivity(intent);
 
                     } else {
-                        Toast.makeText(getActivity(), v.getResources().getString(R.string.wrong_date), Toast.LENGTH_LONG).show();
+                        Toast.makeText(getActivity(), v.getResources().getString(R.string.creation_error), Toast.LENGTH_LONG).show();
                     }
                 }
             }

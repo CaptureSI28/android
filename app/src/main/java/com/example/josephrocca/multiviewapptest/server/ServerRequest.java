@@ -48,6 +48,7 @@ public class ServerRequest {
         HashMap<String, String> data = new HashMap<String, String>();
         data.put("session_id", Control.getInstance().getUser().getSession_id());
         data.put("service", "infos_partie");
+        data.put("game_id", String.valueOf(Control.getInstance().getCurrentGame().getId()));
         data.put("infos_equipes", "true");
         data.put("infos_joueur", "true");
         data.put("couleur_zones", "true");
@@ -73,16 +74,16 @@ public class ServerRequest {
 
                 json = EntityUtils.toString(reponse.getEntity());
                 result = new JSONObject(json);
-                // Update nombre de joueurs par équipe dans le modèle
+                // Update joueurs dans le modèle
                 try {
-                    JSONArray nbJoueursEquipe = result.getJSONArray("nbJoueursEquipes");
-                    for (int i = 0; i < nbJoueursEquipe.length(); i++) {
+                    JSONArray players = result.getJSONArray("listeJoueursPartie");
+                    for (int j = 0; j < players.length(); j++) {
+                        JSONObject playerJson = players.getJSONObject(j);
+                        String pseudo = playerJson.getString("login");
+                        int teamId = Integer.valueOf(playerJson.getString("equipe"));
 
-                        JSONObject tmp = nbJoueursEquipe.getJSONObject(i);
-                        int eq = tmp.getInt("equipe");
-                        int nb = tmp.getInt("nbJoueurs");
-                        Team t = currentGame.getTeams().get(eq);
-                        t.setNbJoueurs(nb);
+                        Control.getInstance().addPlayer(new Player(pseudo, 0, teamId, ""));
+                        currentGame.addPlayer(Control.getInstance().getPlayerByLogin(pseudo), teamId);
                     }
                 } catch (JSONException e) {
                     Log.d("Exception:", e.toString());
@@ -287,7 +288,7 @@ public class ServerRequest {
                         g.setPrivate(tmp.getString("partie_privee").equals("YES"));
                         g.setCreator(tmp.getString("createur"));
 
-                        // Get liste s
+                        // Get liste players
                         JSONArray players = tmp.getJSONArray("players");
                         for (int j = 0; j < players.length(); j++) {
                             JSONObject playerJson = players.getJSONObject(j);
@@ -502,12 +503,14 @@ public class ServerRequest {
 
 
     // Flasher un qrcode
-    public static boolean flash(String codeNumber) {
+    public static String flash(String codeNumber) {
+        String result = "fail";
 
         HashMap<String, String> data = new HashMap<String, String>();
         data.put("session_id", Control.getInstance().getUser().getSession_id());
         data.put("service", "flash");
         data.put("qrcode", String.valueOf(codeNumber));
+        data.put("id_game", String.valueOf(Control.getInstance().getCurrentGame().getId()));
 
         AsyncHttpPost asyncHttpPost = new AsyncHttpPost(data);
         asyncHttpPost.execute(serverAdresse);
@@ -525,22 +528,24 @@ public class ServerRequest {
 
             String json = null;
             String success = null;
+            String bonus = null;
             try {
                 json = EntityUtils.toString(reponse.getEntity());
                 JSONObject jsonObj = new JSONObject(json);
                 success = jsonObj.getString("success");
+                bonus = jsonObj.getString("bonus");
+                if (bonus != null && bonus.contains("YES"))
+                    result = "bonus";
+                else if (success != null && success.contains("YES"))
+                    result = "success";
             } catch (IOException e) {
                 e.printStackTrace();
             } catch (JSONException e) {
                 e.printStackTrace();
             }
 
-            if (success != null && success.contains("YES"))
-                return true;
-            else
-                return false;
-        } else
-            return false;
+        }
+        return result;
     }
 
     // Recuperation de classements

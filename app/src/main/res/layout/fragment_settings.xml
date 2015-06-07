@@ -13,15 +13,16 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Nom de la partie"
-        android:textStyle="bold"
-        android:layout_gravity="center_horizontal" />
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="20dp" />
 
     <TextView
         android:id="@+id/settings_createur"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Créateur de la partie"
-        android:textStyle="bold"
+        android:textAppearance="?android:attr/textAppearanceMedium"
         android:layout_gravity="center_horizontal" />
 
     <TextView
@@ -29,7 +30,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Date début"
-        android:textStyle="bold"
+        android:textAppearance="?android:attr/textAppearanceMedium"
         android:layout_gravity="center_horizontal" />
 
     <TextView
@@ -37,7 +38,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Date fin"
-        android:textStyle="bold"
+        android:textAppearance="?android:attr/textAppearanceMedium"
         android:layout_gravity="center_horizontal" />
 
     <Button
@@ -45,7 +46,9 @@
         android:layout_height="wrap_content"
         android:text="Quitter la partie"
         android:id="@+id/settings_button_quit"
-        android:layout_gravity="center_horizontal" />
+        android:background="@drawable/button_background"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="20dp" />
 
     <ListView
         android:layout_width="match_parent"

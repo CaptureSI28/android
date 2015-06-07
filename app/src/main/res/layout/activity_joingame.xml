@@ -1,32 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content">
 
-    <TextView
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Rejoindre partie"
-        android:id="@+id/textView5"
-        android:layout_gravity="center_horizontal"
-        android:gravity="center"
-        android:height="60dp"
-        android:background="#ff7b87aa"
-        android:textColor="#ffffffff" />
 
-    <LinearLayout
-        android:orientation="vertical"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="bottom"
-        android:weightSum="1">
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="Rejoindre partie"
+            android:id="@+id/textView5"
+            android:layout_gravity="center_horizontal"
+            android:gravity="center"
+            android:height="60dp"
+            android:background="#ff7b87aa"
+            android:textColor="#ffffffff" />
 
         <LinearLayout
             android:orientation="vertical"
             android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:layout_weight="1"
+            android:layout_height="283dp"
             android:padding="10dp"
             android:id="@+id/linearLayout">
 
@@ -60,20 +53,27 @@
                     android:layout_marginLeft="10dp" />
             </LinearLayout>
 
-            <TextView
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="du 01/01/01"
-                android:id="@+id/joingame_datedeb"
-                android:layout_marginTop="20dp" />
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="10dp">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="au 02/02/02"
-                android:id="@+id/joingame_datefin" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="du 01/01/01"
+                    android:id="@+id/joingame_datedeb" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="au 02/02/02"
+                    android:id="@+id/joingame_datefin" />
+            </LinearLayout>
 
             <ListView
                 android:layout_width="match_parent"
@@ -85,139 +85,144 @@
         </LinearLayout>
 
         <LinearLayout
-            android:orientation="vertical"
-            android:layout_width="fill_parent"
-            android:layout_height="130dp"
-            android:layout_weight="0">
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:focusable="true">
 
-            <LinearLayout
-                android:orientation="horizontal"
-                android:layout_width="match_parent"
+            <TextView
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp"
-                android:focusable="true">
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="Mot de passe"
+                android:id="@+id/textView6"
+                android:layout_weight="1"
+                android:paddingLeft="10dp" />
 
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:text="Mot de passe"
-                    android:id="@+id/textView6"
-                    android:layout_weight="1"
-                    android:paddingLeft="10dp" />
-
-                <EditText
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/editext_background"
-                    android:inputType="textPassword"
-                    android:ems="10"
-                    android:id="@+id/joingame_pwd"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:layout_marginRight="10dp"
-                    android:password="false" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:orientation="horizontal"
-                android:layout_width="fill_parent"
+            <EditText
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp">
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:text="Equipe"
-                    android:id="@+id/textView7"
-                    android:layout_weight="1"
-                    android:paddingLeft="10dp" />
-
-                <RadioGroup
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:orientation="horizontal"
-                    android:layout_marginRight="10dp">
-
-                    <RadioButton
-                        android:id="@+id/joingame_radio_button_red"
-                        android:layout_width="55dp"
-                        android:layout_height="wrap_content"
-                        android:background="@drawable/radio_button_background_red"
-                        android:button="@android:color/transparent"
-                        android:checked="true"
-                        android:text="rouge"
-                        android:gravity="center" />
-
-                    <RadioButton
-                        android:id="@+id/joingame_radio_button_yellow_blue"
-                        android:layout_width="55dp"
-                        android:layout_height="wrap_content"
-                        android:background="@drawable/radio_button_background_blue"
-                        android:button="@android:color/transparent"
-                        android:text="bleu"
-                        android:checked="false"
-                        android:gravity="center" />
-
-                    <RadioButton
-                        android:id="@+id/joingame_radio_button_green"
-                        android:layout_width="55dp"
-                        android:layout_height="wrap_content"
-                        android:background="@drawable/radio_button_background_green"
-                        android:button="@android:color/transparent"
-                        android:text="vert"
-                        android:checked="false"
-                        android:gravity="center" />
-
-                    <RadioButton
-                        android:id="@+id/joingame_radio_button_yellow_yellow"
-                        android:layout_width="55dp"
-                        android:layout_height="wrap_content"
-                        android:background="@drawable/radio_button_background_yellow"
-                        android:button="@android:color/transparent"
-                        android:text="jaune"
-                        android:checked="false"
-                        android:gravity="center" />
-                </RadioGroup>
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:orientation="horizontal"
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
+                android:background="@drawable/editext_background"
+                android:inputType="textPassword"
+                android:ems="10"
+                android:id="@+id/joingame_pwd"
+                android:layout_weight="1"
                 android:gravity="center"
-                android:weightSum="1">
+                android:layout_marginRight="10dp"
+                android:password="false" />
 
-                <Button
-                    style="?android:attr/buttonStyleSmall"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/button_background"
-                    android:text="@string/annuler"
-                    android:id="@+id/joingame_cancel"
-                    android:minHeight="0dp"
-                    android:textColor="#ffffffff" />
-
-                <Space
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_weight="0.1" />
-
-                <Button
-                    style="?android:attr/buttonStyleSmall"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/button_background"
-                    android:text="@string/rejoindre"
-                    android:id="@+id/joingame_joinbut"
-                    android:minHeight="0dp"
-                    android:textColor="#ffffffff" />
-            </LinearLayout>
         </LinearLayout>
-    </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="Equipe"
+                android:id="@+id/textView7"
+                android:layout_weight="1"
+                android:paddingLeft="10dp" />
+
+            <RadioGroup
+                android:id="@+id/joingame_radio_group"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:layout_marginRight="10dp">
+
+                <RadioButton
+                    android:id="@+id/joingame_radio_button_red"
+                    android:layout_width="55dp"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/radio_button_background_red"
+                    android:button="@android:color/transparent"
+                    android:checked="true"
+                    android:text="rouge"
+                    android:gravity="center" />
+
+                <RadioButton
+                    android:id="@+id/joingame_radio_button_yellow_blue"
+                    android:layout_width="55dp"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/radio_button_background_blue"
+                    android:button="@android:color/transparent"
+                    android:text="bleu"
+                    android:checked="false"
+                    android:gravity="center" />
+
+                <RadioButton
+                    android:id="@+id/joingame_radio_button_green"
+                    android:layout_width="55dp"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/radio_button_background_green"
+                    android:button="@android:color/transparent"
+                    android:text="vert"
+                    android:checked="false"
+                    android:gravity="center" />
+
+                <RadioButton
+                    android:id="@+id/joingame_radio_button_yellow_yellow"
+                    android:layout_width="55dp"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/radio_button_background_yellow"
+                    android:button="@android:color/transparent"
+                    android:text="jaune"
+                    android:checked="false"
+                    android:gravity="center" />
+            </RadioGroup>
+
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="344dp"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="@string/team_checked"
+            android:id="@+id/error_message_team"
+            android:layout_gravity="center_horizontal"
+            android:visibility="visible"
+            android:paddingTop="5dp"
+            android:paddingBottom="10dp" />
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:gravity="center"
+            android:weightSum="1"
+            android:layout_marginBottom="5dp">
+
+            <Button
+                style="?android:attr/buttonStyleSmall"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/button_background"
+                android:text="@string/annuler"
+                android:id="@+id/joingame_cancel"
+                android:minHeight="0dp"
+                android:textColor="#ffffffff" />
+
+            <Space
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="0.1" />
+
+            <Button
+                style="?android:attr/buttonStyleSmall"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/button_background"
+                android:text="@string/rejoindre"
+                android:id="@+id/joingame_joinbut"
+                android:minHeight="0dp"
+                android:textColor="#ffffffff" />
+        </LinearLayout>
 
 </LinearLayout>

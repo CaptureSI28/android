@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
+import com.example.josephrocca.multiviewapptest.Control;
 import com.example.josephrocca.multiviewapptest.R;
 import com.example.josephrocca.multiviewapptest.model.ClassementItem;
 import com.example.josephrocca.multiviewapptest.model.Flash;
@@ -77,6 +78,7 @@ public class SimpleFlashListAdapter extends ArrayAdapter<Flash> {
                     holder.player = (TextView) convertView.findViewById(R.id.historique_player);
                     holder.zone = (TextView) convertView.findViewById(R.id.historique_zone);
                     holder.nbpoints = (TextView) convertView.findViewById(R.id.historique_points);
+                    holder.pts = (TextView) convertView.findViewById(R.id.pts);
                     break;
             }
             convertView.setTag(holder);
@@ -85,10 +87,15 @@ public class SimpleFlashListAdapter extends ArrayAdapter<Flash> {
         }
 
         Flash it = allflashs.get(position);
+        int teamColor = MyColor.getTeamColorById(Control.getInstance().getCurrentGame().getTeamIdByLogin(it.getPlayer().getLogin()), false);
+
         holder.player.setText(String.valueOf(it.getPlayer().getLogin()));
+        holder.player.setTextColor(teamColor);
         holder.date.setText(Util.getStringFromDate(it.getDate_flash()));
         holder.zone.setText(String.valueOf(it.getZone().getName()));
-        holder.nbpoints.setText(String.valueOf(it.getNbpoints()));
+        holder.nbpoints.setText("+"+String.valueOf(it.getNbpoints()));
+        holder.nbpoints.setTextColor(teamColor);
+        holder.pts.setTextColor(teamColor);
         holder.pos = position;
         return convertView;
     }
@@ -115,6 +122,7 @@ public class SimpleFlashListAdapter extends ArrayAdapter<Flash> {
         TextView player;
         TextView zone;
         TextView nbpoints;
+        TextView pts;
         int pos; //to store the position of the item within the list
     }
 }
