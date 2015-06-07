@@ -79,6 +79,7 @@ public class Menu {
         selectFrag(1);
 
     }
+    
 
     public void updateAllMenu () {
         updateMenu(m2, Arrays.asList(m1, m3, m4));
