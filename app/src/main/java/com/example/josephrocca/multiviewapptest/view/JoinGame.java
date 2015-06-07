@@ -52,7 +52,7 @@ public class JoinGame extends Activity {
             gamename.setText(gameToJoin.getName());
             gamecrea.setText(gameToJoin.getCreator());
             gamedatedeb.setText("du " + gameToJoin.getDateDebut());
-            gamedatefin.setText("au " + gameToJoin.getDateFin());
+            gamedatefin.setText(" au " + gameToJoin.getDateFin());
 
             SimplePlayerListAdapter arrayAdapter = new SimplePlayerListAdapter(
                     this,

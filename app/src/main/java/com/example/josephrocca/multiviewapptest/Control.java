@@ -75,6 +75,15 @@ public class Control {
         return games;
     }
 
+    public boolean isGameAlreadyExist (String name) {
+        boolean find = false;
+        for(Game game : games.values()) {
+            if(game.getName().equals(name))
+                find=true;
+        }
+        return find;
+    }
+
     public ArrayList<Game> getGamesArrayList() {
         return new ArrayList<Game>(games.values());
     }

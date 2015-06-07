@@ -93,9 +93,11 @@ public class fragmentSelPartNew extends Fragment {
         conn_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // TODO Vérifier que la partie n'existe pas déjà
                 if (nomPartie.getText().toString().isEmpty()) {
-                    Toast.makeText(getActivity(), v.getResources().getString(R.string.game_name_missing), Toast.LENGTH_LONG).show();
+                    Toast.makeText(getActivity(), v.getResources().getString(R.string.game_name_missing), Toast.LENGTH_SHORT).show();
+                }
+                else if(Control.getInstance().isGameAlreadyExist(nomPartie.getText().toString())) {
+                    Toast.makeText(getActivity(), v.getResources().getString(R.string.game_name_already_exist), Toast.LENGTH_SHORT).show();
                 }
                 // Vérification debut < fin
                 else if (!dateIsValide(datedeb.getText().toString(), datefin.getText().toString())) {
@@ -103,7 +105,7 @@ public class fragmentSelPartNew extends Fragment {
                 }
                 // Verification MDP si partie privée
                 else if (checkBox.isChecked() && password.getText().length() == 0) {
-                    Toast.makeText(getActivity(), v.getResources().getString(R.string.password_missing), Toast.LENGTH_LONG).show();
+                    Toast.makeText(getActivity(), v.getResources().getString(R.string.password_missing), Toast.LENGTH_SHORT).show();
                 }
                 // Création de la partie
                 else {
@@ -113,7 +115,7 @@ public class fragmentSelPartNew extends Fragment {
                         startActivity(intent);
 
                     } else {
-                        Toast.makeText(getActivity(), v.getResources().getString(R.string.creation_error), Toast.LENGTH_LONG).show();
+                        Toast.makeText(getActivity(), v.getResources().getString(R.string.creation_error), Toast.LENGTH_SHORT).show();
                     }
                 }
             }
@@ -128,7 +130,7 @@ public class fragmentSelPartNew extends Fragment {
         try {
             Date debut = formatIn.parse(dateDebut);
             Date fin = formatIn.parse(dateFin);
-            if (!fin.before(debut))
+            if (!fin.before(debut) && !fin.equals(debut))
                 result = true;
         } catch (ParseException e) {
             e.printStackTrace();

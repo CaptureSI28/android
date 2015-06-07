@@ -13,12 +13,13 @@
     <string name="game_begin">Cette partie n\'a pas encore commencé.</string>
     <string name="game_end">Cette partie est terminée, vous ne pouvez plus flasher.</string>
     <string name="inscription_error">Impossible de rejoindre la partie.</string>
-    <string name="creation_error">Ce nom de partie existe déjà, veuillez en choisir un autre.</string>
+    <string name="creation_error">Erreur de création.</string>
     <string name="ok">Ok</string>
     <string name="flash_error">Ce QRCode a déjà été flashé dans les trois dernières minutes.</string>
     <string name="bonus">Félicitations ! Vous venez de flasher un QRCode bonus : les points gagnés sont doublés !</string>
     <string name="bonus_title">Bonus</string>
     <string name="game_name_missing">Veuillez entrer un nom de partie.</string>
+    <string name="game_name_already_exist">Ce nom de partie existe déjà, veuillez en choisir un autre.</string>
     <string name="wrong_date">La date de début doit être antérieure à la date de fin et postérieure à aujourd\'hui.</string>
     <string name="password_missing">Veuillez entrer un mot de passe.</string>
     <string name="team_checked">Vous avez déjà rejoint cette partie, vous ne pouvez pas changer d\'équipe.</string>
