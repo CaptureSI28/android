@@ -75,9 +75,9 @@ public class Menu {
             }
         });
 
-        updateMenu(m1, Arrays.asList(m2, m3, m4));
+        //updateMenu(m1, Arrays.asList(m2, m3, m4));
         updateMenu(m2, Arrays.asList(m1, m3, m4));
-        selectFrag(1);
+        selectFrag(2);
 
     }
 

@@ -54,7 +54,7 @@ public class fragmentSelPartOld extends Fragment implements SwipeRefreshLayout.O
         // Récupération des données depuis le server
         if (ServerRequest.fetchGamesList()) {
             // Creation de la liste en elle-même
-            id_games = new ArrayList<>(Control.getInstance().getGamesArrayList());
+            id_games = new ArrayList<Game>(Control.getInstance().getGamesArrayList());
             arrayAdapter = new GamesListAdapter(
                     getActivity(), id_games);
             partieList.setAdapter(arrayAdapter);

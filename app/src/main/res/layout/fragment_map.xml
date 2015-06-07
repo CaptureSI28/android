@@ -76,6 +76,36 @@
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true" />
 
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/planbfz5"
+            android:src="@drawable/planbfz5"
+            android:alpha="0"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true" />
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/planbfz6"
+            android:src="@drawable/planbfz6"
+            android:alpha="0"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true" />
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/planbfz7"
+            android:src="@drawable/planbfz7"
+            android:alpha="0"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true" />
+
     </RelativeLayout>
 
 </LinearLayout>

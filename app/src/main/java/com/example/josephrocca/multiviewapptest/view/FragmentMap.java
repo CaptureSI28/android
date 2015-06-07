@@ -37,6 +37,9 @@ public class FragmentMap extends Fragment {
         zoneLayoutId.put(2, R.id.planbfz2);
         zoneLayoutId.put(3, R.id.planbfz3);
         zoneLayoutId.put(4, R.id.planbfz4);
+        zoneLayoutId.put(5, R.id.planbfz5);
+        zoneLayoutId.put(6, R.id.planbfz6);
+        zoneLayoutId.put(7, R.id.planbfz7);
 
         disablezones.put(1, new ArrayList<Integer>(Arrays.asList(1,2)));
     }
