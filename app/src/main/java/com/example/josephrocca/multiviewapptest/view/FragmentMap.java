@@ -29,21 +29,27 @@ public class FragmentMap extends Fragment {
     private static String spinnerTxt3 = "Etage 3";
     private static String spinnerTxt4 = "Etage 4";
     private static String spinnerTxt5 = "Etage 5";
+    private static String spinnerTxt6 = "Etage 6";
 
     static HashMap<Integer, Integer> zoneLayoutId = new HashMap<Integer, Integer>();
     static HashMap<Integer, ArrayList<Integer>> disablezones = new HashMap<Integer, ArrayList<Integer>>();
     static{
 
         zoneLayoutId.put(1, R.id.planbfz1);
-        /*
         zoneLayoutId.put(2, R.id.planbfz2);
         zoneLayoutId.put(3, R.id.planbfz3);
         zoneLayoutId.put(4, R.id.planbfz4);
         zoneLayoutId.put(5, R.id.planbfz5);
+        /*
         zoneLayoutId.put(6, R.id.planbfz6);
         zoneLayoutId.put(7, R.id.planbfz7);*/
 
-        disablezones.put(1, new ArrayList<Integer>(Arrays.asList(1,2)));
+
+        disablezones.put(0, new ArrayList<Integer>(Arrays.asList(1,2,3,4)));
+        disablezones.put(3, new ArrayList<Integer>(Arrays.asList(2,3,4)));
+        disablezones.put(4, new ArrayList<Integer>(Arrays.asList(2,3,4)));
+        disablezones.put(5, new ArrayList<Integer>(Arrays.asList(2,3,4,5)));
+        disablezones.put(6, new ArrayList<Integer>(Arrays.asList(2,3,4,5)));
     }
 
 
@@ -58,11 +64,12 @@ public class FragmentMap extends Fragment {
 
         List<String> spinnerArray =  new ArrayList<String>();
         spinnerArray.add(spinnerTxt0);
-        // spinnerArray.add(spinnerTxt1);
-        // spinnerArray.add(spinnerTxt2);
-        // spinnerArray.add(spinnerTxt3);
-        // spinnerArray.add(spinnerTxt4);
-        // spinnerArray.add(spinnerTxt5);
+        spinnerArray.add(spinnerTxt1);
+        spinnerArray.add(spinnerTxt2);
+        spinnerArray.add(spinnerTxt3);
+        spinnerArray.add(spinnerTxt4);
+        spinnerArray.add(spinnerTxt5);
+        spinnerArray.add(spinnerTxt6);
 
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(
                 getActivity(), android.R.layout.simple_spinner_item, spinnerArray);

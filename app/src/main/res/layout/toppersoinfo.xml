@@ -12,9 +12,9 @@
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="43dp"
-        android:gravity="center_vertical|right"
         android:paddingRight="5dp"
-        android:id="@+id/textlayout">
+        android:id="@+id/textlayout"
+        android:gravity="center_vertical">
 
         <ImageView
             android:layout_width="wrap_content"
@@ -26,7 +26,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textAppearance="?android:attr/textAppearanceMedium"
             android:text="userpt"
             android:id="@+id/userpt"
             android:textSize="20sp" />

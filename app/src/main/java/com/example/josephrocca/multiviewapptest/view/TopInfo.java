@@ -87,7 +87,7 @@ public class TopInfo {
             teamsMap.put(i,t);
 
             View child = linf.inflate(R.layout.topteaminfo, row, false);
-            TableRow.LayoutParams params = new TableRow.LayoutParams(1, ViewGroup.LayoutParams.WRAP_CONTENT, 1f);
+            TableRow.LayoutParams params = new TableRow.LayoutParams(1, ViewGroup.LayoutParams.WRAP_CONTENT, 0.9f);
             child.setLayoutParams(params);
 
             TextView teampt             = (TextView)child.findViewById(R.id.ptteam);
