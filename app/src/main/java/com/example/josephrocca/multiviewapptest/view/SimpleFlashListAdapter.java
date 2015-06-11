@@ -74,7 +74,6 @@ public class SimpleFlashListAdapter extends ArrayAdapter<Flash> {
             switch (type) {
                 case 1:
                     convertView = mInflater.inflate(R.layout.flash_row, parent, false);
-                    holder.date = (TextView) convertView.findViewById(R.id.historique_date);
                     holder.player = (TextView) convertView.findViewById(R.id.historique_player);
                     holder.zone = (TextView) convertView.findViewById(R.id.historique_zone);
                     holder.nbpoints = (TextView) convertView.findViewById(R.id.historique_points);
@@ -91,7 +90,6 @@ public class SimpleFlashListAdapter extends ArrayAdapter<Flash> {
 
         holder.player.setText(String.valueOf(it.getPlayer().getLogin()));
         holder.player.setTextColor(teamColor);
-        holder.date.setText(Util.getStringFromDate(it.getDate_flash()));
         holder.zone.setText(String.valueOf(it.getZone().getName()));
         holder.nbpoints.setText("+"+String.valueOf(it.getNbpoints()));
         holder.nbpoints.setTextColor(teamColor);

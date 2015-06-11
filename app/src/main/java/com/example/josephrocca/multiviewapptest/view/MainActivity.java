@@ -3,6 +3,7 @@ package com.example.josephrocca.multiviewapptest.view;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.media.MediaPlayer;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
@@ -92,11 +93,15 @@ public class MainActivity extends ActionBarActivity {
         // Si retour d'un flash...
         if (requestCode == SCAN) {
             if (data != null) {
+
                 String barcode = data.getStringExtra(ZBarConstants.SCAN_RESULT);
+
+                MediaPlayer player = MediaPlayer.create(this, R.raw.son);
 
                 String response = ServerRequest.flash(barcode);
                 if (response.contains("fail")) {
                     Toast.makeText(getApplicationContext(), getResources().getString(R.string.flash_error), Toast.LENGTH_LONG).show();
+                    MediaPlayer playerError = MediaPlayer.create(this, R.raw.son);
                 } else if (response.contains("bonus")) {
                     AlertDialog.Builder builder = new AlertDialog.Builder(this);
                     builder.setMessage(R.string.bonus).setTitle(R.string.bonus_title);
@@ -106,6 +111,9 @@ public class MainActivity extends ActionBarActivity {
                         }
                     });
                     builder.create().show();
+                    player.start();
+                } else {
+                    player.start();
                 }
 
                 topinfo.update();

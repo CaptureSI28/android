@@ -89,7 +89,6 @@ public class fragmentSelPartNew extends Fragment {
             }
         });
 
-        // TODO Remonter les messages d'erreur du serveur (date invalide etc.)
         conn_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

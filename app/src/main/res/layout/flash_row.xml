@@ -11,21 +11,11 @@
         android:gravity="center_vertical"
         android:layout_gravity="center_horizontal">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceSmall"
-            android:text="2014-05-16"
-            android:id="@+id/historique_date"
-            android:layout_weight="0.50"
-            android:paddingLeft="10dp"
-            android:layout_gravity="center_vertical"
-            android:gravity="center" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceMedium"
+            style="@android:style/TextAppearance.DeviceDefault.Medium"
             android:text="roccajos"
             android:id="@+id/historique_player"
             android:layout_weight="1"
@@ -35,7 +25,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceMedium"
+            style="@android:style/TextAppearance.DeviceDefault.Medium"
             android:text="a flashé"
             android:id="@+id/textView"
             android:layout_weight="0.50"
@@ -44,7 +34,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceMedium"
+            style="@android:style/TextAppearance.DeviceDefault.Medium"
             android:text="Phil"
             android:id="@+id/historique_zone"
             android:layout_weight="1"
@@ -54,7 +44,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceMedium"
+            style="@android:style/TextAppearance.DeviceDefault.Medium"
             android:text="10"
             android:id="@+id/historique_points"
             android:layout_weight="1"
@@ -64,7 +54,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceMedium"
+            style="@android:style/TextAppearance.DeviceDefault.Medium"
             android:text="Pts"
             android:id="@+id/pts"
             android:layout_weight="0.50"
