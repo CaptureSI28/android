@@ -29,7 +29,7 @@
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:text="userpt"
             android:id="@+id/userpt"
-            android:textSize="30sp" />
+            android:textSize="20sp" />
     </LinearLayout>
 
     <LinearLayout
