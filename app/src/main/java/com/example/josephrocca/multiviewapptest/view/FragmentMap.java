@@ -14,6 +14,7 @@ import android.widget.Spinner;
 import com.example.josephrocca.multiviewapptest.Control;
 import com.example.josephrocca.multiviewapptest.R;
 import com.example.josephrocca.multiviewapptest.model.Zone;
+import com.example.josephrocca.multiviewapptest.server.BitmapWorkerTask;
 import com.example.josephrocca.multiviewapptest.utils.MyColor;
 
 import java.util.ArrayList;
@@ -31,19 +32,26 @@ public class FragmentMap extends Fragment {
     private static String spinnerTxt5 = "Etage 5";
     private static String spinnerTxt6 = "Etage 6";
 
+    static HashMap<Integer, Integer> zoneImageId = new HashMap<Integer, Integer>();
     static HashMap<Integer, Integer> zoneLayoutId = new HashMap<Integer, Integer>();
     static HashMap<Integer, ArrayList<Integer>> disablezones = new HashMap<Integer, ArrayList<Integer>>();
     static{
+
+        zoneImageId.put(1, R.drawable.planbfz1);
+        zoneImageId.put(2, R.drawable.planbfz2);
+        zoneImageId.put(3, R.drawable.planbfz3);
+        zoneImageId.put(4, R.drawable.planbfz4);
+        zoneImageId.put(5, R.drawable.planbfz5);
+        zoneImageId.put(6, R.drawable.planbfz6);
+        zoneImageId.put(7, R.drawable.planbfz7);
 
         zoneLayoutId.put(1, R.id.planbfz1);
         zoneLayoutId.put(2, R.id.planbfz2);
         zoneLayoutId.put(3, R.id.planbfz3);
         zoneLayoutId.put(4, R.id.planbfz4);
         zoneLayoutId.put(5, R.id.planbfz5);
-        /*
         zoneLayoutId.put(6, R.id.planbfz6);
-        zoneLayoutId.put(7, R.id.planbfz7);*/
-
+        zoneLayoutId.put(7, R.id.planbfz7);
 
         disablezones.put(0, new ArrayList<Integer>(Arrays.asList(1,2,3,4)));
         disablezones.put(3, new ArrayList<Integer>(Arrays.asList(2,3,4)));
@@ -105,6 +113,7 @@ public class FragmentMap extends Fragment {
 
         for(Integer idxZone : zoneLayoutId.keySet()){
             zoneImg = (ImageView)v.findViewById(zoneLayoutId.get(idxZone));
+            loadBitmap(zoneImageId.get(idxZone), zoneImg);
             Zone z = Control.getInstance().getZoneByIdx(etage*10+idxZone);
             if(z!=null) {
                 int team = z.getTeam();
@@ -132,5 +141,10 @@ public class FragmentMap extends Fragment {
                 zoneImg.setAlpha(0.75f);
             }
         }
+    }
+
+    public void loadBitmap(int resId, ImageView imageView) {
+        BitmapWorkerTask task = new BitmapWorkerTask(imageView);
+        task.execute(resId);
     }
 }

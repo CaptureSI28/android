@@ -41,7 +41,6 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:id="@+id/planbfz1"
-            android:src="@drawable/planbfz1"
             android:alpha="0"
             android:layout_alignParentTop="true"
             android:layout_alignParentLeft="true"
@@ -52,7 +51,6 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:id="@+id/planbfz2"
-            android:src="@drawable/planbfz2"
             android:alpha="0"
             android:layout_alignParentTop="true"
             android:layout_alignParentLeft="true"
@@ -62,7 +60,6 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:id="@+id/planbfz3"
-            android:src="@drawable/planbfz3"
             android:alpha="0"
             android:layout_alignParentTop="true"
             android:layout_alignParentLeft="true"
@@ -72,7 +69,6 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:id="@+id/planbfz4"
-            android:src="@drawable/planbfz4"
             android:alpha="0"
             android:layout_alignParentTop="true"
             android:layout_alignParentLeft="true"
@@ -82,18 +78,16 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:id="@+id/planbfz5"
-            android:src="@drawable/planbfz5"
             android:alpha="0"
             android:layout_alignParentTop="true"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true" />
 
-        <!--
+
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:id="@+id/planbfz6"
-            android:src="@drawable/planbfz6"
             android:alpha="0"
             android:layout_alignParentTop="true"
             android:layout_alignParentLeft="true"
@@ -103,11 +97,10 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:id="@+id/planbfz7"
-            android:src="@drawable/planbfz7"
             android:alpha="0"
             android:layout_alignParentTop="true"
             android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true" />-->
+            android:layout_alignParentStart="true" />
 
     </RelativeLayout>
 
