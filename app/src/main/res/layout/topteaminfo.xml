@@ -27,7 +27,7 @@
     </LinearLayout>
 
     <LinearLayout
-        android:orientation="vertical"
+        android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="20dp"
         android:gravity="center_vertical|right"
@@ -41,6 +41,13 @@
             android:text="nb player"
             android:id="@+id/topteaminfo_nb"
             android:textSize="12sp"/>
+
+        <ImageView
+            android:layout_width="15dp"
+            android:layout_height="15dp"
+            android:id="@+id/icon"
+            android:src="@drawable/icnbplayer"
+            android:tint="@color/neutre"/>
     </LinearLayout>
 
     <LinearLayout

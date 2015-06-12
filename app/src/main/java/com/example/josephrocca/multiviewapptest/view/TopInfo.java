@@ -92,6 +92,7 @@ public class TopInfo {
 
             TextView teampt             = (TextView)child.findViewById(R.id.ptteam);
             TextView teamnb             = (TextView)child.findViewById(R.id.topteaminfo_nb);
+            ImageView teamicon            = (ImageView)child.findViewById(R.id.icon);
             LinearLayout colorlayout    = (LinearLayout)child.findViewById(R.id.colorlayteam);
 
             teampt.setText(Integer.toString(t.getNbpts()));
@@ -100,6 +101,7 @@ public class TopInfo {
             colorlayout.setBackgroundColor(MyColor.getTeamColorById(t.getIdx(), false));
 
             teamnb.setTextColor(MyColor.getTeamColorById(t.getIdx(), true));
+            teamicon.setColorFilter(MyColor.getTeamColorById(t.getIdx(), false));
 
             row.addView(child);
 
